@@ -15,11 +15,11 @@
     }
   ],
   "scripts": {
-    "build": "turbo build --cache-dir=.turbo",
+    "build": "NODE_OPTIONS=--max-old-space-size=4096 turbo build --cache-dir=.turbo",
     "build:docs": "pnpm -F @repo/docs build",
-    "build:strapi": "turbo run build --filter=@repo/strapi",
-    "build:ui": "turbo run build --filter=@repo/ui",
-    "build:ui:static": "NODE_OPTIONS=--max-old-space-size=2048 turbo run build:static --filter=@repo/ui",
+    "build:strapi": "NODE_OPTIONS=--max-old-space-size=4096 turbo run build --filter=@repo/strapi",
+    "build:ui": "NODE_OPTIONS=--max-old-space-size=4096 turbo run build --filter=@repo/ui",
+    "build:ui:static": "NODE_OPTIONS=--max-old-space-size=4096 turbo run build:static --filter=@repo/ui",
     "commit": "git-cz",
     "dev": "turbo dev",
     "dev:docs": "pnpm -F @repo/docs start",
