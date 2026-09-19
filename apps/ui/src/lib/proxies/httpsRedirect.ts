@@ -8,13 +8,7 @@ import { isDevelopment } from "@/lib/general-helpers"
  */
 export const httpsRedirect = (req: NextRequest): NextResponse | null => {
   const xForwardedProto = req.headers.get("x-forwarded-proto")
-  const host = req.headers.get("host") ?? ""
-  const firstColon = host.indexOf(":")
-  const hostname = host.startsWith("[")
-    ? host.slice(1, host.indexOf("]"))
-    : firstColon !== host.lastIndexOf(":")
-      ? host
-      : (host.split(":", 1)[0] ?? "")
+  const hostname = req.nextUrl.hostname
   const isLocalhost = ["localhost", "127.0.0.1", "::1"].includes(hostname)
   const isDev = isDevelopment() || isLocalhost
 
