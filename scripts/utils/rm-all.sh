@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
-rm -rf `find . -type d -name node_modules`
-rm -rf `find . -type d -name .next`
-rm -rf `find . -type d -name .turbo`
-rm -rf `find . -type d -name .strapi`
-rm -rf `find . -type d -name dist`
-rm -rf `find . -type d -name build`
+find . -type d -name node_modules -prune -exec rm -rf {} +
+find . -type d \( \
+  -name .next -o \
+  -name .turbo -o \
+  -name .strapi -o \
+  -name .cache -o \
+  -name dist -o \
+  -name build \
+\) -prune -exec rm -rf {} +

@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
-# Remove Next.js build cache folders
-rm -rf apps/ui/.next
-rm -rf apps/ui/out
-rm -rf .turbo
-rm -rf apps/ui/.turbo
+# Remove generated application and build-tool caches.
+pnpm exec rimraf --glob \
+  "apps/**/.next" \
+  "apps/**/out" \
+  ".turbo" \
+  "apps/**/.turbo" \
+  "packages/**/.turbo" \
+  "qa/**/.turbo" \
+  "apps/**/node_modules/.cache" \
+  "packages/**/node_modules/.cache" \
+  "qa/**/node_modules/.cache"

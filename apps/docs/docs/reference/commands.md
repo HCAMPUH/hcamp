@@ -146,7 +146,7 @@ Bash helpers in `scripts/utils` — not wired into `pnpm`, invoke directly from 
 
 ```bash
 bash scripts/utils/rm-modules.sh     # delete every node_modules in the workspace
-bash scripts/utils/rm-next-cache.sh  # delete apps/ui/.next, apps/ui/out, .turbo, apps/ui/.turbo
+bash scripts/utils/rm-next-cache.sh  # delete app build caches, Next.js output, Turbo caches, and node_modules/.cache
 bash scripts/utils/rm-all.sh         # nuke node_modules + .next + .turbo + .strapi + dist + build
 ```
 
