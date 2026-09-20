@@ -17,8 +17,8 @@
   "scripts": {
     "build": "NODE_OPTIONS=--max-old-space-size=8192 turbo build --cache-dir=.turbo",
     "build:docs": "pnpm -F @repo/docs build",
-    "build:strapi": "NODE_OPTIONS=--max-old-space-size=8192 turbo run build --filter=@repo/strapi",
-    "build:ui": "NODE_OPTIONS=--max-old-space-size=8192 turbo run build --filter=@repo/ui",
+    "build:strapi": "NODE_OPTIONS=--max-old-space-size=8192 turbo run build --filter=@repo/strapi && rimraf ./**/.cache",
+    "build:ui": "NODE_OPTIONS=--max-old-space-size=8192 turbo run build --filter=@repo/ui && rimraf ./**/.next/cache",
     "build:ui:static": "NODE_OPTIONS=--max-old-space-size=8192 turbo run build:static --filter=@repo/ui",
     "commit": "git-cz",
     "dev": "turbo dev",
@@ -77,6 +77,7 @@
     "lefthook": "2.1.9",
     "lint-staged": "15.5.2",
     "prettier": "3.8.4",
+    "rimraf": "^5.0.0",
     "semantic-release": "24.2.9",
     "tslib": "2.8.1",
     "turbo": "2.9.18"
