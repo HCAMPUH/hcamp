@@ -50,9 +50,9 @@ export function NavbarInner({
 
             {/* RIGHT SIDE */}
             <div className="hidden h-full items-center gap-2 pl-4 lg:flex">
-              {/* <NavbarAuthSection sessionSSR={session} />
+              {/*   <NavbarAuthSection sessionSSR={session} />
               <LocaleSwitcher locale={locale} /> */}
-              <div className="flex h-8 w-px flex-1 bg-black/70" />
+              {/* <div className="flex h-8 w-px flex-1 bg-black/70" /> */}
               {navbarData?.primaryButtons?.map((button) => (
                 <StrapiLink key={button.id} component={button} />
               ))}
