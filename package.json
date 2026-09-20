@@ -15,10 +15,10 @@
     }
   ],
   "scripts": {
-    "build": "NODE_OPTIONS=--max-old-space-size=8192 turbo build --cache-dir=.turbo",
+    "build": "NODE_OPTIONS=--max-old-space-size=8192 turbo build --cache-dir=.turbo && rimraf --glob .turbo \"apps/**/.turbo\" \"packages/**/.turbo\" \"qa/**/.turbo\"",
     "build:docs": "pnpm -F @repo/docs build",
-    "build:strapi": "NODE_OPTIONS=--max-old-space-size=8192 turbo run build --filter=@repo/strapi && rimraf ./**/.cache",
-    "build:ui": "NODE_OPTIONS=--max-old-space-size=8192 turbo run build --filter=@repo/ui && rimraf ./**/.next/cache",
+    "build:strapi": "NODE_OPTIONS=--max-old-space-size=8192 turbo run build --filter=@repo/strapi && rimraf --glob \"**/.cache\"",
+    "build:ui": "NODE_OPTIONS=--max-old-space-size=8192 turbo run build --filter=@repo/ui && rimraf --glob \"**/.next/cache\"",
     "build:ui:static": "NODE_OPTIONS=--max-old-space-size=8192 turbo run build:static --filter=@repo/ui",
     "commit": "git-cz",
     "dev": "turbo dev",
