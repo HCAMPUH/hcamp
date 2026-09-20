@@ -28,7 +28,7 @@ export function generateStaticParams() {
 
 export const metadata: Metadata = {
   title: {
-    template: "%s / Notum Technologies",
+    template: "%s / Hawaii Concussion Awareness and Management Program",
     default: "",
   },
   icons: {
