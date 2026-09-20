@@ -5,9 +5,9 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { useTranslations, type Locale } from "next-intl"
 import { useState } from "react"
 
-import LocaleSwitcher from "@/components/elementary/LocaleSwitcher"
+/* import LocaleSwitcher from "@/components/elementary/LocaleSwitcher" */
 import StrapiLink from "@/components/page-builder/components/utilities/StrapiLink"
-import { NavbarAuthSection } from "@/components/page-builder/single-types/navbar/NavbarAuthSection"
+/* import { NavbarAuthSection } from "@/components/page-builder/single-types/navbar/NavbarAuthSection" */
 import Typography from "@/components/typography"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/styles"
@@ -124,8 +124,7 @@ export function MobileNavigation({
         {/* Auth + Locale */}
         {/* TO DO: these components should be changed to mobile view in the future */}
         <div className="flex w-full items-center justify-between gap-2">
-          <NavbarAuthSection sessionSSR={session} />
-          {locale ? <LocaleSwitcher locale={locale} /> : null}
+          {/* <NavbarAuthSection sessionSSR={session} /> */}
         </div>
         {primaryButtons?.length ? (
           <div className="space-y-2">
