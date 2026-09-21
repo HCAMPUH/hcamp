@@ -31,7 +31,7 @@ export function StrapiAnimatedLogoRow({
 
   return (
     <section className="w-full px-6 py-10">
-      <Container className="flex flex-col items-center gap-7.5 overflow-hidden rounded-4xl bg-linear-to-r from-purple-500/10 to-rose-300/10 py-10 shadow-sm dark:from-purple-400/20 dark:to-rose-400/20">
+      <Container className="flex flex-col items-center overflow-hidden rounded-4xl bg-linear-to-r from-purple-500/10 to-rose-300/10 py-10 shadow-sm dark:from-purple-400/20 dark:to-rose-400/20">
         <CkEditorRenderer htmlContent={component.title} />
 
         <div className={cn("group relative mt-12 flex w-full items-center")}>
@@ -57,7 +57,7 @@ export function StrapiAnimatedLogoRow({
                     <StrapiBasicImage
                       component={logo}
                       loading="eager"
-                      className="icon--invert-on-dark h-16 w-auto object-contain"
+                      className="icon--invert-on-dark h-20 w-auto object-contain"
                       height={80}
                     />
                   </li>
