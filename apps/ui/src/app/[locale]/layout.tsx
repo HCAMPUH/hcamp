@@ -75,6 +75,10 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
+        <Script
+          src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+          strategy="beforeInteractive"
+        />
         <Script id="csr-config" strategy="beforeInteractive">
           {`
          window.CSR_CONFIG = window.CSR_CONFIG || {};

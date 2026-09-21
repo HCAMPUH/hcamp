@@ -64,6 +64,8 @@ function buildCsp({
     "default-src 'self'",
     [
       "script-src 'self' 'unsafe-inline'",
+      "https://s3.amazonaws.com",
+      "https://ajax.googleapis.com",
       ...(isDevelopment ? ["'unsafe-eval'"] : []),
       // Example — Google Tag Manager / Analytics / Ads (uncomment if used):
       // "https://www.googletagmanager.com",
