@@ -97,9 +97,14 @@ function buildCsp({
       // "https://*.doubleclick.net",
       // "https://www.google.com",
     ].join(" "),
-    // Example — add framed third parties (e.g. tag manager preview) here:
-    // "frame-src 'self' https://www.googletagmanager.com https://bid.g.doubleclick.net https://td.doubleclick.net",
-    "frame-src 'self'",
+    // Allow only the provider origins used by CMS video embeds. The iframe
+    // document remains responsible for its own scripts and media policy.
+    [
+      "frame-src 'self'",
+      "https://player.vimeo.com",
+      "https://www.youtube.com",
+      "https://www.youtube-nocookie.com",
+    ].join(" "),
     "worker-src 'self' blob:",
     [
       "media-src 'self' blob: https:",
