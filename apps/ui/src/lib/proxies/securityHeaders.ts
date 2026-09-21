@@ -72,7 +72,10 @@ function buildCsp({
       // "https://pagead2.googlesyndication.com",
       // "https://googleads.g.doubleclick.net",
     ].join(" "),
-    "style-src 'self' 'unsafe-inline'",
+    [
+      "style-src 'self' 'unsafe-inline'",
+      "https://cdn-images.mailchimp.com",
+    ].join(" "),
     // imgproxy, blob storage and Strapi media are all served over HTTPS.
     [
       "img-src 'self' data: blob: https:",
