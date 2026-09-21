@@ -77,6 +77,7 @@ function buildCsp({
     [
       "style-src 'self' 'unsafe-inline'",
       "https://cdn-images.mailchimp.com",
+      "https://hawaii.us14.list-manage.com",
     ].join(" "),
     // imgproxy, blob storage and Strapi media are all served over HTTPS.
     [
