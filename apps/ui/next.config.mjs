@@ -84,7 +84,8 @@ const nextConfig = {
         },
         {
           key: "Permissions-Policy",
-          value: "camera=(), microphone=(), geolocation=()",
+          value:
+            'camera=(), microphone=(), geolocation=(), unload=(self "https://player.vimeo.com")',
         },
       ],
     },

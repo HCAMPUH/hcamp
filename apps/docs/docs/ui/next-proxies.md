@@ -127,12 +127,12 @@ Security headers are split by how they are computed:
 
 - **Static headers** — set in `apps/ui/next.config.mjs` via `headers()` for every route, because they are build-time constants:
 
-  | Header                      | Value                                          |
-  | --------------------------- | ---------------------------------------------- |
-  | `Strict-Transport-Security` | `max-age=63072000; includeSubDomains; preload` |
-  | `X-Content-Type-Options`    | `nosniff`                                      |
-  | `Referrer-Policy`           | `strict-origin-when-cross-origin`              |
-  | `Permissions-Policy`        | `camera=(), microphone=(), geolocation=()`     |
+  | Header                      | Value                                                                                |
+  | --------------------------- | ------------------------------------------------------------------------------------ |
+  | `Strict-Transport-Security` | `max-age=63072000; includeSubDomains; preload`                                       |
+  | `X-Content-Type-Options`    | `nosniff`                                                                            |
+  | `Referrer-Policy`           | `strict-origin-when-cross-origin`                                                    |
+  | `Permissions-Policy`        | `camera=(), microphone=(), geolocation=(), unload=(self "https://player.vimeo.com")` |
 
 - **Runtime headers** — set in `apps/ui/src/lib/proxies/securityHeaders.ts`, because they depend on request/runtime state:
   - `Content-Security-Policy` — its `frame-ancestors` is derived from the runtime `STRAPI_URL` (unavailable at build time, so it cannot live in `next.config`).

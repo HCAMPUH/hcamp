@@ -67,6 +67,7 @@ function buildCsp({
       "https://s3.amazonaws.com",
       "https://ajax.googleapis.com",
       "https://hawaii.us14.list-manage.com",
+      "https://player.vimeo.com",
       ...(isDevelopment ? ["'unsafe-eval'"] : []),
       // Example — Google Tag Manager / Analytics / Ads (uncomment if used):
       // "https://www.googletagmanager.com",

@@ -26,12 +26,15 @@ let strapi
 try {
   strapi = await loadStrapi()
 
-  const states = await Promise.all(
-    requiredDocuments.map(async ({ label, uid }) => ({
+  // The startup check can run against a shared database client. Keep these
+  // reads sequential so pg never receives overlapping queries on one client.
+  const states = []
+  for (const { label, uid } of requiredDocuments) {
+    states.push({
       label,
       exists: await documentExists(uid),
-    }))
-  )
+    })
+  }
 
   const missing = states.filter(({ exists }) => !exists)
 

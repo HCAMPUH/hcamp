@@ -8,8 +8,8 @@
     "dev": "next dev",
     "lint": "eslint -c ./eslint.config.mjs './**/*.{js,ts,jsx,tsx,cjs,mjs}'",
     "lint:fix": "pnpm lint --fix",
-    "preview": "next build && next start",
-    "start": "next start",
+    "preview": "next build && pnpm start",
+    "start": "if [ -f .next/standalone/server.js ]; then node .next/standalone/server.js; else next start; fi",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"
