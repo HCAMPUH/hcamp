@@ -133,10 +133,14 @@ Heroku dyno filesystems are ephemeral. Use [S3](../../strapi/plugins/upload-prov
 The repository currently includes `apps/strapi/Procfile`:
 
 ```Procfile
-web: cd apps/strapi && node scripts/seed-runner.mjs start
+web: cd apps/strapi && pnpm run start
 ```
 
-This starts Strapi through the seed runner. Configure seed-related variables intentionally for each environment.
+This starts Strapi directly as a long-running web process. Do not use the one-shot
+`start:seeded` script as the web process: Heroku (and process managers such as PM2)
+will restart it after it exits. If production content needs to be seeded, run
+`pnpm seed:import` separately as a release or operational task, then start the web
+process.
 
 :::tip Seed import memory
 If the dyno hits memory limits during startup seeding, increase the dyno size or disable automatic seeding. Then run the import manually by opening a Heroku dyno shell with `heroku run bash` and running `pnpm run seed:import`.

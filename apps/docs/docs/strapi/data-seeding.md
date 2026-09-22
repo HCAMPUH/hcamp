@@ -22,7 +22,7 @@ apps/strapi/seed/exports/strapi-export-YYYY-MM-DD-HHmmss.tar.gz
 
 The newest timestamped export is treated as the current seed. There is no separate promotion step.
 
-When Strapi starts through the default scripts, `scripts/seed-runner.mjs` can run before the Strapi server starts:
+For local development, `scripts/seed-runner.mjs` can run before the Strapi server starts:
 
 1. Load `.env`.
 2. Run `scripts/seed-check.mjs`.
@@ -49,6 +49,11 @@ pnpm seed:export  # Create a new timestamped seed export
 
 `seed:export` keeps only the latest 5 exports.
 
+Production web processes must run `strapi start` directly. The seed runner is a
+startup helper, not a service process; invoke `pnpm -F @repo/strapi start:seeded`
+only as an explicit one-shot startup task. Running it as a PM2 or Heroku web
+process can cause restart loops when the wrapper exits.
+
 ## Auto Seed Configuration
 
 Automatic seeding is controlled by:
@@ -67,7 +72,9 @@ Available modes:
 - `force` - always import the latest seed export; this overwrites existing data
 - `skip` - never import
 
-For deployed environments, usually keep `AUTO_SEED_ENABLED=false` unless the environment should self-initialize (`empty` mode) or refilled (`force` mode).
+For deployed environments, usually keep `AUTO_SEED_ENABLED=false` and run
+`pnpm seed:import` as a separate release or operational task when an import is
+required.
 
 ## Local Development Workflow
 

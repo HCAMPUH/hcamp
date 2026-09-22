@@ -93,4 +93,4 @@ ENV PATH=/app/apps/${APP}/node_modules/.bin:$PATH
 USER strapi
 WORKDIR /app/apps/${APP}
 EXPOSE ${PORT:-1337}
-CMD ["node", "scripts/seed-runner.mjs", "start"]
+CMD ["node_modules/.bin/strapi", "start"]
