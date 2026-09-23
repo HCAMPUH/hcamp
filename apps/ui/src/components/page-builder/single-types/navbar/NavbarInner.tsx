@@ -34,14 +34,17 @@ export function NavbarInner({
             <div className="flex items-center gap-2">
               {/* Logo */}
               {navbarData?.logoImage?.image && navbarData.logoImage.link ? (
-                <StrapiImageWithLink component={navbarData.logoImage} />
+                <StrapiImageWithLink
+                  component={navbarData.logoImage}
+                  imageProps={{ className: "icon--invert-on-dark" }}
+                />
               ) : null}
               {navbarData?.logoImage?.image && !navbarData.logoImage.link ? (
                 <StrapiBasicImage
                   component={navbarData.logoImage.image}
                   width={80}
                   height={30}
-                  className="h-7.5 w-20 shrink-0 object-contain"
+                  className="icon--invert-on-dark h-7.5 w-20 shrink-0 object-contain"
                 />
               ) : null}
               {/* Desktop Navigation */}
