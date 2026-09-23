@@ -392,6 +392,24 @@
   min-width: 15em;
 }
 
+.ck-editor-rich-text-page .media,
+.ck-editor-rich-text-blog .media {
+  aspect-ratio: 16 / 9;
+  min-width: 0;
+  position: relative;
+  width: 100%;
+}
+
+.ck-editor-rich-text-page .media iframe,
+.ck-editor-rich-text-blog .media iframe {
+  border: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
 .ck-content .page-break {
   align-items: center;
   clear: both;

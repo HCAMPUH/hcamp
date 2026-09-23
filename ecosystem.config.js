@@ -9,7 +9,9 @@ module.exports = {
     {
       name: "hcamp-frontend",
       cwd: "/var/www/apps/ui",
-      script: ".next/standalone/apps/ui/server.js",
+      // script: ".next/standalone/apps/ui/server.js",
+      script: "npm",
+      args: "run start",
       env: {
         NODE_ENV: "production",
         PORT: 3000,

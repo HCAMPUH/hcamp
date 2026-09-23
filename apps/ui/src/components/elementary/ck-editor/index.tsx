@@ -3,6 +3,7 @@ import { type Locale, useLocale } from "next-intl"
 import {
   processLinksInHtmlContent,
   removeEmptyImagesFromContent,
+  transformOembedElements,
 } from "@/components/elementary/ck-editor/utils"
 import { cn } from "@/lib/styles"
 
@@ -26,6 +27,7 @@ function CkEditorRenderer({
     const transformers = [
       (h: string) => processLinksInHtmlContent(h, locale),
       removeEmptyImagesFromContent,
+      transformOembedElements,
     ]
 
     return transformers.reduce((result, transform) => transform(result), html)
