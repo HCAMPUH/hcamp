@@ -59,6 +59,7 @@ export function StrapiAnimatedLogoRow({
                       loading="eager"
                       className="h-20 w-auto object-contain"
                       height={80}
+                      preload
                     />
                   </li>
                 ))}
