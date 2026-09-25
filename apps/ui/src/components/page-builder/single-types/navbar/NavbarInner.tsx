@@ -38,6 +38,8 @@ export function NavbarInner({
                   component={navbarData.logoImage}
                   imageProps={{
                     className: "icon--invert-on-dark shrink-0 object-contain",
+                    width: undefined,
+                    height: undefined,
                     preload: true,
                   }}
                 />
