@@ -67,6 +67,7 @@
     "react-dom": "18.3.1",
     "react-router-dom": "6.30.6",
     "strapi-plugin-config-sync": "3.2.0",
+    "strapi-plugin-magic-mail": "^3.0.4",
     "strapi-provider-upload-azure-storage": "3.5.0",
     "styled-components": "6.5.3",
     "zod": "4.4.3"
