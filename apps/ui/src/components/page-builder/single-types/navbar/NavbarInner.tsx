@@ -37,10 +37,7 @@ export function NavbarInner({
                 <StrapiImageWithLink
                   component={navbarData.logoImage}
                   imageProps={{
-                    className:
-                      "icon--invert-on-dark h-7.5 w-20 shrink-0 object-contain",
-                    // width: 150,
-                    // height: 45,
+                    className: "icon--invert-on-dark shrink-0 object-contain",
                     preload: true,
                   }}
                 />
@@ -49,7 +46,7 @@ export function NavbarInner({
                 <StrapiBasicImage
                   component={navbarData.logoImage.image}
                   preload
-                  className="icon--invert-on-dark h-7.5 w-20 shrink-0 object-contain"
+                  className="icon--invert-on-dark shrink-0 object-contain"
                 />
               ) : null}
               {/* Desktop Navigation */}
