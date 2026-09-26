@@ -24,6 +24,7 @@ export default [
             "https://player.vimeo.com",
             "https://www.youtube.com",
             "https://youtube.com",
+            "https://editor.unlayer.com",
           ],
           "img-src": [
             "'self'",
@@ -59,9 +60,11 @@ export default [
             "https://i.ytimg.com",
             "https://yt3.ggpht.com",
             "https://*.youtube.com",
+            "https://editor.unlayer.com",
           ],
           "frame-src": [
             "'self'",
+            "https://editor.unlayer.com",
             "https://player.vimeo.com",
             "https://vimeo.com",
             "https://*.vimeo.com",
