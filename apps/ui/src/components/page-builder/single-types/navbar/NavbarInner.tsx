@@ -12,6 +12,7 @@ import {
   NavbarMobileProvider,
   NavbarMobileToggle,
 } from "@/components/page-builder/single-types/navbar/NavbarMobileControls"
+import NavbarSearch from "@/components/page-builder/single-types/navbar/NavbarSearch"
 import type { BetterAuthSessionWithStrapi } from "@/types/better-auth"
 
 import { DesktopNavigation } from "./DesktopNavigation"
@@ -57,6 +58,7 @@ export function NavbarInner({
 
             {/* RIGHT SIDE */}
             <div className="hidden h-full items-center gap-2 pl-4 lg:flex">
+              <NavbarSearch />
               {/*   <NavbarAuthSection sessionSSR={session} />
               <LocaleSwitcher locale={locale} /> */}
               {/* <div className="flex h-8 w-px flex-1 bg-black/70" /> */}
@@ -64,7 +66,10 @@ export function NavbarInner({
                 <StrapiLink key={button.id} component={button} />
               ))}
             </div>
-            <NavbarMobileToggle />
+            <div className="flex items-center gap-1 lg:hidden">
+              <NavbarSearch />
+              <NavbarMobileToggle />
+            </div>
           </Container>
         </div>
       </header>

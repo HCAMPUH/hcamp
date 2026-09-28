@@ -41,6 +41,15 @@ function frameAncestorsFromEnv(): string | null {
   return unique.length > 0 ? unique.join(" ") : null
 }
 
+function meilisearchOriginsFromEnv(): string[] {
+  const meilisearchHost = getEnvVar("NEXT_PUBLIC_MEILISEARCH_HOST")
+  if (!meilisearchHost) return []
+
+  const url = new URL(meilisearchHost)
+
+  return [url.origin]
+}
+
 /**
  * Builds the Content-Security-Policy.
  *
@@ -59,6 +68,7 @@ function buildCsp({
 }): string {
   const isDevelopment = getEnvVar("NODE_ENV") === "development"
   const allowLocalStrapiMedia = isDevelopment || isLocalhostUi
+  const meilisearchOrigins = meilisearchOriginsFromEnv()
 
   return [
     "default-src 'self'",
@@ -89,6 +99,7 @@ function buildCsp({
     "font-src 'self' data:",
     [
       "connect-src 'self'",
+      ...meilisearchOrigins,
       // Example — Google Analytics / Ads (uncomment if used):
       // "https://*.google-analytics.com",
       // "https://*.analytics.google.com",
