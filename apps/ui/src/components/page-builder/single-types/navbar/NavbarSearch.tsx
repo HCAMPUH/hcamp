@@ -42,7 +42,7 @@ function extractContentText(value: unknown): string {
       continue
     }
     if (Array.isArray(current)) {
-      values.push(...current.toReversed())
+      values.push(...[...current].reverse())
       continue
     }
     if (typeof current !== "object" || current === null) continue
