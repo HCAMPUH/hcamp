@@ -37,16 +37,20 @@ export const transformOembedElements = (content?: string | null): string =>
 
 function replaceOembedElement(match: string): string {
   const url = match.match(/\burl\s*=\s*(["'])(.*?)\1/i)?.[2]
-  const embedUrl = url ? getEmbedUrl(url) : null
+  const video = url ? getVideoDetails(url) : null
 
-  if (!embedUrl) {
+  if (!video) {
     return match
   }
 
-  return `<iframe src="${escapeAttribute(embedUrl)}" title="Embedded media" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+  return `<button type="button" class="ck-video-placeholder" data-video-embed="${escapeAttribute(video.embedUrl)}" aria-label="Play ${video.provider} video"><img src="${escapeAttribute(video.thumbnailUrl)}" alt="" loading="lazy" /><span class="ck-video-placeholder__play" aria-hidden="true"><span></span></span></button>`
 }
 
-function getEmbedUrl(value: string): string | null {
+function getVideoDetails(value: string): null | {
+  embedUrl: string
+  thumbnailUrl: string
+  provider: "YouTube" | "Vimeo"
+} {
   let url: URL
 
   try {
@@ -67,14 +71,24 @@ function getEmbedUrl(value: string): string | null {
           url.pathname.match(/^\/(?:embed|shorts|live)\/([^/?]+)/)?.[1]
 
     return videoId
-      ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}`
+      ? {
+          embedUrl: `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}`,
+          thumbnailUrl: `https://i.ytimg.com/vi/${encodeURIComponent(videoId)}/hqdefault.jpg`,
+          provider: "YouTube",
+        }
       : null
   }
 
   if (vimeoHosts.has(url.hostname.toLowerCase())) {
     const videoId = url.pathname.match(/\/(?:video\/)?(\d+)/)?.[1]
 
-    return videoId ? `https://player.vimeo.com/video/${videoId}` : null
+    return videoId
+      ? {
+          embedUrl: `https://player.vimeo.com/video/${videoId}`,
+          thumbnailUrl: `https://vumbnail.com/${videoId}.jpg`,
+          provider: "Vimeo",
+        }
+      : null
   }
 
   return null

@@ -10,13 +10,17 @@ import {
 } from "@/components/elementary/ck-editor/utils"
 
 describe("transformOembedElements", () => {
-  it("renders YouTube embeds as privacy-enhanced iframes", () => {
+  it("renders YouTube embeds as thumbnail play buttons", () => {
     const result = transformOembedElements(
       '<figure class="media"><oembed url="https://www.youtube.com/watch?v=abc123"></oembed></figure>'
     )
 
+    expect(result).toContain('class="ck-video-placeholder"')
     expect(result).toContain(
-      '<iframe src="https://www.youtube-nocookie.com/embed/abc123"'
+      'data-video-embed="https://www.youtube-nocookie.com/embed/abc123"'
+    )
+    expect(result).toContain(
+      'src="https://i.ytimg.com/vi/abc123/hqdefault.jpg"'
     )
     expect(result).not.toContain("<oembed")
   })
@@ -26,7 +30,12 @@ describe("transformOembedElements", () => {
       transformOembedElements(
         '<oembed url="https://vimeo.com/123456"></oembed>'
       )
-    ).toContain('src="https://player.vimeo.com/video/123456"')
+    ).toContain('data-video-embed="https://player.vimeo.com/video/123456"')
+    expect(
+      transformOembedElements(
+        '<oembed url="https://vimeo.com/123456"></oembed>'
+      )
+    ).toContain('src="https://vumbnail.com/123456.jpg"')
 
     const unsupported = '<oembed url="https://example.com/video"></oembed>'
     expect(transformOembedElements(unsupported)).toBe(unsupported)
