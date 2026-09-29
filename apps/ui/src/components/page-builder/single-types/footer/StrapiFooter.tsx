@@ -28,7 +28,11 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
         <div className="flex flex-col justify-between gap-10 lg:flex-row">
           <div className="flex flex-row flex-wrap items-center justify-center gap-4 md:items-start md:justify-start">
             {footer.logoImage?.map((logoImage) => (
-              <StrapiImageWithLink key={logoImage.id} component={logoImage} />
+              <StrapiImageWithLink
+                key={logoImage.id}
+                component={logoImage}
+                imageProps={{ className: "icon--invert-on-light" }}
+              />
             ))}
           </div>
 
