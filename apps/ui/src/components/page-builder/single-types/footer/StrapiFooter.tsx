@@ -26,8 +26,10 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
     <div className="bg-background w-full border-t shadow-sm backdrop-blur transition-colors duration-300">
       <Container className="pt-8 pb-4">
         <div className="flex flex-col justify-between gap-10 lg:flex-row">
-          <div className="flex flex-col items-center justify-center space-y-4 md:items-start md:justify-start">
-            <StrapiImageWithLink component={footer.logoImage} />
+          <div className="flex flex-row flex-wrap items-center justify-center gap-4 md:items-start md:justify-start">
+            {footer.logoImage?.map((logoImage) => (
+              <StrapiImageWithLink key={logoImage.id} component={logoImage} />
+            ))}
           </div>
 
           <div

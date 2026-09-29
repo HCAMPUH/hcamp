@@ -464,7 +464,7 @@ export interface ApiFooterFooter extends Struct.SingleTypeSchema {
       }>
     locale: Schema.Attribute.String
     localizations: Schema.Attribute.Relation<"oneToMany", "api::footer.footer">
-    logoImage: Schema.Attribute.Component<"utilities.image-with-link", false> &
+    logoImage: Schema.Attribute.Component<"utilities.image-with-link", true> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true

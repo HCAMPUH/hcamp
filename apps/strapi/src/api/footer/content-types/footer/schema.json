@@ -52,7 +52,7 @@
         }
       },
       "component": "utilities.image-with-link",
-      "repeatable": false
+      "repeatable": true
     }
   }
 }
