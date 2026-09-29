@@ -26,13 +26,23 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
     <div className="bg-background w-full border-t shadow-sm backdrop-blur transition-colors duration-300">
       <Container className="pt-8 pb-4">
         <div className="flex flex-col justify-between gap-10 lg:flex-row">
-          <div className="flex flex-row flex-wrap items-center justify-center gap-4 md:items-start md:justify-start">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
             {footer.logoImage?.map((logoImage) => (
-              <StrapiImageWithLink
+              <div
                 key={logoImage.id}
-                component={logoImage}
-                imageProps={{ className: "icon--invert-on-light" }}
-              />
+                className="flex h-16 items-center justify-center p-2"
+              >
+                <StrapiImageWithLink
+                  component={logoImage}
+                  imageProps={{
+                    className: "icon--invert-on-light max-h-full max-w-full",
+                  }}
+                  linkProps={{
+                    className:
+                      "relative flex h-full w-full items-center justify-center p-0",
+                  }}
+                />
+              </div>
             ))}
           </div>
 
