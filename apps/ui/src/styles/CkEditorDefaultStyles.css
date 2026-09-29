@@ -457,6 +457,19 @@
   margin-left: 0.2rem;
 }
 
+@media (max-width: 640px) {
+  .ck-content .ck-video-placeholder__play {
+    height: 3rem;
+    width: 3rem;
+  }
+
+  .ck-content .ck-video-placeholder__play::after {
+    border-bottom-width: 0.45rem;
+    border-left-width: 0.7rem;
+    border-top-width: 0.45rem;
+  }
+}
+
 .ck-content .ck-video-placeholder:hover .ck-video-placeholder__play,
 .ck-content .ck-video-placeholder:focus-visible .ck-video-placeholder__play {
   background: #d4af37;
