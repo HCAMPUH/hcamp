@@ -26,6 +26,16 @@
       "locale": null
     },
     {
+      "action": "api::post.post.find",
+      "documentId": "a1b2c3d4e5f6012345678901",
+      "locale": null
+    },
+    {
+      "action": "api::post.post.findOne",
+      "documentId": "b1c2d3e4f5a6012345678901",
+      "locale": null
+    },
+    {
       "action": "plugin::users-permissions.auth.callback",
       "documentId": "tr6d6pxzwqnkhmmf8qhrgvt7",
       "locale": null

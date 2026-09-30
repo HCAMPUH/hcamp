@@ -216,6 +216,17 @@ export interface SectionsImageWithCtaButton extends Struct.ComponentSchema {
   }
 }
 
+export interface SectionsPostList extends Struct.ComponentSchema {
+  collectionName: "components_sections_post_lists"
+  info: {
+    displayName: "Post List"
+    icon: "bulletList"
+  }
+  attributes: {
+    posts: Schema.Attribute.Relation<"manyToMany", "api::post.post">
+  }
+}
+
 export interface SectionsStatistics extends Struct.ComponentSchema {
   collectionName: "components_sections_statistics"
   info: {
@@ -536,6 +547,7 @@ declare module "@strapi/strapi" {
       "sections.heading-with-cta-button": SectionsHeadingWithCtaButton
       "sections.hero": SectionsHero
       "sections.image-with-cta-button": SectionsImageWithCtaButton
+      "sections.post-list": SectionsPostList
       "sections.statistics": SectionsStatistics
       "seo-utilities.seo": SeoUtilitiesSeo
       "seo-utilities.seo-og": SeoUtilitiesSeoOg

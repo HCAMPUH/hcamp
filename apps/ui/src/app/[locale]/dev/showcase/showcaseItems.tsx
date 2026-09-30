@@ -23,6 +23,7 @@ import MockedStrapiFigures from "@/app/[locale]/dev/showcase/components/strapiCo
 import MockedStrapiHeadingWithCTAButton from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiHeadingWithCTAButton"
 import MockedStrapiHero from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiHero"
 import MockedStrapiImageWithCTAButton from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiImageWithCTAButton"
+import MockedStrapiPostList from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiPostList"
 
 export const showcaseItems = [
   // Atomic items
@@ -205,6 +206,13 @@ export const showcaseItems = [
     kind: "component",
     component: MockedStrapiImageWithCTAButton,
     description: "An image block paired with a call-to-action",
+  },
+  {
+    id: "post-list",
+    label: "Post List",
+    kind: "component",
+    component: MockedStrapiPostList,
+    description: "A responsive list of posts with images, excerpts, and links",
   },
 ] as const
 

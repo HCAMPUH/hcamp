@@ -17,6 +17,27 @@ const populateOverrides = [
       },
     },
   },
+  {
+    componentUid: "sections.post-list",
+    mergeWithGeneratedPopulate: true,
+    overridePopulate: {
+      posts: {
+        fields: [
+          "title",
+          "slug",
+          "excerpt",
+          "eventDate",
+          "featured",
+          "location",
+          "eventTime",
+          "eventSpeakers",
+        ],
+        populate: {
+          coverImage: true,
+        },
+      },
+    },
+  },
 ] satisfies PopulateOverrideEntries<ComponentPopulateMap>
 
 export function smartPopulateConfig() {

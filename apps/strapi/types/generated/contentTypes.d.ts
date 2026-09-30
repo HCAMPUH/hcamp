@@ -646,6 +646,59 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
   }
 }
 
+export interface ApiPostPost extends Struct.CollectionTypeSchema {
+  collectionName: "posts"
+  info: {
+    displayName: "Posts"
+    pluralName: "posts"
+    singularName: "post"
+  }
+  options: {
+    draftAndPublish: true
+  }
+  attributes: {
+    content: Schema.Attribute.DynamicZone<
+      [
+        "sections.image-with-cta-button",
+        "sections.hero",
+        "sections.heading-with-cta-button",
+        "sections.faq",
+        "sections.carousel",
+        "sections.animated-logo-row",
+        "forms.newsletter-form",
+        "forms.contact-form",
+        "utilities.ck-editor-content",
+        "sections.statistics",
+        "sections.features-list",
+        "sections.cta-banner",
+        "utilities.ck-editor-text",
+        "utilities.tip-tap-rich-text",
+      ]
+    >
+    coverImage: Schema.Attribute.Media<"images">
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    excerpt: Schema.Attribute.Text
+    eventDate: Schema.Attribute.Date
+    eventSpeakers: Schema.Attribute.String
+    eventTime: Schema.Attribute.String
+    eventSpeakers: Schema.Attribute.String
+    eventTime: Schema.Attribute.String
+    featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>
+    issueDate: Schema.Attribute.Date & Schema.Attribute.Required
+    location: Schema.Attribute.String
+    location: Schema.Attribute.String
+    publishedAt: Schema.Attribute.DateTime
+    slug: Schema.Attribute.UID<"api::post.post", "title"> &
+      Schema.Attribute.Required
+    title: Schema.Attribute.String & Schema.Attribute.Required
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+  }
+}
+
 export interface ApiRedirectRedirect extends Struct.CollectionTypeSchema {
   collectionName: "redirects"
   info: {
@@ -1222,6 +1275,7 @@ declare module "@strapi/strapi" {
       "api::hierarchy.hierarchy": ApiHierarchyHierarchy
       "api::navbar.navbar": ApiNavbarNavbar
       "api::page.page": ApiPagePage
+      "api::post.post": ApiPostPost
       "api::redirect.redirect": ApiRedirectRedirect
       "api::subscriber.subscriber": ApiSubscriberSubscriber
       "plugin::content-releases.release": PluginContentReleasesRelease

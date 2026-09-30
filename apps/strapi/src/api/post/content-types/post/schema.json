@@ -1,0 +1,72 @@
+{
+  "kind": "collectionType",
+  "collectionName": "posts",
+  "info": {
+    "singularName": "post",
+    "pluralName": "posts",
+    "displayName": "Posts"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "issueDate": {
+      "type": "date",
+      "required": true
+    },
+    "eventDate": {
+      "type": "date"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "excerpt": {
+      "type": "text"
+    },
+    "coverImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "content": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.image-with-cta-button",
+        "sections.hero",
+        "sections.heading-with-cta-button",
+        "sections.faq",
+        "sections.carousel",
+        "sections.animated-logo-row",
+        "forms.newsletter-form",
+        "forms.contact-form",
+        "utilities.ck-editor-content",
+        "sections.statistics",
+        "sections.features-list",
+        "sections.cta-banner",
+        "utilities.ck-editor-text"
+      ]
+    },
+    "location": {
+      "type": "string"
+    },
+    "eventTime": {
+      "type": "string"
+    },
+    "eventSpeakers": {
+      "type": "string"
+    }
+  }
+}

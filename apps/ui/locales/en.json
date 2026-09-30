@@ -32,7 +32,8 @@
     "close": "Close",
     "submitForm": "Submit",
     "saveChanges": "Save changes",
-    "back": "Back"
+    "back": "Back",
+    "readPost": "Read"
   },
 
   "tables": {

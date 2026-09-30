@@ -78,6 +78,49 @@ export async function fetchAllPages(
   }
 }
 
+export async function fetchPost(slug: string, locale: Locale) {
+  const dm = await draftMode()
+
+  return PublicStrapiClient.fetchOneBySlug(
+    "api::post.post",
+    slug,
+    {
+      locale,
+      status: dm.isEnabled ? "draft" : "published",
+      populate: { coverImage: true, content: "smart" },
+    },
+    {
+      next: { revalidate: 120 },
+    }
+  )
+}
+
+export async function fetchAllPosts(locale: Locale) {
+  return PublicStrapiClient.fetchAll(
+    "api::post.post",
+    {
+      locale,
+      status: "published",
+      fields: [
+        "title",
+        "slug",
+        "excerpt",
+        "issueDate",
+        "eventDate",
+        "featured",
+        "location",
+        "eventTime",
+        "eventSpeakers",
+      ],
+      populate: { coverImage: true },
+      sort: { issueDate: "asc" },
+    },
+    {
+      next: { revalidate: 120 },
+    }
+  )
+}
+
 // ------ SEO fetching functions
 
 export async function fetchSeo(

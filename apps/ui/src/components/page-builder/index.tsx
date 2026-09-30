@@ -11,6 +11,7 @@ import { StrapiStatistics } from "@/components/page-builder/components/sections/
 import StrapiHeadingWithCTAButton from "@/components/page-builder/components/sections/StrapiHeadingWithCTAButton"
 import StrapiHero from "@/components/page-builder/components/sections/StrapiHero"
 import StrapiImageWithCTAButton from "@/components/page-builder/components/sections/StrapiImageWithCTAButton"
+import StrapiPostList from "@/components/page-builder/components/sections/StrapiPostList"
 import StrapiCkEditorContent from "@/components/page-builder/components/utilities/StrapiCkEditorContent"
 import StrapiTipTapEditorContent from "@/components/page-builder/components/utilities/StrapiTipTapEditorContent"
 
@@ -40,6 +41,7 @@ export const PageContentComponents: Partial<
   "sections.statistics": StrapiStatistics,
   "sections.features-list": StrapiFeaturesList,
   "sections.cta-banner": StrapiCTABanner,
+  "sections.post-list": StrapiPostList,
 
   // Forms
   "forms.contact-form": StrapiContactForm,

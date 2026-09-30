@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_sections_post_lists",
+  "info": {
+    "displayName": "Post List",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "posts": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::post.post"
+    }
+  }
+}
