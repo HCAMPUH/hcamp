@@ -113,6 +113,7 @@ function buildCsp({
     // document remains responsible for its own scripts and media policy.
     [
       "frame-src 'self'",
+      "https://www.google.com",
       "https://player.vimeo.com",
       "https://www.youtube.com",
       "https://www.youtube-nocookie.com",
