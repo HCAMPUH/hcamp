@@ -113,7 +113,7 @@ export async function fetchAllPosts(locale: Locale) {
         "eventSpeakers",
       ],
       populate: { coverImage: true },
-      sort: { issueDate: "asc" },
+      sort: { issueDate: "desc" },
     },
     {
       next: { revalidate: 120 },

@@ -144,9 +144,9 @@
 
   "contactForm": {
     "name": "First name and last name",
-    "namePlaceholder": "John Doe",
+    "namePlaceholder": "Keanu Reeves",
     "email": "Email",
-    "emailPlaceholder": "john.doe@gmail.com",
+    "emailPlaceholder": "keanu.reeves@gmail.com",
     "message": "Message",
     "gdpr": "I agree to the processing of personal data",
     "submit": "Send",

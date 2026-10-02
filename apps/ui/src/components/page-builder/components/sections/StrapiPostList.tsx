@@ -24,14 +24,7 @@ export async function StrapiPostList({
     selectedPosts.length
       ? selectedPosts
       : ((await fetchAllPosts(locale)).data ?? [])
-  )
-    .slice()
-    .sort((a, b) => {
-      const dateA = getTimestamp(a.issueDate)
-      const dateB = getTimestamp(b.issueDate)
-
-      return dateA - dateB
-    })
+  ).slice()
 
   return (
     <section>
@@ -158,10 +151,6 @@ function PostDate({
 
 function parseDate(value: string | Date) {
   return new Date(value)
-}
-
-function getTimestamp(value: string | Date | null | undefined) {
-  return value ? parseDate(value).getTime() : 0
 }
 
 StrapiPostList.displayName = "StrapiPostList"
