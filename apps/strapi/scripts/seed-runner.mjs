@@ -149,7 +149,9 @@ async function runStrapi(args) {
     process.platform === "win32" ? "strapi.cmd" : "strapi"
   )
 
-  await runCommand(strapiBin, args)
+  await runCommand(strapiBin, args, {
+    shell: process.platform === "win32",
+  })
 }
 
 async function confirm(question) {
@@ -174,6 +176,7 @@ function runCommand(command, args, options = {}) {
     const child = spawn(command, args, {
       cwd: appDir,
       env: process.env,
+      shell: options.shell || false,
       stdio: "inherit",
     })
 
