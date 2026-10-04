@@ -85,14 +85,23 @@ export function VideoLightbox({ children }: { children: ReactNode }) {
 }
 
 function handleVideoLoad(event: SyntheticEvent<HTMLIFrameElement>) {
-  if (!event.currentTarget.src.includes("youtube-nocookie.com")) return
+  const iframe = event.currentTarget
+  if (iframe.src.includes("youtube-nocookie.com")) {
+    postYoutubeCommand(iframe, "playVideo")
 
-  event.currentTarget.contentWindow?.postMessage(
-    JSON.stringify({
-      event: "command",
-      func: "playVideo",
-      args: [],
-    }),
+    window.setTimeout(() => {
+      postYoutubeCommand(iframe, "unMute")
+      postYoutubeCommand(iframe, "playVideo")
+    }, 250)
+  }
+}
+
+function postYoutubeCommand(
+  iframe: HTMLIFrameElement,
+  func: "playVideo" | "unMute"
+) {
+  iframe.contentWindow?.postMessage(
+    JSON.stringify({ event: "command", func, args: [] }),
     "https://www.youtube-nocookie.com"
   )
 }
