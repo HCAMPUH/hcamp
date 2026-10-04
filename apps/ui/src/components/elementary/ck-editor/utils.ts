@@ -43,12 +43,13 @@ function replaceOembedElement(match: string): string {
     return match
   }
 
-  return `<button type="button" class="ck-video-placeholder" data-video-embed="${escapeAttribute(video.embedUrl)}" aria-label="Play ${video.provider} video"><img src="${escapeAttribute(video.thumbnailUrl)}" alt="" loading="lazy" /><span class="ck-video-placeholder__play" aria-hidden="true"><span></span></span></button>`
+  return `<button type="button" class="ck-video-placeholder" data-video-embed="${escapeAttribute(video.embedUrl)}" aria-label="Play ${video.provider} video"><img src="${escapeAttribute(video.thumbnailUrl)}" alt="" loading="lazy" onerror="${escapeAttribute(video.fallbackThumbnailUrl ? `this.onerror=null;this.src='${video.fallbackThumbnailUrl}'` : "")}" /><span class="ck-video-placeholder__play" aria-hidden="true"><span></span></span></button>`
 }
 
 function getVideoDetails(value: string): null | {
   embedUrl: string
   thumbnailUrl: string
+  fallbackThumbnailUrl?: string
   provider: "YouTube" | "Vimeo"
 } {
   let url: URL
@@ -73,7 +74,8 @@ function getVideoDetails(value: string): null | {
     return videoId
       ? {
           embedUrl: `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}`,
-          thumbnailUrl: `https://i.ytimg.com/vi/${encodeURIComponent(videoId)}/hqdefault.jpg`,
+          thumbnailUrl: `https://i.ytimg.com/vi/${encodeURIComponent(videoId)}/maxresdefault.jpg`,
+          fallbackThumbnailUrl: `https://i.ytimg.com/vi/${encodeURIComponent(videoId)}/hqdefault.jpg`,
           provider: "YouTube",
         }
       : null
@@ -85,7 +87,8 @@ function getVideoDetails(value: string): null | {
     return videoId
       ? {
           embedUrl: `https://player.vimeo.com/video/${videoId}`,
-          thumbnailUrl: `https://vumbnail.com/${videoId}.jpg`,
+          thumbnailUrl: `https://vumbnail.com/${videoId}.jpg?w=1280`,
+          fallbackThumbnailUrl: `https://vumbnail.com/${videoId}.jpg`,
           provider: "Vimeo",
         }
       : null
