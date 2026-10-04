@@ -45,7 +45,7 @@ export async function StrapiPostList({
               >
                 <article className="bg-card text-card-foreground border-border flex h-full w-full flex-col overflow-hidden rounded-xl border shadow-sm transition-shadow group-hover:shadow-md">
                   {imageUrl ? (
-                    <div className="relative aspect-video">
+                    <div className="relative aspect-[4/3]">
                       <Image
                         src={imageUrl}
                         alt={post.coverImage?.alternativeText ?? post.title}
@@ -56,12 +56,12 @@ export async function StrapiPostList({
                       <div className="from-card via-card/45 pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-linear-to-t to-transparent" />
                     </div>
                   ) : null}
-                  <div className="flex flex-1 flex-col items-start gap-4 p-6">
+                  <div className="flex flex-1 flex-col items-start gap-3 p-4">
                     <h4 className="text-foreground w-full min-w-0 text-left text-2xl leading-tight font-semibold wrap-break-word">
                       {post.title}
                     </h4>
                     {post.excerpt ? (
-                      <p className="text-muted-foreground w-full min-w-0 text-left leading-relaxed wrap-break-word">
+                      <p className="text-muted-foreground w-full min-w-0 text-left text-sm leading-relaxed wrap-break-word">
                         {post.excerpt}
                       </p>
                     ) : null}
