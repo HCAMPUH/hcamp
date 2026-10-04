@@ -52,6 +52,7 @@ export function VideoLightbox({ children }: { children: ReactNode }) {
     setVideoUrl(nextVideoUrl)
 
     if (isYouTubeUrl(nextVideoUrl)) {
+      postYoutubeCommand(preloadedIframeRef.current, "setVolume", [100])
       postYoutubeCommand(preloadedIframeRef.current, "unMute")
       postYoutubeCommand(preloadedIframeRef.current, "playVideo")
     }
@@ -171,12 +172,13 @@ function stopVideo(iframe: HTMLIFrameElement | null, videoUrl: string | null) {
 
 function postYoutubeCommand(
   iframe: HTMLIFrameElement | null,
-  func: "playVideo" | "unMute"
+  func: "playVideo" | "unMute" | "setVolume",
+  args: number[] = []
 ) {
   if (!iframe) return
 
   iframe.contentWindow?.postMessage(
-    JSON.stringify({ event: "command", func, args: [] }),
+    JSON.stringify({ event: "command", func, args }),
     "https://www.youtube-nocookie.com"
   )
 }
