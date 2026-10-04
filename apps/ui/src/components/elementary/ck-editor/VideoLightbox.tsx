@@ -1,11 +1,13 @@
 "use client"
 
 import {
+  useRef,
   useState,
   type KeyboardEvent,
   type MouseEvent,
+  type PointerEvent,
+  type FocusEvent,
   type ReactNode,
-  type SyntheticEvent,
 } from "react"
 
 import {
@@ -17,20 +19,50 @@ import {
 
 export function VideoLightbox({ children }: { children: ReactNode }) {
   const [videoUrl, setVideoUrl] = useState<string | null>(null)
+  const [preloadedVideoUrl, setPreloadedVideoUrl] = useState<string | null>(
+    null
+  )
+  const preloadedIframeRef = useRef<HTMLIFrameElement>(null)
+  const modalIframeRef = useRef<HTMLIFrameElement>(null)
   const playbackUrl = videoUrl ? getPlaybackUrl(videoUrl) : null
+  const preloadedPlaybackUrl = preloadedVideoUrl
+    ? getPlaybackUrl(preloadedVideoUrl, false)
+    : null
+
+  const preloadVideo = (target: EventTarget | null) => {
+    if (!(target instanceof HTMLElement)) return
+
+    const videoButton = target.closest<HTMLButtonElement>("[data-video-embed]")
+
+    const nextVideoUrl = videoButton?.dataset.videoEmbed
+
+    if (nextVideoUrl && isYouTubeUrl(nextVideoUrl)) {
+      setPreloadedVideoUrl(nextVideoUrl)
+    }
+  }
 
   const openVideo = (target: EventTarget | null) => {
     if (!(target instanceof HTMLElement)) return
 
     const videoButton = target.closest<HTMLButtonElement>("[data-video-embed]")
+    const nextVideoUrl = videoButton?.dataset.videoEmbed
 
-    if (videoButton) {
-      setVideoUrl(videoButton.dataset.videoEmbed ?? null)
+    if (!nextVideoUrl) return
+
+    setVideoUrl(nextVideoUrl)
+
+    if (isYouTubeUrl(nextVideoUrl)) {
+      postYoutubeCommand(preloadedIframeRef.current, "unMute")
+      postYoutubeCommand(preloadedIframeRef.current, "playVideo")
     }
   }
 
   const handleClick = (event: MouseEvent<HTMLDivElement>) => {
     openVideo(event.target)
+  }
+
+  const handlePointerOver = (event: PointerEvent<HTMLDivElement>) => {
+    preloadVideo(event.target)
   }
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -45,16 +77,51 @@ export function VideoLightbox({ children }: { children: ReactNode }) {
 
     event.preventDefault()
     setVideoUrl(videoButton.dataset.videoEmbed ?? null)
+    preloadVideo(videoButton)
+  }
+
+  const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
+    preloadVideo(event.target)
   }
 
   return (
     <>
-      <div onClick={handleClick} onKeyDown={handleKeyDown}>
+      <div
+        onClick={handleClick}
+        onFocus={handleFocus}
+        onKeyDown={handleKeyDown}
+        onPointerOver={handlePointerOver}
+      >
         {children}
       </div>
+      {preloadedPlaybackUrl && (
+        <iframe
+          ref={preloadedIframeRef}
+          className={
+            videoUrl === preloadedVideoUrl
+              ? "fixed top-1/2 left-1/2 z-[60] aspect-video w-[96vw] -translate-x-1/2 -translate-y-1/2 rounded-xl sm:w-[min(90vw,80rem)]"
+              : "pointer-events-none absolute size-px opacity-0"
+          }
+          src={preloadedPlaybackUrl}
+          title="YouTube video player"
+          tabIndex={-1}
+          aria-hidden="true"
+          allow="autoplay; fullscreen; picture-in-picture"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        />
+      )}
       <Dialog
         open={videoUrl !== null}
-        onOpenChange={(open) => !open && setVideoUrl(null)}
+        onOpenChange={(open) => {
+          if (open) {
+            return
+          }
+
+          pauseVideo(modalIframeRef.current, videoUrl)
+          pauseVideo(preloadedIframeRef.current, preloadedVideoUrl)
+          setVideoUrl(null)
+        }}
       >
         <DialogContent
           className="aspect-video w-[96vw] max-w-[96vw] overflow-hidden rounded-xl border-0 bg-black p-0 shadow-none sm:w-[min(90vw,80rem)] sm:max-w-[80rem]"
@@ -65,16 +132,16 @@ export function VideoLightbox({ children }: { children: ReactNode }) {
           <DialogDescription className="sr-only">
             Embedded video player
           </DialogDescription>
-          {playbackUrl && (
+          {playbackUrl && videoUrl !== preloadedVideoUrl && (
             <div className="h-full">
               <iframe
+                ref={modalIframeRef}
                 className="h-full w-full border-0"
                 src={playbackUrl}
                 title="Embedded video player"
                 allow="autoplay; fullscreen; picture-in-picture"
                 referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
-                onLoad={handleVideoLoad}
               />
             </div>
           )}
@@ -84,32 +151,39 @@ export function VideoLightbox({ children }: { children: ReactNode }) {
   )
 }
 
-function handleVideoLoad(event: SyntheticEvent<HTMLIFrameElement>) {
-  const iframe = event.currentTarget
-  if (iframe.src.includes("youtube-nocookie.com")) {
-    postYoutubeCommand(iframe, "playVideo")
+function isYouTubeUrl(url: string) {
+  return url.includes("youtube-nocookie.com") || url.includes("youtube.com")
+}
 
-    window.setTimeout(() => {
-      postYoutubeCommand(iframe, "unMute")
-      postYoutubeCommand(iframe, "playVideo")
-    }, 250)
-  }
+function pauseVideo(iframe: HTMLIFrameElement | null, videoUrl: string | null) {
+  if (!iframe || !videoUrl) return
+
+  const message = isYouTubeUrl(videoUrl)
+    ? { event: "command", func: "pauseVideo", args: [] }
+    : { method: "pause" }
+  const targetOrigin = isYouTubeUrl(videoUrl)
+    ? "https://www.youtube-nocookie.com"
+    : "https://player.vimeo.com"
+
+  iframe.contentWindow?.postMessage(JSON.stringify(message), targetOrigin)
 }
 
 function postYoutubeCommand(
-  iframe: HTMLIFrameElement,
+  iframe: HTMLIFrameElement | null,
   func: "playVideo" | "unMute"
 ) {
+  if (!iframe) return
+
   iframe.contentWindow?.postMessage(
     JSON.stringify({ event: "command", func, args: [] }),
     "https://www.youtube-nocookie.com"
   )
 }
 
-function getPlaybackUrl(videoUrl: string) {
+function getPlaybackUrl(videoUrl: string, autoplay = true) {
   const url = new URL(videoUrl)
 
-  url.searchParams.set("autoplay", "1")
+  url.searchParams.set("autoplay", autoplay ? "1" : "0")
   url.searchParams.set("playsinline", "1")
 
   if (url.hostname === "www.youtube-nocookie.com") {
