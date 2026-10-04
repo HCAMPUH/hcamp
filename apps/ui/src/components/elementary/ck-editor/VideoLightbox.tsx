@@ -99,13 +99,13 @@ export function VideoLightbox({ children }: { children: ReactNode }) {
           ref={preloadedIframeRef}
           className={
             videoUrl === preloadedVideoUrl
-              ? "fixed top-1/2 left-1/2 z-[60] aspect-video w-[96vw] -translate-x-1/2 -translate-y-1/2 rounded-xl sm:w-[min(90vw,80rem)]"
+              ? "pointer-events-auto fixed top-1/2 left-1/2 z-[60] aspect-video w-[96vw] -translate-x-1/2 -translate-y-1/2 rounded-xl sm:w-[min(90vw,80rem)]"
               : "pointer-events-none absolute size-px opacity-0"
           }
           src={preloadedPlaybackUrl}
           title="YouTube video player"
-          tabIndex={-1}
-          aria-hidden="true"
+          tabIndex={videoUrl === preloadedVideoUrl ? 0 : -1}
+          aria-hidden={videoUrl === preloadedVideoUrl ? undefined : true}
           allow="autoplay; fullscreen; picture-in-picture"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
@@ -118,9 +118,10 @@ export function VideoLightbox({ children }: { children: ReactNode }) {
             return
           }
 
-          pauseVideo(modalIframeRef.current, videoUrl)
-          pauseVideo(preloadedIframeRef.current, preloadedVideoUrl)
+          stopVideo(modalIframeRef.current, videoUrl)
+          stopVideo(preloadedIframeRef.current, preloadedVideoUrl)
           setVideoUrl(null)
+          setPreloadedVideoUrl(null)
         }}
       >
         <DialogContent
@@ -155,12 +156,12 @@ function isYouTubeUrl(url: string) {
   return url.includes("youtube-nocookie.com") || url.includes("youtube.com")
 }
 
-function pauseVideo(iframe: HTMLIFrameElement | null, videoUrl: string | null) {
+function stopVideo(iframe: HTMLIFrameElement | null, videoUrl: string | null) {
   if (!iframe || !videoUrl) return
 
   const message = isYouTubeUrl(videoUrl)
-    ? { event: "command", func: "pauseVideo", args: [] }
-    : { method: "pause" }
+    ? { event: "command", func: "stopVideo", args: [] }
+    : { method: "unload" }
   const targetOrigin = isYouTubeUrl(videoUrl)
     ? "https://www.youtube-nocookie.com"
     : "https://player.vimeo.com"
