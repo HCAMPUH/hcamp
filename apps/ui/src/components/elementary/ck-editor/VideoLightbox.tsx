@@ -52,9 +52,9 @@ export function VideoLightbox({ children }: { children: ReactNode }) {
     setVideoUrl(nextVideoUrl)
 
     if (isYouTubeUrl(nextVideoUrl)) {
-      postYoutubeCommand(preloadedIframeRef.current, "setVolume", [100])
-      postYoutubeCommand(preloadedIframeRef.current, "unMute")
       postYoutubeCommand(preloadedIframeRef.current, "playVideo")
+      postYoutubeCommand(preloadedIframeRef.current, "unMute")
+      postYoutubeCommand(preloadedIframeRef.current, "setVolume", [100])
     }
   }
 
