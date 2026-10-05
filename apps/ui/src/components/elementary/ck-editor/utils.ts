@@ -89,7 +89,7 @@ function getVideoDetails(value: string): null | {
       ? {
           embedUrl: `https://player.vimeo.com/video/${videoId}`,
           thumbnailUrl: `/api/vimeo-thumbnail?video=${videoId}`,
-          fallbackThumbnailUrl: `https://vumbnail.com/${videoId}.jpg`,
+          fallbackThumbnailUrl: "/images/placeholder.png",
           provider: "Vimeo",
         }
       : null

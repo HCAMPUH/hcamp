@@ -43,7 +43,7 @@ describe("transformOembedElements", () => {
       transformOembedElements(
         '<oembed url="https://vimeo.com/123456"></oembed>'
       )
-    ).toContain("this.src='https://vumbnail.com/123456.jpg'")
+    ).toContain("this.src='/images/placeholder.png'")
 
     const unsupported = '<oembed url="https://example.com/video"></oembed>'
     expect(transformOembedElements(unsupported)).toBe(unsupported)

@@ -1,5 +1,6 @@
 const VIMEO_OEMBED_URL = "https://vimeo.com/api/oembed.json"
 const VIMEO_CDN_HOST = "i.vimeocdn.com"
+const FALLBACK_THUMBNAIL_URL = "/images/placeholder.png"
 
 export const runtime = "nodejs"
 
@@ -11,7 +12,6 @@ export async function GET(request: Request) {
     return new Response("Invalid Vimeo video ID", { status: 400 })
   }
 
-  const fallbackUrl = `https://vumbnail.com/${videoId}.jpg`
   const oembedUrl = new URL(VIMEO_OEMBED_URL)
   oembedUrl.searchParams.set("url", `https://vimeo.com/${videoId}`)
 
@@ -23,15 +23,15 @@ export async function GET(request: Request) {
     })
 
     if (!response.ok) {
-      return Response.redirect(fallbackUrl, 302)
+      return Response.redirect(FALLBACK_THUMBNAIL_URL, 302)
     }
 
     const data: unknown = await response.json()
     const thumbnailUrl = getVimeoThumbnailUrl(data)
 
-    return Response.redirect(thumbnailUrl ?? fallbackUrl, 302)
+    return Response.redirect(thumbnailUrl ?? FALLBACK_THUMBNAIL_URL, 302)
   } catch {
-    return Response.redirect(fallbackUrl, 302)
+    return Response.redirect(FALLBACK_THUMBNAIL_URL, 302)
   }
 }
 
