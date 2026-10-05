@@ -74,7 +74,8 @@
         "sections.features-list",
         "sections.cta-banner",
         "utilities.ck-editor-text",
-        "sections.post-list"
+        "sections.post-list",
+        "sections.events-and-research"
       ]
     },
     "children": {

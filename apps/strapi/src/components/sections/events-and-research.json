@@ -1,0 +1,51 @@
+{
+  "collectionName": "components_sections_events_and_researches",
+  "info": {
+    "displayName": "Events & Research",
+    "icon": "calendar"
+  },
+  "options": {},
+  "attributes": {
+    "eventsEyebrow": {
+      "type": "string",
+      "required": true
+    },
+    "eventsTitle": {
+      "type": "string",
+      "required": true
+    },
+    "eventsDescription": {
+      "type": "text"
+    },
+    "events": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::post.post"
+    },
+    "eventHighlightLabel": {
+      "type": "string"
+    },
+    "eventHighlightTitle": {
+      "type": "string"
+    },
+    "eventHighlightDescription": {
+      "type": "text"
+    },
+    "researchEyebrow": {
+      "type": "string",
+      "required": true
+    },
+    "researchTitle": {
+      "type": "string",
+      "required": true
+    },
+    "researchDescription": {
+      "type": "text"
+    },
+    "researchItems": {
+      "type": "component",
+      "component": "shared.research-item",
+      "repeatable": true
+    }
+  }
+}

@@ -25,8 +25,9 @@ const vimeoHosts = new Set(["vimeo.com", "www.vimeo.com", "player.vimeo.com"])
 
 /**
  * CKEditor stores media embeds as `<oembed>` elements. Convert supported
- * providers to iframes before injecting the HTML so they work in SSR, preview,
- * and the public frontend without fetching provider oEmbed APIs at render time.
+ * providers to clickable placeholders before injecting the HTML. Vimeo
+ * thumbnails are resolved by the server route when the image is requested,
+ * avoiding a provider API call during rendering.
  */
 /* eslint-disable unicorn/no-unsafe-string-replacement, unicorn/prefer-string-replace-all */
 export const transformOembedElements = (content?: string | null): string =>
@@ -87,7 +88,7 @@ function getVideoDetails(value: string): null | {
     return videoId
       ? {
           embedUrl: `https://player.vimeo.com/video/${videoId}`,
-          thumbnailUrl: `https://vumbnail.com/${videoId}.jpg?w=1280`,
+          thumbnailUrl: `/api/vimeo-thumbnail?video=${videoId}`,
           fallbackThumbnailUrl: `https://vumbnail.com/${videoId}.jpg`,
           provider: "Vimeo",
         }

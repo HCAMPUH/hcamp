@@ -5,6 +5,7 @@ import StrapiNewsletterForm from "@/components/page-builder/components/forms/Str
 import StrapiAnimatedLogoRow from "@/components/page-builder/components/sections/StrapiAnimatedLogoRow"
 import StrapiCarousel from "@/components/page-builder/components/sections/StrapiCarousel"
 import StrapiCTABanner from "@/components/page-builder/components/sections/StrapiCTABanner"
+import StrapiEventsAndResearch from "@/components/page-builder/components/sections/StrapiEventsAndResearch"
 import StrapiFaq from "@/components/page-builder/components/sections/StrapiFaq"
 import { StrapiFeaturesList } from "@/components/page-builder/components/sections/StrapiFeaturesList"
 import { StrapiStatistics } from "@/components/page-builder/components/sections/StrapiFigures"
@@ -42,6 +43,7 @@ export const PageContentComponents: Partial<
   "sections.features-list": StrapiFeaturesList,
   "sections.cta-banner": StrapiCTABanner,
   "sections.post-list": StrapiPostList,
+  "sections.events-and-research": StrapiEventsAndResearch,
 
   // Forms
   "forms.contact-form": StrapiContactForm,

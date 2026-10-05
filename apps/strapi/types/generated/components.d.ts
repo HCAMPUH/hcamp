@@ -216,6 +216,27 @@ export interface SectionsImageWithCtaButton extends Struct.ComponentSchema {
   }
 }
 
+export interface SectionsEventsAndResearch extends Struct.ComponentSchema {
+  collectionName: "components_sections_events_and_researches"
+  info: {
+    displayName: "Events & Research"
+    icon: "calendar"
+  }
+  attributes: {
+    eventHighlightDescription: Schema.Attribute.Text
+    eventHighlightLabel: Schema.Attribute.String
+    eventHighlightTitle: Schema.Attribute.String
+    events: Schema.Attribute.Relation<"manyToMany", "api::post.post">
+    eventsDescription: Schema.Attribute.Text
+    eventsEyebrow: Schema.Attribute.String & Schema.Attribute.Required
+    eventsTitle: Schema.Attribute.String & Schema.Attribute.Required
+    researchDescription: Schema.Attribute.Text
+    researchEyebrow: Schema.Attribute.String & Schema.Attribute.Required
+    researchItems: Schema.Attribute.Component<"shared.research-item", true>
+    researchTitle: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
 export interface SectionsPostList extends Struct.ComponentSchema {
   collectionName: "components_sections_post_lists"
   info: {
@@ -375,6 +396,22 @@ export interface SharedImageWithTitleAndDescription
           preset: "defaultCkEditor"
         }
       >
+  }
+}
+
+export interface SharedResearchItem extends Struct.ComponentSchema {
+  collectionName: "components_shared_research_items"
+  info: {
+    displayName: "Research Item"
+  }
+  attributes: {
+    description: Schema.Attribute.Text & Schema.Attribute.Required
+    journal: Schema.Attribute.String & Schema.Attribute.Required
+    link: Schema.Attribute.Component<"utilities.link", false>
+    page: Schema.Attribute.Relation<"oneToOne", "api::page.page"> &
+      Schema.Attribute.Required
+    title: Schema.Attribute.String & Schema.Attribute.Required
+    year: Schema.Attribute.Integer & Schema.Attribute.Required
   }
 }
 
@@ -542,6 +579,7 @@ declare module "@strapi/strapi" {
       "sections.animated-logo-row": SectionsAnimatedLogoRow
       "sections.carousel": SectionsCarousel
       "sections.cta-banner": SectionsCtaBanner
+      "sections.events-and-research": SectionsEventsAndResearch
       "sections.faq": SectionsFaq
       "sections.features-list": SectionsFeaturesList
       "sections.heading-with-cta-button": SectionsHeadingWithCtaButton
@@ -556,6 +594,7 @@ declare module "@strapi/strapi" {
       "shared.figure": SharedFigure
       "shared.image-with-config": SharedImageWithConfig
       "shared.image-with-title-and-description": SharedImageWithTitleAndDescription
+      "shared.research-item": SharedResearchItem
       "utilities.accordions": UtilitiesAccordions
       "utilities.basic-image": UtilitiesBasicImage
       "utilities.ck-editor-content": UtilitiesCkEditorContent

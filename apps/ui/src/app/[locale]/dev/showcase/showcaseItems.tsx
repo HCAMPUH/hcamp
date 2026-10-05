@@ -17,6 +17,7 @@ import TooltipSection from "@/app/[locale]/dev/showcase/components/sections/Tool
 import MockedStrapiAnimatedLogoRow from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiAnimatedLogoRow"
 import MockedStrapiCarousel from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiCarousel"
 import MockedStrapiCTABanner from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiCTABanner"
+import MockedStrapiEventsAndResearch from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiEventsAndResearch"
 import MockedStrapiFaq from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiFaq"
 import MockedStrapiFeaturesList from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiFeaturesList"
 import MockedStrapiFigures from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiFigures"
@@ -213,6 +214,14 @@ export const showcaseItems = [
     kind: "component",
     component: MockedStrapiPostList,
     description: "A responsive list of posts with images, excerpts, and links",
+  },
+  {
+    id: "events-and-research",
+    label: "Events & Research",
+    kind: "component",
+    component: MockedStrapiEventsAndResearch,
+    description:
+      "A two-column section for selected event posts, research pages, and a featured event callout",
   },
 ] as const
 

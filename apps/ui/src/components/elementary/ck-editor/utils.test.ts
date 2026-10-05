@@ -38,7 +38,7 @@ describe("transformOembedElements", () => {
       transformOembedElements(
         '<oembed url="https://vimeo.com/123456"></oembed>'
       )
-    ).toContain('src="https://vumbnail.com/123456.jpg?w=1280"')
+    ).toContain('src="/api/vimeo-thumbnail?video=123456"')
     expect(
       transformOembedElements(
         '<oembed url="https://vimeo.com/123456"></oembed>'

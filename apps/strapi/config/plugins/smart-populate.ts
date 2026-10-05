@@ -38,6 +38,29 @@ const populateOverrides = [
       },
     },
   },
+  {
+    componentUid: "sections.events-and-research",
+    mergeWithGeneratedPopulate: true,
+    overridePopulate: {
+      events: {
+        fields: [
+          "title",
+          "slug",
+          "eventDate",
+          "eventTime",
+          "eventSpeakers",
+          "location",
+        ],
+      },
+      researchItems: {
+        populate: {
+          page: {
+            fields: ["title", "fullPath"],
+          },
+        },
+      },
+    },
+  },
 ] satisfies PopulateOverrideEntries<ComponentPopulateMap>
 
 export function smartPopulateConfig() {
