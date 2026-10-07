@@ -48,8 +48,8 @@ export default ({ env }) => {
               ? `/posts/${(document as { slug?: string })?.slug ?? ""}`
               : (document as { fullPath?: string })?.fullPath
           // Disable preview if the pathname is not found
-          if (!pathname || pathname.endsWith("/")) {
-            return null // returning null diables the preview button in the UI
+          if (!pathname || (pathname !== "/" && pathname.endsWith("/"))) {
+            return null // returning null disables the preview button in the UI
           }
           // Use Next.js draft mode passing it a secret key and the content-type status
           const urlSearchParams = new URLSearchParams({
