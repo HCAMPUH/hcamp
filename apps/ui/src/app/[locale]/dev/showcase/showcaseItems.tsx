@@ -14,9 +14,12 @@ import TableSection from "@/app/[locale]/dev/showcase/components/sections/TableS
 import TabsSection from "@/app/[locale]/dev/showcase/components/sections/TabsSection"
 import TextareaSection from "@/app/[locale]/dev/showcase/components/sections/TextareaSection"
 import TooltipSection from "@/app/[locale]/dev/showcase/components/sections/TooltipSection"
+import MockedStrapiAccordion from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiAccordion"
 import MockedStrapiAnimatedLogoRow from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiAnimatedLogoRow"
+import MockedStrapiCard from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiCard"
 import MockedStrapiCarousel from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiCarousel"
 import MockedStrapiCTABanner from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiCTABanner"
+import MockedStrapiDialog from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiDialog"
 import MockedStrapiEventsAndResearch from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiEventsAndResearch"
 import MockedStrapiFaq from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiFaq"
 import MockedStrapiFeaturesList from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiFeaturesList"
@@ -25,6 +28,9 @@ import MockedStrapiHeadingWithCTAButton from "@/app/[locale]/dev/showcase/compon
 import MockedStrapiHero from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiHero"
 import MockedStrapiImageWithCTAButton from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiImageWithCTAButton"
 import MockedStrapiPostList from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiPostList"
+import MockedStrapiTable from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiTable"
+import MockedStrapiTabs from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiTabs"
+import MockedStrapiTooltip from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiTooltip"
 
 export const showcaseItems = [
   // Atomic items
@@ -222,6 +228,48 @@ export const showcaseItems = [
     component: MockedStrapiEventsAndResearch,
     description:
       "A two-column section for selected event posts, research pages, and a featured event callout",
+  },
+  {
+    id: "strapi-card",
+    label: "Card",
+    kind: "component",
+    component: MockedStrapiCard,
+    description: "A CMS-managed card section",
+  },
+  {
+    id: "strapi-tabs",
+    label: "Tabs",
+    kind: "component",
+    component: MockedStrapiTabs,
+    description: "A CMS-managed tabs section",
+  },
+  {
+    id: "strapi-table",
+    label: "Table",
+    kind: "component",
+    component: MockedStrapiTable,
+    description: "A CMS-managed table section",
+  },
+  {
+    id: "strapi-dialog",
+    label: "Dialog",
+    kind: "component",
+    component: MockedStrapiDialog,
+    description: "A CMS-managed dialog section",
+  },
+  {
+    id: "strapi-tooltip",
+    label: "Tooltip",
+    kind: "component",
+    component: MockedStrapiTooltip,
+    description: "A CMS-managed tooltip section",
+  },
+  {
+    id: "strapi-accordion",
+    label: "Accordion",
+    kind: "component",
+    component: MockedStrapiAccordion,
+    description: "A CMS-managed accordion section",
   },
 ] as const
 

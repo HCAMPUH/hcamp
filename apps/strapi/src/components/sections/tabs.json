@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_sections_tabs",
+  "info": {
+    "displayName": "Tabs",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "tabs": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.tab-item"
+    }
+  }
+}

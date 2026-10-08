@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_sections_dialogs",
+  "info": {
+    "displayName": "Dialog",
+    "icon": "discuss"
+  },
+  "options": {},
+  "attributes": {
+    "triggerLabel": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "content": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultCkEditor"
+      }
+    }
+  }
+}

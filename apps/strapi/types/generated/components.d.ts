@@ -216,6 +216,57 @@ export interface SectionsImageWithCtaButton extends Struct.ComponentSchema {
   }
 }
 
+export interface SectionsCard extends Struct.ComponentSchema {
+  collectionName: "components_sections_cards"
+  info: {
+    displayName: "Card"
+    icon: "cube"
+  }
+  attributes: {
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    description: Schema.Attribute.String
+    title: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SectionsAccordion extends Struct.ComponentSchema {
+  collectionName: "components_sections_accordions"
+  info: {
+    displayName: "Accordion"
+    icon: "list"
+  }
+  attributes: {
+    items: Schema.Attribute.Component<"utilities.accordions", true>
+    title: Schema.Attribute.String
+  }
+}
+
+export interface SectionsDialog extends Struct.ComponentSchema {
+  collectionName: "components_sections_dialogs"
+  info: {
+    displayName: "Dialog"
+    icon: "discuss"
+  }
+  attributes: {
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    description: Schema.Attribute.String
+    title: Schema.Attribute.String & Schema.Attribute.Required
+    triggerLabel: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
 export interface SectionsEventsAndResearch extends Struct.ComponentSchema {
   collectionName: "components_sections_events_and_researches"
   info: {
@@ -234,6 +285,44 @@ export interface SectionsEventsAndResearch extends Struct.ComponentSchema {
     researchEyebrow: Schema.Attribute.String & Schema.Attribute.Required
     researchItems: Schema.Attribute.Component<"shared.research-item", true>
     researchTitle: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SectionsTabs extends Struct.ComponentSchema {
+  collectionName: "components_sections_tabs"
+  info: {
+    displayName: "Tabs"
+    icon: "bulletList"
+  }
+  attributes: {
+    tabs: Schema.Attribute.Component<"shared.tab-item", true>
+    title: Schema.Attribute.String
+  }
+}
+
+export interface SectionsTable extends Struct.ComponentSchema {
+  collectionName: "components_sections_tables"
+  info: {
+    displayName: "Table"
+    icon: "table"
+  }
+  attributes: {
+    firstColumnLabel: Schema.Attribute.String & Schema.Attribute.Required
+    rows: Schema.Attribute.Component<"shared.table-row", true>
+    secondColumnLabel: Schema.Attribute.String & Schema.Attribute.Required
+    title: Schema.Attribute.String
+  }
+}
+
+export interface SectionsTooltip extends Struct.ComponentSchema {
+  collectionName: "components_sections_tooltips"
+  info: {
+    displayName: "Tooltip"
+    icon: "information"
+  }
+  attributes: {
+    content: Schema.Attribute.String & Schema.Attribute.Required
+    triggerLabel: Schema.Attribute.String & Schema.Attribute.Required
   }
 }
 
@@ -415,6 +504,34 @@ export interface SharedResearchItem extends Struct.ComponentSchema {
   }
 }
 
+export interface SharedTabItem extends Struct.ComponentSchema {
+  collectionName: "components_shared_tab_items"
+  info: {
+    displayName: "Tab Item"
+  }
+  attributes: {
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    label: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SharedTableRow extends Struct.ComponentSchema {
+  collectionName: "components_shared_table_rows"
+  info: {
+    displayName: "Table Row"
+  }
+  attributes: {
+    label: Schema.Attribute.String & Schema.Attribute.Required
+    value: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
 export interface UtilitiesAccordions extends Struct.ComponentSchema {
   collectionName: "components_utilities_accordions"
   info: {
@@ -577,8 +694,11 @@ declare module "@strapi/strapi" {
       "forms.newsletter-form": FormsNewsletterForm
       "layout.navbar-item": LayoutNavbarItem
       "sections.animated-logo-row": SectionsAnimatedLogoRow
+      "sections.accordion": SectionsAccordion
       "sections.carousel": SectionsCarousel
+      "sections.card": SectionsCard
       "sections.cta-banner": SectionsCtaBanner
+      "sections.dialog": SectionsDialog
       "sections.events-and-research": SectionsEventsAndResearch
       "sections.faq": SectionsFaq
       "sections.features-list": SectionsFeaturesList
@@ -587,6 +707,9 @@ declare module "@strapi/strapi" {
       "sections.image-with-cta-button": SectionsImageWithCtaButton
       "sections.post-list": SectionsPostList
       "sections.statistics": SectionsStatistics
+      "sections.table": SectionsTable
+      "sections.tabs": SectionsTabs
+      "sections.tooltip": SectionsTooltip
       "seo-utilities.seo": SeoUtilitiesSeo
       "seo-utilities.seo-og": SeoUtilitiesSeoOg
       "seo-utilities.seo-twitter": SeoUtilitiesSeoTwitter
@@ -595,6 +718,8 @@ declare module "@strapi/strapi" {
       "shared.image-with-config": SharedImageWithConfig
       "shared.image-with-title-and-description": SharedImageWithTitleAndDescription
       "shared.research-item": SharedResearchItem
+      "shared.tab-item": SharedTabItem
+      "shared.table-row": SharedTableRow
       "utilities.accordions": UtilitiesAccordions
       "utilities.basic-image": UtilitiesBasicImage
       "utilities.ck-editor-content": UtilitiesCkEditorContent

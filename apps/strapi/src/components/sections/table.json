@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_sections_tables",
+  "info": {
+    "displayName": "Table",
+    "icon": "table"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "firstColumnLabel": {
+      "type": "string",
+      "required": true
+    },
+    "secondColumnLabel": {
+      "type": "string",
+      "required": true
+    },
+    "rows": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.table-row"
+    }
+  }
+}

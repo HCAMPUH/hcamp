@@ -2,9 +2,12 @@ import type { UID } from "@repo/strapi-types"
 
 import StrapiContactForm from "@/components/page-builder/components/forms/StrapiContactForm"
 import StrapiNewsletterForm from "@/components/page-builder/components/forms/StrapiNewsletterForm"
+import StrapiAccordion from "@/components/page-builder/components/sections/StrapiAccordion"
 import StrapiAnimatedLogoRow from "@/components/page-builder/components/sections/StrapiAnimatedLogoRow"
+import StrapiCard from "@/components/page-builder/components/sections/StrapiCard"
 import StrapiCarousel from "@/components/page-builder/components/sections/StrapiCarousel"
 import StrapiCTABanner from "@/components/page-builder/components/sections/StrapiCTABanner"
+import StrapiDialog from "@/components/page-builder/components/sections/StrapiDialog"
 import StrapiEventsAndResearch from "@/components/page-builder/components/sections/StrapiEventsAndResearch"
 import StrapiFaq from "@/components/page-builder/components/sections/StrapiFaq"
 import { StrapiFeaturesList } from "@/components/page-builder/components/sections/StrapiFeaturesList"
@@ -13,6 +16,9 @@ import StrapiHeadingWithCTAButton from "@/components/page-builder/components/sec
 import StrapiHero from "@/components/page-builder/components/sections/StrapiHero"
 import StrapiImageWithCTAButton from "@/components/page-builder/components/sections/StrapiImageWithCTAButton"
 import StrapiPostList from "@/components/page-builder/components/sections/StrapiPostList"
+import StrapiTable from "@/components/page-builder/components/sections/StrapiTable"
+import StrapiTabs from "@/components/page-builder/components/sections/StrapiTabs"
+import StrapiTooltip from "@/components/page-builder/components/sections/StrapiTooltip"
 import StrapiCkEditorContent from "@/components/page-builder/components/utilities/StrapiCkEditorContent"
 import StrapiTipTapEditorContent from "@/components/page-builder/components/utilities/StrapiTipTapEditorContent"
 
@@ -44,6 +50,12 @@ export const PageContentComponents: Partial<
   "sections.cta-banner": StrapiCTABanner,
   "sections.post-list": StrapiPostList,
   "sections.events-and-research": StrapiEventsAndResearch,
+  "sections.card": StrapiCard,
+  "sections.tabs": StrapiTabs,
+  "sections.table": StrapiTable,
+  "sections.dialog": StrapiDialog,
+  "sections.tooltip": StrapiTooltip,
+  "sections.accordion": StrapiAccordion,
 
   // Forms
   "forms.contact-form": StrapiContactForm,

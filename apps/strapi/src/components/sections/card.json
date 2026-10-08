@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_sections_cards",
+  "info": {
+    "displayName": "Card",
+    "icon": "cube"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "content": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultCkEditor"
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_sections_tooltips",
+  "info": {
+    "displayName": "Tooltip",
+    "icon": "information"
+  },
+  "options": {},
+  "attributes": {
+    "triggerLabel": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

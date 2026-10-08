@@ -75,7 +75,13 @@
         "sections.cta-banner",
         "utilities.ck-editor-text",
         "sections.post-list",
-        "sections.events-and-research"
+        "sections.events-and-research",
+        "sections.card",
+        "sections.tabs",
+        "sections.table",
+        "sections.dialog",
+        "sections.tooltip",
+        "sections.accordion"
       ]
     },
     "children": {
