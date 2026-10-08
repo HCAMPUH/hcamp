@@ -679,6 +679,10 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
         "sections.features-list",
         "sections.cta-banner",
         "utilities.ck-editor-text",
+        "sections.table",
+        "sections.dialog",
+        "sections.tooltip",
+        "sections.accordion",
         "utilities.tip-tap-rich-text",
       ]
     >

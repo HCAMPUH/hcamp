@@ -56,7 +56,11 @@
         "sections.statistics",
         "sections.features-list",
         "sections.cta-banner",
-        "utilities.ck-editor-text"
+        "utilities.ck-editor-text",
+        "sections.table",
+        "sections.dialog",
+        "sections.tooltip",
+        "sections.accordion"
       ]
     },
     "location": {
