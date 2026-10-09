@@ -11,8 +11,12 @@
       "required": true
     },
     "answer": {
-      "type": "text",
-      "required": true
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "required": true,
+      "options": {
+        "preset": "defaultCkEditor"
+      }
     }
   }
 }

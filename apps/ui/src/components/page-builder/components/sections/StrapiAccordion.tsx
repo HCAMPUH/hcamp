@@ -2,6 +2,7 @@
 
 import type { Data } from "@repo/strapi-types"
 
+import CkEditorRenderer from "@/components/elementary/ck-editor"
 import { Container } from "@/components/elementary/Container"
 import Typography from "@/components/typography"
 import {
@@ -29,7 +30,9 @@ export default function StrapiAccordion({
           {component.items?.map((item) => (
             <AccordionItem key={item.id} value={item.id.toString()}>
               <AccordionTrigger>{item.question}</AccordionTrigger>
-              <AccordionContent>{item.answer}</AccordionContent>
+              <AccordionContent>
+                <CkEditorRenderer htmlContent={item.answer} />
+              </AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>

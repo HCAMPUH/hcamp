@@ -539,7 +539,14 @@ export interface UtilitiesAccordions extends Struct.ComponentSchema {
     displayName: "Accordions"
   }
   attributes: {
-    answer: Schema.Attribute.Text & Schema.Attribute.Required
+    answer: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      > &
+      Schema.Attribute.Required
     question: Schema.Attribute.String & Schema.Attribute.Required
   }
 }
