@@ -38,8 +38,8 @@ export default function StrapiAccordion({
               <AccordionTrigger
                 className={
                   item.questionBackgroundColor
-                    ? "border border-b-0 px-4 data-[state=open]:rounded-b-none"
-                    : "px-4"
+                    ? "border border-b-0 px-4 duration-200 data-[state=closed]:delay-200 data-[state=open]:rounded-b-none"
+                    : undefined
                 }
                 style={{
                   backgroundColor: item.questionBackgroundColor ?? undefined,
