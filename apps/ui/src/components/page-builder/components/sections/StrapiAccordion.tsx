@@ -22,7 +22,7 @@ export default function StrapiAccordion({
     <section>
       <Container className="py-8">
         {component.title ? (
-          <Typography tag="h2" variant="heading3" className="mb-4">
+          <Typography tag="h2" variant="heading3" className="mb-4 text-center">
             {component.title}
           </Typography>
         ) : null}
