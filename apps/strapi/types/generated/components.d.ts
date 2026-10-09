@@ -548,6 +548,8 @@ export interface UtilitiesAccordions extends Struct.ComponentSchema {
       > &
       Schema.Attribute.Required
     question: Schema.Attribute.String & Schema.Attribute.Required
+    questionBackgroundColor: Schema.Attribute.String &
+      Schema.Attribute.CustomField<"plugin::color-picker.color">
   }
 }
 

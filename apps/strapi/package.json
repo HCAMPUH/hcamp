@@ -49,6 +49,7 @@
     "@strapi/design-system": "2.2.4",
     "@strapi/icons": "2.2.4",
     "@strapi/logger": "5.57.0",
+    "@strapi/plugin-color-picker": "5.57.0",
     "@strapi/plugin-sentry": "5.57.0",
     "@strapi/plugin-users-permissions": "5.57.0",
     "@strapi/provider-email-mailgun": "5.57.0",

@@ -9,6 +9,10 @@ export default ({ env }) => {
       enabled: true,
     },
 
+    "color-picker": {
+      enabled: true,
+    },
+
     "users-permissions": {
       config: {
         jwt: {

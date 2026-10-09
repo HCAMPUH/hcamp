@@ -28,9 +28,35 @@ export default function StrapiAccordion({
         ) : null}
         <Accordion type="single" collapsible>
           {component.items?.map((item) => (
-            <AccordionItem key={item.id} value={item.id.toString()}>
-              <AccordionTrigger>{item.question}</AccordionTrigger>
-              <AccordionContent>
+            <AccordionItem
+              key={item.id}
+              value={item.id.toString()}
+              className={
+                item.questionBackgroundColor ? "border-b-0" : undefined
+              }
+            >
+              <AccordionTrigger
+                className={
+                  item.questionBackgroundColor
+                    ? "border border-b-0 px-4 data-[state=open]:rounded-b-none"
+                    : "px-4"
+                }
+                style={{
+                  backgroundColor: item.questionBackgroundColor ?? undefined,
+                }}
+              >
+                {item.question}
+              </AccordionTrigger>
+              <AccordionContent
+                className={
+                  item.questionBackgroundColor
+                    ? "-mt-px rounded-b-md border"
+                    : undefined
+                }
+                contentClassName={
+                  item.questionBackgroundColor ? "px-4" : undefined
+                }
+              >
                 <CkEditorRenderer htmlContent={item.answer} />
               </AccordionContent>
             </AccordionItem>
