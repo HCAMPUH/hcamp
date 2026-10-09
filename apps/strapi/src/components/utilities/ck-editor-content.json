@@ -4,5 +4,13 @@
     "displayName": "CkEditorContent"
   },
   "options": {},
-  "attributes": {}
+  "attributes": {
+    "content": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultCkEditor"
+      }
+    }
+  }
 }
