@@ -52,8 +52,10 @@ export default async function PostPage({
     <main className="flex w-full flex-col overflow-hidden">
       <Container className="py-12 md:py-20">
         <article>
-          <h1 className="text-4xl font-bold md:text-6xl">{post.title}</h1>
-          {post.excerpt ? (
+          {post.showTitle !== false ? (
+            <h1 className="text-4xl font-bold md:text-6xl">{post.title}</h1>
+          ) : null}
+          {post.showDescription !== false && post.excerpt ? (
             <p className="text-muted-foreground mt-6 max-w-3xl text-xl">
               {post.excerpt}
             </p>

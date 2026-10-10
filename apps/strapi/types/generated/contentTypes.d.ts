@@ -703,6 +703,8 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
     location: Schema.Attribute.String
     location: Schema.Attribute.String
     publishedAt: Schema.Attribute.DateTime
+    showDescription: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>
+    showTitle: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>
     slug: Schema.Attribute.UID<"api::post.post", "title"> &
       Schema.Attribute.Required
     title: Schema.Attribute.String & Schema.Attribute.Required

@@ -22,6 +22,10 @@
       "type": "string",
       "required": true
     },
+    "showTitle": {
+      "type": "boolean",
+      "default": true
+    },
     "slug": {
       "type": "uid",
       "targetField": "title",
@@ -29,6 +33,10 @@
     },
     "excerpt": {
       "type": "text"
+    },
+    "showDescription": {
+      "type": "boolean",
+      "default": true
     },
     "coverImage": {
       "type": "media",
