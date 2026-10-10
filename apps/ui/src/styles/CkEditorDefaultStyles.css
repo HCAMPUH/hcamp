@@ -426,6 +426,7 @@
 .ck-content .ck-video-placeholder img {
   height: 100%;
   object-fit: cover;
+  object-position: center;
   opacity: 0.82;
   transition: opacity 200ms ease;
   width: 100%;
