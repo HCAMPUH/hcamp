@@ -26,7 +26,11 @@ export default function StrapiAccordion({
             {component.title}
           </Typography>
         ) : null}
-        <Accordion type="single" collapsible>
+        <Accordion
+          type="single"
+          collapsible
+          defaultValue={component.items?.[0]?.id?.toString()}
+        >
           {component.items?.map((item) => (
             <AccordionItem
               key={item.id}
