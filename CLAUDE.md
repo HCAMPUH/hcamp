@@ -82,4 +82,8 @@ Reusable agent instructions live in [`.claude/skills/`](./.claude/skills/) — t
 
 See [`.claude/skills/README.md`](./.claude/skills/README.md) for the authoring guide and full catalog, and the [AI → Skills docs](apps/docs/docs/reference/AI/skills/overview.md) (with [workflow diagrams](apps/docs/docs/reference/AI/skills/overview.md#workflows)) for what each skill does and how they chain. Worktree-based isolation is wired through the `start-work` skill.
 
+## Protected files
+
+Agents must not modify `apps/strapi/src/components/utilities/ck-editor-content.json` unless the user explicitly requests changes to that file.
+
 This file (`CLAUDE.md`) is mirrored as `AGENTS.md` (a symlink) for non-Claude agents; the same pairing exists in `apps/ui` and `apps/strapi`.
