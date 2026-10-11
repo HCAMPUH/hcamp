@@ -411,12 +411,13 @@
 }
 
 .ck-content .ck-video-placeholder {
+  aspect-ratio: 16 / 9;
   background: #111;
   border: 0;
   border-radius: 1rem;
   cursor: pointer;
   display: block;
-  height: 100%;
+  height: auto;
   overflow: hidden;
   padding: 0;
   position: relative;
@@ -424,8 +425,9 @@
 }
 
 .ck-content .ck-video-placeholder img {
-  height: 100%;
+  height: auto;
   object-fit: cover;
+  object-position: center;
   opacity: 0.82;
   transition: opacity 200ms ease;
   width: 100%;
