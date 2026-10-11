@@ -75,7 +75,7 @@ function getVideoDetails(value: string): null | {
     return videoId
       ? {
           embedUrl: `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}`,
-          thumbnailUrl: `/api/youtube-thumbnail?video=${encodeURIComponent(videoId)}`,
+          thumbnailUrl: `https://i.ytimg.com/vi/${encodeURIComponent(videoId)}/maxresdefault.jpg`,
           fallbackThumbnailUrl: `https://i.ytimg.com/vi/${encodeURIComponent(videoId)}/hqdefault.jpg`,
           provider: "YouTube",
         }
