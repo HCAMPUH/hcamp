@@ -20,10 +20,10 @@ describe("transformOembedElements", () => {
       'data-video-embed="https://www.youtube-nocookie.com/embed/abc123"'
     )
     expect(result).toContain(
-      'src="https://i.ytimg.com/vi/abc123/maxresdefault.jpg"'
+      'src="https://i.ytimg.com/vi/abc123/mqdefault.jpg"'
     )
     expect(result).toContain(
-      "this.src='https://i.ytimg.com/vi/abc123/hqdefault.jpg'"
+      "this.src='https://i.ytimg.com/vi/abc123/sddefault.jpg'"
     )
     expect(result).not.toContain("<oembed")
   })

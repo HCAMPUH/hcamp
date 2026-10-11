@@ -417,7 +417,7 @@
   border-radius: 1rem;
   cursor: pointer;
   display: block;
-  height: auto;
+  height: 100%;
   overflow: hidden;
   padding: 0;
   position: relative;
@@ -425,7 +425,8 @@
 }
 
 .ck-content .ck-video-placeholder img {
-  height: auto;
+  display: block;
+  height: 100%;
   object-fit: cover;
   object-position: center;
   opacity: 0.82;
