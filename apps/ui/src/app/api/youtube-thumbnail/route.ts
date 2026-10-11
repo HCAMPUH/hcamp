@@ -31,7 +31,7 @@ export async function GET(request: Request) {
     }
 
     const data: unknown = await response.json()
-    const thumbnailUrl = getYouTubeThumbnailUrl(data)
+    const thumbnailUrl = getYouTubeThumbnailUrl(data, videoId)
 
     return Response.redirect(thumbnailUrl ?? fallbackUrl, 302)
   } catch {
@@ -39,7 +39,7 @@ export async function GET(request: Request) {
   }
 }
 
-function getYouTubeThumbnailUrl(data: unknown): string | null {
+function getYouTubeThumbnailUrl(data: unknown, videoId: string): string | null {
   if (!data || typeof data !== "object" || !("thumbnail_url" in data)) {
     return null
   }
@@ -54,7 +54,7 @@ function getYouTubeThumbnailUrl(data: unknown): string | null {
     const url = new URL(thumbnailUrl)
 
     return url.protocol === "https:" && url.hostname === YOUTUBE_THUMBNAIL_HOST
-      ? url.href
+      ? `https://${YOUTUBE_THUMBNAIL_HOST}/vi/${videoId}/maxresdefault.jpg`
       : null
   } catch {
     return null
