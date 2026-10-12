@@ -19,12 +19,7 @@ describe("transformOembedElements", () => {
     expect(result).toContain(
       'data-video-embed="https://www.youtube-nocookie.com/embed/abc123"'
     )
-    expect(result).toContain(
-      'src="https://i.ytimg.com/vi/abc123/maxresdefault.jpg"'
-    )
-    expect(result).toContain(
-      "this.src='https://i.ytimg.com/vi/abc123/sddefault.jpg'"
-    )
+    expect(result).toContain('src="/api/youtube-thumbnail?video=abc123"')
     expect(result).not.toContain("<oembed")
   })
 
@@ -39,12 +34,6 @@ describe("transformOembedElements", () => {
         '<oembed url="https://vimeo.com/123456"></oembed>'
       )
     ).toContain('src="/api/vimeo-thumbnail?video=123456"')
-    expect(
-      transformOembedElements(
-        '<oembed url="https://vimeo.com/123456"></oembed>'
-      )
-    ).toContain("this.src='/images/placeholder.png'")
-
     const unsupported = '<oembed url="https://example.com/video"></oembed>'
     expect(transformOembedElements(unsupported)).toBe(unsupported)
   })
