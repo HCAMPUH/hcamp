@@ -3,6 +3,7 @@ import { type Locale, useLocale } from "next-intl"
 import {
   processLinksInHtmlContent,
   removeEmptyImagesFromContent,
+  transformLayoutTables,
   transformOembedElements,
 } from "@/components/elementary/ck-editor/utils"
 import { VideoLightbox } from "@/components/elementary/ck-editor/VideoLightbox"
@@ -33,6 +34,7 @@ function CkEditorRenderer({
       (h: string) => processLinksInHtmlContent(h, locale),
       removeEmptyImagesFromContent,
       transformOembedElements,
+      transformLayoutTables,
     ]
 
     return transformers.reduce((result, transform) => transform(result), html)

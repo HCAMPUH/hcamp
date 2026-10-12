@@ -1,4 +1,5 @@
 import type { Locale } from "next-intl"
+import { HTMLElement, parse } from "node-html-parser"
 
 import { routing } from "@/lib/navigation"
 
@@ -35,6 +36,51 @@ export const transformOembedElements = (content?: string | null): string =>
     ?.replace(/<oembed\b[^>]*>[\s\S]*?<\/oembed>/gi, replaceOembedElement)
     .replace(/<oembed\b[^>]*\/>/gi, replaceOembedElement) || ""
 /* eslint-enable unicorn/no-unsafe-string-replacement, unicorn/prefer-string-replace-all */
+
+/**
+ * Converts CKEditor layout tables into responsive Bootstrap-style rows and
+ * columns for the published page. Layout tables are only an authoring format;
+ * table cells must not constrain the content flow in the frontend.
+ */
+export const transformLayoutTables = (content?: string | null): string => {
+  if (!content?.includes("layout-table")) {
+    return content || ""
+  }
+
+  const root = parse(content)
+
+  for (const table of root.querySelectorAll(
+    ":scope figure.table.layout-table, :scope table.table.layout-table"
+  )) {
+    const rows = table.querySelectorAll(":scope tr")
+
+    if (rows.length === 0) {
+      continue
+    }
+
+    const grid = rows
+      .map((row) => {
+        const cells = row.childNodes.filter(
+          (node): node is HTMLElement =>
+            node instanceof HTMLElement &&
+            ["TD", "TH"].includes(node.rawTagName.toUpperCase())
+        )
+
+        if (cells.length === 0) {
+          return ""
+        }
+
+        return `<div class="row">${cells
+          .map((cell) => `<div class="col-12 col-md">${cell.innerHTML}</div>`)
+          .join("")}</div>`
+      })
+      .join("")
+
+    table.replaceWith(`<div class="ck-layout-grid">${grid}</div>`)
+  }
+
+  return root.toString()
+}
 
 function replaceOembedElement(match: string): string {
   const url = match.match(/\burl\s*=\s*(["'])(.*?)\1/i)?.[2]
