@@ -29,32 +29,73 @@ export async function GET(request: Request) {
     }
 
     const data: unknown = await response.json()
-    const thumbnailUrl = getVimeoThumbnailUrl(data)
+    const thumbnailUrls = getVimeoThumbnailUrls(data)
 
-    return Response.redirect(thumbnailUrl ?? FALLBACK_THUMBNAIL_URL, 302)
+    for (const thumbnailUrl of thumbnailUrls) {
+      if (await isAvailable(thumbnailUrl)) {
+        return Response.redirect(thumbnailUrl, 302)
+      }
+    }
+
+    return Response.redirect(FALLBACK_THUMBNAIL_URL, 302)
   } catch {
     return Response.redirect(FALLBACK_THUMBNAIL_URL, 302)
   }
 }
 
-function getVimeoThumbnailUrl(data: unknown): string | null {
-  if (!data || typeof data !== "object" || !("thumbnail_url" in data)) {
-    return null
+function getVimeoThumbnailUrls(data: unknown): string[] {
+  if (!data || typeof data !== "object") {
+    return []
   }
 
-  const thumbnailUrl = data.thumbnail_url
+  const sourceUrl =
+    "thumbnail_large_url" in data &&
+    typeof data.thumbnail_large_url === "string"
+      ? data.thumbnail_large_url
+      : "thumbnail_url" in data && typeof data.thumbnail_url === "string"
+        ? data.thumbnail_url
+        : null
 
-  if (typeof thumbnailUrl !== "string") {
-    return null
+  if (!sourceUrl) {
+    return []
   }
 
   try {
-    const url = new URL(thumbnailUrl)
+    const url = new URL(sourceUrl)
 
-    return url.protocol === "https:" && url.hostname === VIMEO_CDN_HOST
-      ? url.href
-      : null
+    if (url.protocol !== "https:" || url.hostname !== VIMEO_CDN_HOST) {
+      return []
+    }
+
+    const highResolutionUrls = [
+      ["1920", "1080"],
+      ["1280", "720"],
+    ].map(([width, height]) => {
+      const highResolutionUrl = new URL(url)
+
+      highResolutionUrl.pathname = highResolutionUrl.pathname.replace(
+        /-d_\d+(?:x\d+)?$/,
+        () => `-d_${width}x${height}`
+      )
+
+      return highResolutionUrl.href
+    })
+
+    return [...new Set([...highResolutionUrls, url.href])]
   } catch {
-    return null
+    return []
+  }
+}
+
+async function isAvailable(url: string) {
+  try {
+    const response = await fetch(url, {
+      method: "HEAD",
+      signal: AbortSignal.timeout(5000),
+    })
+
+    return response.ok
+  } catch {
+    return false
   }
 }
