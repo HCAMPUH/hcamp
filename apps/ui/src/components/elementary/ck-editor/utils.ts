@@ -49,14 +49,32 @@ export const transformLayoutTables = (content?: string | null): string => {
 
   const root = parse(content)
 
-  for (const table of root.querySelectorAll(
+  const layoutTables = root.querySelectorAll(
     ":scope figure.table.layout-table, :scope table.table.layout-table"
-  )) {
+  )
+
+  // Convert inner layout tables first so their transformed markup is included
+  // when the containing layout table's cell content is read.
+  for (const table of [...layoutTables].reverse()) {
     const rows = table.querySelectorAll(":scope tr")
 
     if (rows.length === 0) {
       continue
     }
+
+    const columnWidths = table
+      .querySelectorAll(":scope colgroup > col")
+      .map((column) => {
+        const width =
+          column
+            .getAttribute("style")
+            ?.match(/(?:^|;)\s*width\s*:\s*([^;]+)/i)?.[1] ||
+          column.getAttribute("width")
+
+        return width?.trim().match(/^(?:\d+(?:\.\d+)?%|\d+(?:\.\d+)?px)$/)
+          ? width.trim()
+          : undefined
+      })
 
     const grid = rows
       .map((row) => {
@@ -71,7 +89,21 @@ export const transformLayoutTables = (content?: string | null): string => {
         }
 
         return `<div class="row">${cells
-          .map((cell) => `<div class="col-12 col-md">${cell.innerHTML}</div>`)
+          .map((cell, index) => {
+            const width =
+              columnWidths[index] ||
+              cell
+                .getAttribute("style")
+                ?.match(/(?:^|;)\s*width\s*:\s*([^;]+)/i)?.[1]
+            const safeWidth = width
+              ?.trim()
+              .match(/^(?:\d+(?:\.\d+)?%|\d+(?:\.\d+)?px)$/)?.[0]
+            const widthStyle = safeWidth
+              ? ` style="--ck-layout-column-width:${safeWidth}"`
+              : ""
+
+            return `<div class="col-12 col-md"${widthStyle}>${cell.innerHTML}</div>`
+          })
           .join("")}</div>`
       })
       .join("")

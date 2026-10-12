@@ -519,6 +519,10 @@
   .ck-content .ck-layout-grid > .row > .col-md {
     flex: 1 0 0%;
   }
+
+  .ck-content .ck-layout-grid > .row > .col-md[style] {
+    flex: 0 0 var(--ck-layout-column-width);
+  }
 }
 
 .ck-content .page-break {
