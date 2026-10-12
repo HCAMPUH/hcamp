@@ -14,6 +14,8 @@ export async function GET(request: Request) {
 
   const oembedUrl = new URL(VIMEO_OEMBED_URL)
   oembedUrl.searchParams.set("url", `https://vimeo.com/${videoId}`)
+  oembedUrl.searchParams.set("maxwidth", "1920")
+  oembedUrl.searchParams.set("maxheight", "1080")
 
   try {
     const response = await fetch(oembedUrl, {
