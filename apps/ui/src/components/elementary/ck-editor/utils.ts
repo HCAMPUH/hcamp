@@ -56,7 +56,9 @@ export const transformLayoutTables = (content?: string | null): string => {
   // Convert inner layout tables first so their transformed markup is included
   // when the containing layout table's cell content is read.
   for (const table of [...layoutTables].reverse()) {
-    const rows = table.querySelectorAll(":scope tr")
+    const rows = table.querySelectorAll(
+      ":scope > table > tbody > tr, :scope > table > thead > tr, :scope > table > tfoot > tr, :scope > tbody > tr, :scope > thead > tr, :scope > tfoot > tr, :scope > tr"
+    )
 
     if (rows.length === 0) {
       continue
