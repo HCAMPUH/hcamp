@@ -19,6 +19,11 @@
         "preset": "defaultCkEditor"
       }
     },
+    "image": {
+      "type": "component",
+      "component": "utilities.basic-image",
+      "repeatable": false
+    },
     "links": {
       "type": "component",
       "component": "utilities.link",

@@ -47,6 +47,20 @@
           "sortable": false
         }
       },
+      "image": {
+        "edit": {
+          "label": "image",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "image",
+          "searchable": false,
+          "sortable": false
+        }
+      },
       "links": {
         "edit": {
           "label": "links",
@@ -100,6 +114,12 @@
         [
           {
             "name": "description",
+            "size": 12
+          }
+        ],
+        [
+          {
+            "name": "image",
             "size": 12
           }
         ],

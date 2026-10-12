@@ -1,5 +1,6 @@
 import type { Data } from "@repo/strapi-types"
 
+import { mockImage } from "@/app/[locale]/dev/showcase/components/StrapiMedia"
 import StrapiCTABanner from "@/components/page-builder/components/sections/StrapiCTABanner"
 
 const data = {
@@ -8,6 +9,7 @@ const data = {
   title: "<h3>Call to action</h3>",
   description:
     "<p>A short description of a mocked component.A short description of a mocked component. A short description of a mocked component.  </p>",
+  image: mockImage,
   links: [
     {
       id: 1,

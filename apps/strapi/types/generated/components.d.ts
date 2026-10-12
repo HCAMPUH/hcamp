@@ -96,6 +96,7 @@ export interface SectionsCtaBanner extends Struct.ComponentSchema {
       "shared.image-with-title-and-description",
       true
     >
+    image: Schema.Attribute.Component<"utilities.basic-image", false>
     links: Schema.Attribute.Component<"utilities.link", true>
     title: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
