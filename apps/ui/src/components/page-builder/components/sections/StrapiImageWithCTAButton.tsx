@@ -21,8 +21,7 @@ export function StrapiImageWithCTAButton({
         <div className="flex justify-center">
           <StrapiBasicImage
             component={component.image}
-            className="w-full object-contain object-center"
-            height={300}
+            className="max-w-full object-contain object-center"
           />
         </div>
 
