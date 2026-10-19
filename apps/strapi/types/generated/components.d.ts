@@ -505,8 +505,6 @@ export interface SharedResearchItem extends Struct.ComponentSchema {
     description: Schema.Attribute.Text & Schema.Attribute.Required
     journal: Schema.Attribute.String & Schema.Attribute.Required
     link: Schema.Attribute.Component<"utilities.link", false>
-    page: Schema.Attribute.Relation<"oneToOne", "api::page.page"> &
-      Schema.Attribute.Required
     title: Schema.Attribute.String & Schema.Attribute.Required
     year: Schema.Attribute.Integer & Schema.Attribute.Required
   }

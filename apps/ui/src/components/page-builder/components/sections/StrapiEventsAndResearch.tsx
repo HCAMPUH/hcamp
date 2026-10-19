@@ -193,7 +193,7 @@ function ResearchCard({
   peerReviewedLabel: string | null | undefined
 }) {
   const href =
-    item.link?.type === "page" ? item.page?.fullPath : item.link?.href
+    item.link?.type === "page" ? item.link.page?.fullPath : item.link?.href
 
   return (
     <article className="border-border bg-muted/30 rounded-2xl border p-5">
