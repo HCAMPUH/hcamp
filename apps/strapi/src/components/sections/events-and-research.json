@@ -42,6 +42,10 @@
     "researchDescription": {
       "type": "text"
     },
+    "researchPeerReviewedLabel": {
+      "type": "string",
+      "required": true
+    },
     "researchItems": {
       "type": "component",
       "component": "shared.research-item",

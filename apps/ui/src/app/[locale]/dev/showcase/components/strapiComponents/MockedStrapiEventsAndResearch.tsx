@@ -37,6 +37,7 @@ const data = {
   researchTitle: "HCAMP Research Catalog",
   researchDescription:
     "Peer-reviewed publications and clinical studies produced by HCAMP investigators at UH Manoa.",
+  researchPeerReviewedLabel: "Peer reviewed",
   researchItems: [
     {
       id: 1,

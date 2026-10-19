@@ -285,6 +285,7 @@ export interface SectionsEventsAndResearch extends Struct.ComponentSchema {
     researchDescription: Schema.Attribute.Text
     researchEyebrow: Schema.Attribute.String & Schema.Attribute.Required
     researchItems: Schema.Attribute.Component<"shared.research-item", true>
+    researchPeerReviewedLabel: Schema.Attribute.String & Schema.Attribute.Required
     researchTitle: Schema.Attribute.String & Schema.Attribute.Required
   }
 }
