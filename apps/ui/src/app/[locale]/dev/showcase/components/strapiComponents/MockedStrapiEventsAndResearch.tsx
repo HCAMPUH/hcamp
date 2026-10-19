@@ -37,7 +37,6 @@ const data = {
   researchTitle: "HCAMP Research Catalog",
   researchDescription:
     "Peer-reviewed publications and clinical studies produced by HCAMP investigators at UH Manoa.",
-  researchPeerReviewedLabel: "Peer reviewed",
   researchItems: [
     {
       id: 1,
@@ -47,6 +46,7 @@ const data = {
         "Concussion Knowledge and Reporting Behaviors Among High School Athletes in Hawaii",
       description:
         "Investigating cultural factors, peer dynamics, and baseline testing effectiveness across Hawaii island high schools.",
+      researchItemEyebrow: "Peer reviewed",
       link: {
         type: "external",
         label: "Read Abstract & PDF",
@@ -62,6 +62,7 @@ const data = {
         "Implementation of Statewide Return-to-Learn Protocols in Hawaii Public Schools",
       description:
         "Evaluating classroom accommodation strategies and teacher training models in K-12 environments.",
+      researchItemEyebrow: "Peer reviewed",
       link: {
         type: "external",
         label: "Read Abstract & PDF",

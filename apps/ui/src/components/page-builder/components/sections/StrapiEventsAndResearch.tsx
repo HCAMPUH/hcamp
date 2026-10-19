@@ -75,11 +75,7 @@ export function StrapiEventsAndResearch({
           />
           <div className="mt-8 flex flex-col gap-4">
             {component.researchItems?.map((item) => (
-              <ResearchCard
-                key={item.id}
-                item={item}
-                peerReviewedLabel={component.researchPeerReviewedLabel}
-              />
+              <ResearchCard key={item.id} item={item} />
             ))}
           </div>
         </div>
@@ -185,13 +181,7 @@ function EventCard({ event }: { event: Event }) {
   )
 }
 
-function ResearchCard({
-  item,
-  peerReviewedLabel,
-}: {
-  item: ResearchItem
-  peerReviewedLabel: string | null | undefined
-}) {
+function ResearchCard({ item }: { item: ResearchItem }) {
   const href =
     item.link?.type === "page" ? item.link.page?.fullPath : item.link?.href
 
@@ -205,9 +195,9 @@ function ResearchCard({
         >
           {item.journal} • {item.year}
         </Typography>
-        {peerReviewedLabel ? (
+        {item.researchItemEyebrow ? (
           <span className="shrink-0 rounded border border-red-200 bg-red-50 px-2 py-1 text-[0.65rem] font-semibold text-red-800 uppercase">
-            {peerReviewedLabel}
+            {item.researchItemEyebrow}
           </span>
         ) : null}
       </div>

@@ -21,6 +21,9 @@
       "type": "text",
       "required": true
     },
+    "researchItemEyebrow": {
+      "type": "string"
+    },
     "link": {
       "type": "component",
       "component": "utilities.link",

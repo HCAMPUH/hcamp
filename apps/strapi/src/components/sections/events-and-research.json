@@ -46,9 +46,6 @@
         "preset": "defaultCkEditor"
       }
     },
-    "researchPeerReviewedLabel": {
-      "type": "string"
-    },
     "researchItems": {
       "type": "component",
       "component": "shared.research-item",

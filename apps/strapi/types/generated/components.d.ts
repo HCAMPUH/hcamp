@@ -291,7 +291,6 @@ export interface SectionsEventsAndResearch extends Struct.ComponentSchema {
       >
     researchEyebrow: Schema.Attribute.String & Schema.Attribute.Required
     researchItems: Schema.Attribute.Component<"shared.research-item", true>
-    researchPeerReviewedLabel: Schema.Attribute.String
     researchTitle: Schema.Attribute.String & Schema.Attribute.Required
   }
 }
@@ -505,6 +504,7 @@ export interface SharedResearchItem extends Struct.ComponentSchema {
     description: Schema.Attribute.Text & Schema.Attribute.Required
     journal: Schema.Attribute.String & Schema.Attribute.Required
     link: Schema.Attribute.Component<"utilities.link", false>
+    researchItemEyebrow: Schema.Attribute.String
     title: Schema.Attribute.String & Schema.Attribute.Required
     year: Schema.Attribute.Integer & Schema.Attribute.Required
   }
