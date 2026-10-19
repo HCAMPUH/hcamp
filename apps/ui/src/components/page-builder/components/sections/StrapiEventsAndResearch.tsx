@@ -4,6 +4,7 @@ import type { Data } from "@repo/strapi-types"
 import { Clock3, ExternalLink, MapPin, UserRound } from "lucide-react"
 
 import AppLink from "@/components/elementary/AppLink"
+import CkEditorRenderer from "@/components/elementary/ck-editor"
 import { Container } from "@/components/elementary/Container"
 import { StrapiLink } from "@/components/page-builder/components/utilities/StrapiLink"
 import Typography from "@/components/typography"
@@ -109,14 +110,10 @@ function SectionIntro({
       >
         {title}
       </Typography>
-      {description ? (
-        <Typography
-          variant="medium"
-          className="text-muted-foreground mt-2 max-w-2xl"
-        >
-          {description}
-        </Typography>
-      ) : null}
+      <CkEditorRenderer
+        htmlContent={description}
+        className="text-muted-foreground mt-2 max-w-2xl text-sm"
+      />
     </header>
   )
 }

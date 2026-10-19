@@ -282,7 +282,13 @@ export interface SectionsEventsAndResearch extends Struct.ComponentSchema {
     eventsDescription: Schema.Attribute.Text
     eventsEyebrow: Schema.Attribute.String & Schema.Attribute.Required
     eventsTitle: Schema.Attribute.String & Schema.Attribute.Required
-    researchDescription: Schema.Attribute.Text
+    researchDescription: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
     researchEyebrow: Schema.Attribute.String & Schema.Attribute.Required
     researchItems: Schema.Attribute.Component<"shared.research-item", true>
     researchPeerReviewedLabel: Schema.Attribute.String & Schema.Attribute.Required

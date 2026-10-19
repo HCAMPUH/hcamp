@@ -40,7 +40,11 @@
       "required": true
     },
     "researchDescription": {
-      "type": "text"
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultCkEditor"
+      }
     },
     "researchPeerReviewedLabel": {
       "type": "string",
