@@ -11,6 +11,43 @@ import { defaultCkEditorConfig, simpleCkEditorConfig } from "./ckeditor/configs"
 import DataRevalidate from "./extensions/DataRevalidate"
 import Hierarchy from "./extensions/Hierarchy"
 
+const componentDeleteLabelPattern = /^(delete|smazat)(\s|$)/i
+
+function registerComponentDeleteConfirmation() {
+  document.addEventListener(
+    "click",
+    (event) => {
+      const target = event.target
+      if (!(target instanceof Element)) {
+        return
+      }
+
+      const deleteButton = target.closest<HTMLElement>(
+        "button, [role='button']"
+      )
+      const label =
+        deleteButton?.getAttribute("aria-label") ??
+        deleteButton?.getAttribute("title") ??
+        deleteButton?.textContent?.trim()
+
+      if (
+        !deleteButton ||
+        !label ||
+        !componentDeleteLabelPattern.test(label) ||
+        !deleteButton.querySelector(":scope svg")
+      ) {
+        return
+      }
+
+      if (!window.confirm("Are you sure you want to delete this component?")) {
+        event.preventDefault()
+        event.stopImmediatePropagation()
+      }
+    },
+    { capture: true }
+  )
+}
+
 export default {
   config: {
     locales: ["en", "cs"],
@@ -19,6 +56,8 @@ export default {
     },
   },
   async bootstrap(app: StrapiApp) {
+    registerComponentDeleteConfirmation()
+
     app
       .getPlugin("content-manager")
       .injectComponent("editView", "right-links", {
