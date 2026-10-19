@@ -47,8 +47,7 @@
       }
     },
     "researchPeerReviewedLabel": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "researchItems": {
       "type": "component",

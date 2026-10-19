@@ -291,7 +291,7 @@ export interface SectionsEventsAndResearch extends Struct.ComponentSchema {
       >
     researchEyebrow: Schema.Attribute.String & Schema.Attribute.Required
     researchItems: Schema.Attribute.Component<"shared.research-item", true>
-    researchPeerReviewedLabel: Schema.Attribute.String & Schema.Attribute.Required
+    researchPeerReviewedLabel: Schema.Attribute.String
     researchTitle: Schema.Attribute.String & Schema.Attribute.Required
   }
 }
