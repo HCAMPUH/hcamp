@@ -277,6 +277,7 @@ export interface SectionsEventsAndResearch extends Struct.ComponentSchema {
   attributes: {
     eventHighlightDescription: Schema.Attribute.Text
     eventHighlightLabel: Schema.Attribute.String
+    eventHighlightPost: Schema.Attribute.Relation<"oneToOne", "api::post.post">
     eventHighlightTitle: Schema.Attribute.String
     events: Schema.Attribute.Relation<"manyToMany", "api::post.post">
     eventsDescription: Schema.Attribute.Text

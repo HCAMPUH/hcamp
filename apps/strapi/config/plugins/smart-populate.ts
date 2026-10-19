@@ -52,6 +52,9 @@ const populateOverrides = [
           "location",
         ],
       },
+      eventHighlightPost: {
+        fields: ["title", "slug", "excerpt"],
+      },
       researchItems: {
         populate: {
           link: {

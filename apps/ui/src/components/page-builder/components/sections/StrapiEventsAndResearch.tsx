@@ -39,7 +39,7 @@ export function StrapiEventsAndResearch({
               <EventCard key={event.documentId ?? event.id} event={event} />
             ))}
           </div>
-          {component.eventHighlightTitle ? (
+          {component.eventHighlightTitle || component.eventHighlightPost ? (
             <div className="bg-foreground text-background mt-8 rounded-2xl p-6">
               {component.eventHighlightLabel ? (
                 <Typography
@@ -50,17 +50,38 @@ export function StrapiEventsAndResearch({
                   {component.eventHighlightLabel}
                 </Typography>
               ) : null}
-              <Typography
-                tag="h3"
-                variant="heading4"
-                fontWeight="semiBold"
-                className="text-background mt-4"
-              >
-                {component.eventHighlightTitle}
-              </Typography>
-              {component.eventHighlightDescription ? (
+              {component.eventHighlightPost?.slug ? (
+                <AppLink
+                  href={`/posts/${component.eventHighlightPost.slug}`}
+                  variant="ghost"
+                  className="text-background hover:text-background mt-4 h-auto min-w-0 justify-start p-0 text-left whitespace-normal no-underline hover:bg-transparent hover:no-underline"
+                >
+                  <Typography
+                    tag="h3"
+                    variant="heading4"
+                    fontWeight="semiBold"
+                    className="text-background min-w-0 break-words"
+                  >
+                    {component.eventHighlightTitle ??
+                      component.eventHighlightPost.title}
+                  </Typography>
+                </AppLink>
+              ) : (
+                <Typography
+                  tag="h3"
+                  variant="heading4"
+                  fontWeight="semiBold"
+                  className="text-background mt-4"
+                >
+                  {component.eventHighlightTitle ??
+                    component.eventHighlightPost?.title}
+                </Typography>
+              )}
+              {component.eventHighlightDescription ||
+              component.eventHighlightPost?.excerpt ? (
                 <Typography variant="small" className="text-background/70 mt-3">
-                  {component.eventHighlightDescription}
+                  {component.eventHighlightDescription ??
+                    component.eventHighlightPost?.excerpt}
                 </Typography>
               ) : null}
             </div>
