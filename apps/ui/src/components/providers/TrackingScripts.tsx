@@ -30,7 +30,28 @@ export function TrackingScriptWrapper({
 }
 
 function TrackingScripts() {
-  return <>{/* Tracking Scrips here */}</>
+  if (isDevelopment()) {
+    return null
+  }
+
+  return (
+    <>
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-97KMXTDRGC"
+        strategy="afterInteractive"
+      />
+      <TrackingScriptWrapper
+        id="google-analytics"
+        scriptContent={`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-97KMXTDRGC');
+        `}
+        scriptOptions={{ strategy: "afterInteractive" }}
+      />
+    </>
+  )
 }
 
 export default TrackingScripts
