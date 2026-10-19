@@ -54,8 +54,12 @@ const populateOverrides = [
       },
       researchItems: {
         populate: {
-          page: {
-            fields: ["title", "fullPath"],
+          link: {
+            populate: {
+              page: {
+                fields: ["title", "fullPath"],
+              },
+            },
           },
         },
       },
