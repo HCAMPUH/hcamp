@@ -145,9 +145,10 @@ pnpm commit                 # Interactive Commitizen prompt
 Bash helpers in `scripts/utils` — not wired into `pnpm`, invoke directly from the monorepo root:
 
 ```bash
-bash scripts/utils/rm-modules.sh     # delete every node_modules in the workspace
-bash scripts/utils/rm-next-cache.sh  # delete app build caches, Next.js output, Turbo caches, and node_modules/.cache
-bash scripts/utils/rm-all.sh         # nuke node_modules + .next + .turbo + .strapi + dist + build
+bash scripts/utils/rm-modules.sh            # delete every node_modules in the workspace
+bash scripts/utils/rm-next-cache.sh         # delete app build caches, Next.js output, Turbo caches, and node_modules/.cache
+bash scripts/utils/rm-production-cache.sh  # delete production-safe caches without removing runtime build artifacts
+bash scripts/utils/rm-all.sh                # nuke node_modules + .next + .turbo + .strapi + dist + build
 ```
 
 Use `rm-modules.sh` to recover from `pnpm install` drift across apps (e.g. after a Node major bump or pnpm-lock conflict). Use `rm-all.sh` before a full rebuild when caches mask the bug you're chasing. Re-run `pnpm install` afterwards.
