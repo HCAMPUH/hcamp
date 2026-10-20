@@ -133,6 +133,37 @@ describe("page root-slug guard", () => {
     ).resolves.toBeUndefined()
   })
 
+  it("generates a slug and fullPath from the title for a new page", async () => {
+    const data = { title: "Café & Research: 2026" }
+
+    await beforeCreate(data)
+
+    expect(data).toEqual({
+      title: "Café & Research: 2026",
+      slug: "cafe-research-2026",
+      fullPath: "/cafe-research-2026",
+    })
+  })
+
+  it("regenerates fullPath when the slug changes", async () => {
+    const data = { slug: "company", fullPath: "/old-company" }
+
+    buildStrapi({ publishedRow: { slug: "old-company" } })
+    await beforeUpdate(data)
+
+    expect(data.fullPath).toBe("/company")
+  })
+
+  it("preserves a custom fullPath when it is edited without a slug", async () => {
+    const data = { fullPath: "/about/company" }
+
+    await beforeUpdate(data)
+
+    expect(data).toEqual({
+      fullPath: "/about/company",
+    })
+  })
+
   it("resolves the documentId from where.id when data omits it", async () => {
     const { connection } = buildStrapi({
       publishedRow: { slug: ROOT_PAGE_PATH },

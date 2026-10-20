@@ -1,4 +1,4 @@
-import { ROOT_PAGE_PATH } from "@repo/shared-data"
+import { normalizePageFullPath, ROOT_PAGE_PATH } from "@repo/shared-data"
 import type { Modules } from "@strapi/strapi"
 import { errors } from "@strapi/utils"
 
@@ -9,6 +9,48 @@ const { ValidationError } = errors
 type WriteEvent =
   | LifecycleEventType<"beforeCreate">
   | LifecycleEventType<"beforeUpdate">
+
+function slugifyTitle(title: unknown): string | undefined {
+  if (typeof title !== "string") {
+    return undefined
+  }
+
+  let slug = title
+    .normalize("NFKD")
+    .replaceAll(/[\u{300}-\u{36F}]/gu, "")
+    .toLowerCase()
+    .trim()
+    .replaceAll(/[^a-z0-9]+/g, "-")
+
+  while (slug.startsWith("-")) {
+    slug = slug.slice(1)
+  }
+
+  while (slug.endsWith("-")) {
+    slug = slug.slice(0, -1)
+  }
+
+  return slug || undefined
+}
+
+/** Supplies a slug for a newly created page when the editor leaves it blank. */
+function generatePageSlug(event: WriteEvent) {
+  const data = event.params.data
+  if (!data) {
+    return
+  }
+
+  if (data.slug == null) {
+    const slug = slugifyTitle(data.title)
+    if (slug) {
+      data.slug = slug
+    }
+  }
+
+  if (typeof data.slug === "string") {
+    data.fullPath = normalizePageFullPath([data.slug])
+  }
+}
 
 /**
  * Resolves the documentId of the page being written.
@@ -104,9 +146,11 @@ async function preventRootSlugChange(event: WriteEvent) {
 
 export default {
   async beforeCreate(event: LifecycleEventType<"beforeCreate">) {
+    generatePageSlug(event)
     await preventRootSlugChange(event)
   },
   async beforeUpdate(event: LifecycleEventType<"beforeUpdate">) {
+    generatePageSlug(event)
     await preventRootSlugChange(event)
   },
 }
