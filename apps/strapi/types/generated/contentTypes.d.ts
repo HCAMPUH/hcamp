@@ -26,6 +26,11 @@ export interface AdminApiToken extends Struct.CollectionTypeSchema {
       Schema.Attribute.SetMinMaxLength<{
         minLength: 1
       }>
+    adminPermissions: Schema.Attribute.Relation<
+      "oneToMany",
+      "admin::permission"
+    >
+    adminUserOwner: Schema.Attribute.Relation<"manyToOne", "admin::user">
     createdAt: Schema.Attribute.DateTime
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
       Schema.Attribute.Private
@@ -39,6 +44,9 @@ export interface AdminApiToken extends Struct.CollectionTypeSchema {
         minLength: 1
       }>
     expiresAt: Schema.Attribute.DateTime
+    kind: Schema.Attribute.Enumeration<["content-api", "admin"]> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<"content-api">
     lastUsedAt: Schema.Attribute.DateTime
     lifespan: Schema.Attribute.BigInteger
     locale: Schema.Attribute.String & Schema.Attribute.Private
@@ -56,7 +64,6 @@ export interface AdminApiToken extends Struct.CollectionTypeSchema {
     >
     publishedAt: Schema.Attribute.DateTime
     type: Schema.Attribute.Enumeration<["read-only", "full-access", "custom"]> &
-      Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<"read-only">
     updatedAt: Schema.Attribute.DateTime
     updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
@@ -134,6 +141,7 @@ export interface AdminPermission extends Struct.CollectionTypeSchema {
         minLength: 1
       }>
     actionParameters: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<{}>
+    apiToken: Schema.Attribute.Relation<"manyToOne", "admin::api-token">
     conditions: Schema.Attribute.JSON & Schema.Attribute.DefaultTo<[]>
     createdAt: Schema.Attribute.DateTime
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
@@ -241,6 +249,7 @@ export interface AdminSession extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private
     localizations: Schema.Attribute.Relation<"oneToMany", "admin::session"> &
       Schema.Attribute.Private
+    metadata: Schema.Attribute.JSON & Schema.Attribute.Private
     origin: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Private
@@ -385,6 +394,8 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
     }
   }
   attributes: {
+    apiTokens: Schema.Attribute.Relation<"oneToMany", "admin::api-token"> &
+      Schema.Attribute.Private
     blocked: Schema.Attribute.Boolean &
       Schema.Attribute.Private &
       Schema.Attribute.DefaultTo<false>
@@ -421,6 +432,8 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime
     registrationToken: Schema.Attribute.String & Schema.Attribute.Private
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private
+    resetPasswordTokenExpiresAt: Schema.Attribute.DateTime &
+      Schema.Attribute.Private
     roles: Schema.Attribute.Relation<"manyToMany", "admin::role"> &
       Schema.Attribute.Private
     updatedAt: Schema.Attribute.DateTime
@@ -598,6 +611,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         "sections.features-list",
         "sections.cta-banner",
         "utilities.ck-editor-text",
+        "sections.post-list",
         "sections.events-and-research",
         "sections.card",
         "sections.tabs",
@@ -605,7 +619,6 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         "sections.dialog",
         "sections.tooltip",
         "sections.accordion",
-        "utilities.tip-tap-rich-text",
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
@@ -685,28 +698,26 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
         "sections.dialog",
         "sections.tooltip",
         "sections.accordion",
-        "utilities.tip-tap-rich-text",
       ]
     >
     coverImage: Schema.Attribute.Media<"images">
     createdAt: Schema.Attribute.DateTime
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
       Schema.Attribute.Private
-    excerpt: Schema.Attribute.Text
     eventDate: Schema.Attribute.Date
     eventSpeakers: Schema.Attribute.String
     eventTime: Schema.Attribute.String
-    eventSpeakers: Schema.Attribute.String
-    eventTime: Schema.Attribute.String
+    excerpt: Schema.Attribute.Text
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>
     issueDate: Schema.Attribute.Date & Schema.Attribute.Required
-    location: Schema.Attribute.String
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<"oneToMany", "api::post.post"> &
+      Schema.Attribute.Private
     location: Schema.Attribute.String
     publishedAt: Schema.Attribute.DateTime
     showDescription: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>
     showTitle: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>
-    slug: Schema.Attribute.UID<"api::post.post", "title"> &
-      Schema.Attribute.Required
+    slug: Schema.Attribute.UID<"title"> & Schema.Attribute.Required
     title: Schema.Attribute.String & Schema.Attribute.Required
     updatedAt: Schema.Attribute.DateTime
     updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
@@ -911,6 +922,467 @@ export interface PluginI18NLocale extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime
     updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
       Schema.Attribute.Private
+  }
+}
+
+export interface PluginMagicMailEmailAccount
+  extends Struct.CollectionTypeSchema {
+  collectionName: "magic_mail_accounts"
+  info: {
+    description: "Email provider accounts for multi-account email sending"
+    displayName: "Email Account"
+    pluralName: "email-accounts"
+    singularName: "email-account"
+  }
+  options: {
+    draftAndPublish: false
+  }
+  pluginOptions: {
+    "content-manager": {
+      visible: false
+    }
+    "content-type-builder": {
+      visible: false
+    }
+  }
+  attributes: {
+    config: Schema.Attribute.JSON &
+      Schema.Attribute.Required &
+      Schema.Attribute.Private
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    dailyLimit: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>
+    description: Schema.Attribute.Text
+    emailsSentThisHour: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>
+    emailsSentToday: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>
+    fromEmail: Schema.Attribute.Email & Schema.Attribute.Required
+    fromName: Schema.Attribute.String
+    hourlyLimit: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>
+    isActive: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>
+    isPrimary: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>
+    lastUsed: Schema.Attribute.DateTime
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "plugin::magic-mail.email-account"
+    > &
+      Schema.Attribute.Private
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique
+    oauth: Schema.Attribute.JSON & Schema.Attribute.Private
+    priority: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 10
+          min: 1
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<1>
+    provider: Schema.Attribute.Enumeration<
+      [
+        "smtp",
+        "gmail-oauth",
+        "microsoft-oauth",
+        "yahoo-oauth",
+        "sendgrid",
+        "mailgun",
+        "ses",
+        "nodemailer",
+      ]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<"smtp">
+    publishedAt: Schema.Attribute.DateTime
+    replyTo: Schema.Attribute.Email
+    totalEmailsSent: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+  }
+}
+
+export interface PluginMagicMailEmailEvent extends Struct.CollectionTypeSchema {
+  collectionName: "magic_mail_email_events"
+  info: {
+    description: "Individual email tracking events (opens, clicks, bounces)"
+    displayName: "Email Event"
+    pluralName: "email-events"
+    singularName: "email-event"
+  }
+  options: {
+    draftAndPublish: false
+  }
+  pluginOptions: {
+    "content-manager": {
+      visible: false
+    }
+    "content-type-builder": {
+      visible: false
+    }
+  }
+  attributes: {
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    emailLog: Schema.Attribute.Relation<
+      "manyToOne",
+      "plugin::magic-mail.email-log"
+    >
+    ipAddress: Schema.Attribute.String
+    linkText: Schema.Attribute.String
+    linkUrl: Schema.Attribute.Text
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "plugin::magic-mail.email-event"
+    > &
+      Schema.Attribute.Private
+    location: Schema.Attribute.JSON
+    metadata: Schema.Attribute.JSON
+    publishedAt: Schema.Attribute.DateTime
+    timestamp: Schema.Attribute.DateTime & Schema.Attribute.Required
+    type: Schema.Attribute.Enumeration<
+      ["open", "click", "bounce", "complaint", "unsubscribe"]
+    > &
+      Schema.Attribute.Required
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    userAgent: Schema.Attribute.Text
+  }
+}
+
+export interface PluginMagicMailEmailLink extends Struct.CollectionTypeSchema {
+  collectionName: "magic_mail_email_links"
+  info: {
+    description: "Stores click tracking links for emails"
+    displayName: "Email Link"
+    pluralName: "email-links"
+    singularName: "email-link"
+  }
+  options: {
+    draftAndPublish: false
+  }
+  pluginOptions: {
+    "content-manager": {
+      visible: false
+    }
+    "content-type-builder": {
+      visible: false
+    }
+  }
+  attributes: {
+    clickCount: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    emailLog: Schema.Attribute.Relation<
+      "manyToOne",
+      "plugin::magic-mail.email-log"
+    >
+    firstClickedAt: Schema.Attribute.DateTime
+    lastClickedAt: Schema.Attribute.DateTime
+    linkHash: Schema.Attribute.String & Schema.Attribute.Required
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "plugin::magic-mail.email-link"
+    > &
+      Schema.Attribute.Private
+    originalUrl: Schema.Attribute.Text & Schema.Attribute.Required
+    publishedAt: Schema.Attribute.DateTime
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+  }
+}
+
+export interface PluginMagicMailEmailLog extends Struct.CollectionTypeSchema {
+  collectionName: "magic_mail_email_logs"
+  info: {
+    description: "Tracks all sent emails with user association"
+    displayName: "Email Log"
+    pluralName: "email-logs"
+    singularName: "email-log"
+  }
+  options: {
+    draftAndPublish: false
+  }
+  pluginOptions: {
+    "content-manager": {
+      visible: false
+    }
+    "content-type-builder": {
+      visible: false
+    }
+  }
+  attributes: {
+    accountId: Schema.Attribute.String
+    accountName: Schema.Attribute.String
+    bounced: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>
+    bounceReason: Schema.Attribute.Text
+    clickCount: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    deliveredAt: Schema.Attribute.DateTime
+    emailId: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique
+    events: Schema.Attribute.Relation<
+      "oneToMany",
+      "plugin::magic-mail.email-event"
+    >
+    firstOpenedAt: Schema.Attribute.DateTime
+    lastOpenedAt: Schema.Attribute.DateTime
+    links: Schema.Attribute.Relation<
+      "oneToMany",
+      "plugin::magic-mail.email-link"
+    >
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "plugin::magic-mail.email-log"
+    > &
+      Schema.Attribute.Private
+    metadata: Schema.Attribute.JSON
+    openCount: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>
+    publishedAt: Schema.Attribute.DateTime
+    recipient: Schema.Attribute.Email & Schema.Attribute.Required
+    recipientName: Schema.Attribute.String
+    sentAt: Schema.Attribute.DateTime & Schema.Attribute.Required
+    subject: Schema.Attribute.String & Schema.Attribute.Required
+    templateId: Schema.Attribute.Integer
+    templateName: Schema.Attribute.String
+    unsubscribed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>
+    unsubscribedAt: Schema.Attribute.DateTime
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    user: Schema.Attribute.Relation<
+      "manyToOne",
+      "plugin::users-permissions.user"
+    >
+  }
+}
+
+export interface PluginMagicMailEmailTemplate
+  extends Struct.CollectionTypeSchema {
+  collectionName: "magic_mail_email_templates"
+  info: {
+    description: "Email templates created with the visual designer"
+    displayName: "Email Template"
+    pluralName: "email-templates"
+    singularName: "email-template"
+  }
+  options: {
+    draftAndPublish: false
+    timestamps: true
+  }
+  pluginOptions: {
+    "content-manager": {
+      visible: false
+    }
+    "content-type-builder": {
+      visible: false
+    }
+  }
+  attributes: {
+    bodyHtml: Schema.Attribute.Text
+    bodyText: Schema.Attribute.Text
+    category: Schema.Attribute.Enumeration<
+      ["transactional", "marketing", "notification", "custom"]
+    > &
+      Schema.Attribute.DefaultTo<"custom">
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    design: Schema.Attribute.JSON
+    isActive: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "plugin::magic-mail.email-template"
+    > &
+      Schema.Attribute.Private
+    name: Schema.Attribute.String & Schema.Attribute.Required
+    publishedAt: Schema.Attribute.DateTime
+    subject: Schema.Attribute.String & Schema.Attribute.Required
+    tags: Schema.Attribute.JSON
+    templateReferenceId: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    versions: Schema.Attribute.Relation<
+      "oneToMany",
+      "plugin::magic-mail.email-template-version"
+    >
+  }
+}
+
+export interface PluginMagicMailEmailTemplateVersion
+  extends Struct.CollectionTypeSchema {
+  collectionName: "magic_mail_email_template_versions"
+  info: {
+    description: "Version history for email templates"
+    displayName: "Email Template Version"
+    pluralName: "email-template-versions"
+    singularName: "email-template-version"
+  }
+  options: {
+    draftAndPublish: false
+    timestamps: true
+  }
+  pluginOptions: {
+    "content-manager": {
+      visible: false
+    }
+    "content-type-builder": {
+      visible: false
+    }
+  }
+  attributes: {
+    bodyHtml: Schema.Attribute.Text
+    bodyText: Schema.Attribute.Text
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    design: Schema.Attribute.JSON
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "plugin::magic-mail.email-template-version"
+    > &
+      Schema.Attribute.Private
+    name: Schema.Attribute.String
+    publishedAt: Schema.Attribute.DateTime
+    subject: Schema.Attribute.String
+    tags: Schema.Attribute.JSON
+    template: Schema.Attribute.Relation<
+      "manyToOne",
+      "plugin::magic-mail.email-template"
+    >
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    versionNumber: Schema.Attribute.Integer & Schema.Attribute.Required
+  }
+}
+
+export interface PluginMagicMailPluginSettings extends Struct.SingleTypeSchema {
+  collectionName: "magic_mail_settings"
+  info: {
+    displayName: "MagicMail Settings"
+    pluralName: "plugin-settings"
+    singularName: "plugin-settings"
+  }
+  options: {
+    comment: "Global settings for MagicMail plugin"
+    draftAndPublish: false
+  }
+  pluginOptions: {
+    "content-manager": {
+      visible: false
+    }
+    "content-type-builder": {
+      visible: false
+    }
+  }
+  attributes: {
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    defaultFromEmail: Schema.Attribute.String
+    defaultFromName: Schema.Attribute.String
+    enableLinkTracking: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>
+    enableOpenTracking: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>
+    enableUnsubscribeHeader: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "plugin::magic-mail.plugin-settings"
+    > &
+      Schema.Attribute.Private
+    publishedAt: Schema.Attribute.DateTime
+    trackingBaseUrl: Schema.Attribute.String
+    trackingFallbackUrl: Schema.Attribute.String
+    unsubscribeUrl: Schema.Attribute.String
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+  }
+}
+
+export interface PluginMagicMailRoutingRule
+  extends Struct.CollectionTypeSchema {
+  collectionName: "magic_mail_routing_rules"
+  info: {
+    description: "Rules for routing emails to specific accounts"
+    displayName: "Email Routing Rule"
+    pluralName: "routing-rules"
+    singularName: "routing-rule"
+  }
+  options: {
+    draftAndPublish: false
+  }
+  pluginOptions: {
+    "content-manager": {
+      visible: false
+    }
+    "content-type-builder": {
+      visible: false
+    }
+  }
+  attributes: {
+    accountName: Schema.Attribute.String & Schema.Attribute.Required
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    description: Schema.Attribute.Text
+    fallbackAccountName: Schema.Attribute.String
+    isActive: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<true>
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "plugin::magic-mail.routing-rule"
+    > &
+      Schema.Attribute.Private
+    matchType: Schema.Attribute.Enumeration<
+      ["emailType", "subject", "recipient", "template", "custom"]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<"emailType">
+    matchValue: Schema.Attribute.Text & Schema.Attribute.Required
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique
+    priority: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<1>
+    publishedAt: Schema.Attribute.DateTime
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    whatsappFallback: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>
+    whatsappPhoneField: Schema.Attribute.String
   }
 }
 
@@ -1276,7 +1748,7 @@ export interface PluginUsersPermissionsUser
 }
 
 declare module "@strapi/strapi" {
-  export module Public {
+  export namespace Public {
     export interface ContentTypeSchemas {
       "admin::api-token": AdminApiToken
       "admin::api-token-permission": AdminApiTokenPermission
@@ -1296,6 +1768,14 @@ declare module "@strapi/strapi" {
       "plugin::content-releases.release": PluginContentReleasesRelease
       "plugin::content-releases.release-action": PluginContentReleasesReleaseAction
       "plugin::i18n.locale": PluginI18NLocale
+      "plugin::magic-mail.email-account": PluginMagicMailEmailAccount
+      "plugin::magic-mail.email-event": PluginMagicMailEmailEvent
+      "plugin::magic-mail.email-link": PluginMagicMailEmailLink
+      "plugin::magic-mail.email-log": PluginMagicMailEmailLog
+      "plugin::magic-mail.email-template": PluginMagicMailEmailTemplate
+      "plugin::magic-mail.email-template-version": PluginMagicMailEmailTemplateVersion
+      "plugin::magic-mail.plugin-settings": PluginMagicMailPluginSettings
+      "plugin::magic-mail.routing-rule": PluginMagicMailRoutingRule
       "plugin::review-workflows.workflow": PluginReviewWorkflowsWorkflow
       "plugin::review-workflows.workflow-stage": PluginReviewWorkflowsWorkflowStage
       "plugin::upload.file": PluginUploadFile

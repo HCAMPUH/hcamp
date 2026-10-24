@@ -49,6 +49,18 @@ export interface LayoutNavbarItem extends Struct.ComponentSchema {
   }
 }
 
+export interface SectionsAccordion extends Struct.ComponentSchema {
+  collectionName: "components_sections_accordions"
+  info: {
+    displayName: "Accordion"
+    icon: "list"
+  }
+  attributes: {
+    items: Schema.Attribute.Component<"utilities.accordions", true>
+    title: Schema.Attribute.String
+  }
+}
+
 export interface SectionsAnimatedLogoRow extends Struct.ComponentSchema {
   collectionName: "components_sections_animated_logo_rows"
   info: {
@@ -64,6 +76,25 @@ export interface SectionsAnimatedLogoRow extends Struct.ComponentSchema {
           preset: "defaultCkEditor"
         }
       >
+  }
+}
+
+export interface SectionsCard extends Struct.ComponentSchema {
+  collectionName: "components_sections_cards"
+  info: {
+    displayName: "Card"
+    icon: "cube"
+  }
+  attributes: {
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    description: Schema.Attribute.String
+    title: Schema.Attribute.String & Schema.Attribute.Required
   }
 }
 
@@ -105,6 +136,54 @@ export interface SectionsCtaBanner extends Struct.ComponentSchema {
           preset: "defaultCkEditor"
         }
       >
+  }
+}
+
+export interface SectionsDialog extends Struct.ComponentSchema {
+  collectionName: "components_sections_dialogs"
+  info: {
+    displayName: "Dialog"
+    icon: "discuss"
+  }
+  attributes: {
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    description: Schema.Attribute.String
+    title: Schema.Attribute.String & Schema.Attribute.Required
+    triggerLabel: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SectionsEventsAndResearch extends Struct.ComponentSchema {
+  collectionName: "components_sections_events_and_researches"
+  info: {
+    displayName: "Events & Research"
+    icon: "calendar"
+  }
+  attributes: {
+    eventHighlightDescription: Schema.Attribute.Text
+    eventHighlightLabel: Schema.Attribute.String
+    eventHighlightPost: Schema.Attribute.Relation<"oneToOne", "api::post.post">
+    eventHighlightTitle: Schema.Attribute.String
+    events: Schema.Attribute.Relation<"manyToMany", "api::post.post">
+    eventsDescription: Schema.Attribute.Text
+    eventsEyebrow: Schema.Attribute.String & Schema.Attribute.Required
+    eventsTitle: Schema.Attribute.String & Schema.Attribute.Required
+    researchDescription: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    researchEyebrow: Schema.Attribute.String & Schema.Attribute.Required
+    researchItems: Schema.Attribute.Component<"shared.research-item", true>
+    researchTitle: Schema.Attribute.String & Schema.Attribute.Required
   }
 }
 
@@ -217,123 +296,6 @@ export interface SectionsImageWithCtaButton extends Struct.ComponentSchema {
   }
 }
 
-export interface SectionsCard extends Struct.ComponentSchema {
-  collectionName: "components_sections_cards"
-  info: {
-    displayName: "Card"
-    icon: "cube"
-  }
-  attributes: {
-    content: Schema.Attribute.RichText &
-      Schema.Attribute.CustomField<
-        "plugin::ckeditor5.CKEditor",
-        {
-          preset: "defaultCkEditor"
-        }
-      >
-    description: Schema.Attribute.String
-    title: Schema.Attribute.String & Schema.Attribute.Required
-  }
-}
-
-export interface SectionsAccordion extends Struct.ComponentSchema {
-  collectionName: "components_sections_accordions"
-  info: {
-    displayName: "Accordion"
-    icon: "list"
-  }
-  attributes: {
-    items: Schema.Attribute.Component<"utilities.accordions", true>
-    title: Schema.Attribute.String
-  }
-}
-
-export interface SectionsDialog extends Struct.ComponentSchema {
-  collectionName: "components_sections_dialogs"
-  info: {
-    displayName: "Dialog"
-    icon: "discuss"
-  }
-  attributes: {
-    content: Schema.Attribute.RichText &
-      Schema.Attribute.CustomField<
-        "plugin::ckeditor5.CKEditor",
-        {
-          preset: "defaultCkEditor"
-        }
-      >
-    description: Schema.Attribute.String
-    title: Schema.Attribute.String & Schema.Attribute.Required
-    triggerLabel: Schema.Attribute.String & Schema.Attribute.Required
-  }
-}
-
-export interface SectionsEventsAndResearch extends Struct.ComponentSchema {
-  collectionName: "components_sections_events_and_researches"
-  info: {
-    displayName: "Events & Research"
-    icon: "calendar"
-  }
-  attributes: {
-    eventHighlightDescription: Schema.Attribute.Text
-    eventHighlightLabel: Schema.Attribute.String
-    eventHighlightPost: Schema.Attribute.Relation<"oneToOne", "api::post.post">
-    eventHighlightTitle: Schema.Attribute.String
-    events: Schema.Attribute.Relation<"manyToMany", "api::post.post">
-    eventsDescription: Schema.Attribute.Text
-    eventsEyebrow: Schema.Attribute.String & Schema.Attribute.Required
-    eventsTitle: Schema.Attribute.String & Schema.Attribute.Required
-    researchDescription: Schema.Attribute.RichText &
-      Schema.Attribute.CustomField<
-        "plugin::ckeditor5.CKEditor",
-        {
-          preset: "defaultCkEditor"
-        }
-      >
-    researchEyebrow: Schema.Attribute.String & Schema.Attribute.Required
-    researchItems: Schema.Attribute.Component<"shared.research-item", true>
-    researchTitle: Schema.Attribute.String & Schema.Attribute.Required
-  }
-}
-
-export interface SectionsTabs extends Struct.ComponentSchema {
-  collectionName: "components_sections_tabs"
-  info: {
-    displayName: "Tabs"
-    icon: "bulletList"
-  }
-  attributes: {
-    tabs: Schema.Attribute.Component<"shared.tab-item", true>
-    title: Schema.Attribute.String
-  }
-}
-
-export interface SectionsTable extends Struct.ComponentSchema {
-  collectionName: "components_sections_tables"
-  info: {
-    displayName: "Table"
-    icon: "table"
-  }
-  attributes: {
-    firstColumnLabel: Schema.Attribute.String & Schema.Attribute.Required
-    rows: Schema.Attribute.Component<"shared.table-row", true>
-    secondColumnLabel: Schema.Attribute.String & Schema.Attribute.Required
-    title: Schema.Attribute.String
-  }
-}
-
-export interface SectionsTooltip extends Struct.ComponentSchema {
-  collectionName: "components_sections_tooltips"
-  info: {
-    displayName: "Tooltip"
-    icon: "information"
-  }
-  attributes: {
-    content: Schema.Attribute.String & Schema.Attribute.Required
-    triggerLabel: Schema.Attribute.String & Schema.Attribute.Required
-  }
-}
-
 export interface SectionsPostList extends Struct.ComponentSchema {
   collectionName: "components_sections_post_lists"
   info: {
@@ -352,6 +314,44 @@ export interface SectionsStatistics extends Struct.ComponentSchema {
   }
   attributes: {
     figures: Schema.Attribute.Component<"shared.figure", true>
+  }
+}
+
+export interface SectionsTable extends Struct.ComponentSchema {
+  collectionName: "components_sections_tables"
+  info: {
+    displayName: "Table"
+    icon: "table"
+  }
+  attributes: {
+    firstColumnLabel: Schema.Attribute.String & Schema.Attribute.Required
+    rows: Schema.Attribute.Component<"shared.table-row", true>
+    secondColumnLabel: Schema.Attribute.String & Schema.Attribute.Required
+    title: Schema.Attribute.String
+  }
+}
+
+export interface SectionsTabs extends Struct.ComponentSchema {
+  collectionName: "components_sections_tabs"
+  info: {
+    displayName: "Tabs"
+    icon: "bulletList"
+  }
+  attributes: {
+    tabs: Schema.Attribute.Component<"shared.tab-item", true>
+    title: Schema.Attribute.String
+  }
+}
+
+export interface SectionsTooltip extends Struct.ComponentSchema {
+  collectionName: "components_sections_tooltips"
+  info: {
+    displayName: "Tooltip"
+    icon: "information"
+  }
+  attributes: {
+    content: Schema.Attribute.String & Schema.Attribute.Required
+    triggerLabel: Schema.Attribute.String & Schema.Attribute.Required
   }
 }
 
@@ -547,13 +547,13 @@ export interface UtilitiesAccordions extends Struct.ComponentSchema {
   }
   attributes: {
     answer: Schema.Attribute.RichText &
+      Schema.Attribute.Required &
       Schema.Attribute.CustomField<
         "plugin::ckeditor5.CKEditor",
         {
           preset: "defaultCkEditor"
         }
-      > &
-      Schema.Attribute.Required
+      >
     question: Schema.Attribute.String & Schema.Attribute.Required
     questionBackgroundColor: Schema.Attribute.String &
       Schema.Attribute.CustomField<"plugin::color-picker.color">
@@ -703,16 +703,16 @@ export interface UtilitiesTipTapRichText extends Struct.ComponentSchema {
 }
 
 declare module "@strapi/strapi" {
-  export module Public {
+  export namespace Public {
     export interface ComponentSchemas {
       "elements.footer-item": ElementsFooterItem
       "forms.contact-form": FormsContactForm
       "forms.newsletter-form": FormsNewsletterForm
       "layout.navbar-item": LayoutNavbarItem
-      "sections.animated-logo-row": SectionsAnimatedLogoRow
       "sections.accordion": SectionsAccordion
-      "sections.carousel": SectionsCarousel
+      "sections.animated-logo-row": SectionsAnimatedLogoRow
       "sections.card": SectionsCard
+      "sections.carousel": SectionsCarousel
       "sections.cta-banner": SectionsCtaBanner
       "sections.dialog": SectionsDialog
       "sections.events-and-research": SectionsEventsAndResearch
