@@ -81,6 +81,11 @@
     },
     "eventSpeakers": {
       "type": "string"
+    },
+    "seo": {
+      "type": "component",
+      "component": "seo-utilities.seo",
+      "repeatable": false
     }
   }
 }

@@ -7,6 +7,7 @@ import { Container } from "@/components/elementary/Container"
 import { ErrorBoundary } from "@/components/elementary/ErrorBoundary"
 import { PageContentComponents } from "@/components/page-builder"
 import { logger } from "@/lib/logging"
+import { getMetadataFromStrapi } from "@/lib/metadata"
 import { fetchPost } from "@/lib/strapi-api/content/server"
 
 export const dynamic = "force-static"
@@ -29,10 +30,14 @@ export async function generateMetadata({
     return {}
   }
 
-  return {
-    title: post.title,
-    description: post.excerpt ?? undefined,
-  }
+  return (
+    (await getMetadataFromStrapi({
+      fullPath: `/posts/${slug}`,
+      slug,
+      locale: locale as Locale,
+      uid: "api::post.post",
+    })) ?? {}
+  )
 }
 
 export default async function PostPage({

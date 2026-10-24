@@ -715,6 +715,7 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private
     location: Schema.Attribute.String
     publishedAt: Schema.Attribute.DateTime
+    seo: Schema.Attribute.Component<"seo-utilities.seo", false>
     showDescription: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>
     showTitle: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>
     slug: Schema.Attribute.UID<"title"> & Schema.Attribute.Required

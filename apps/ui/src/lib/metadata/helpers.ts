@@ -5,7 +5,6 @@ import type { Locale } from "next-intl"
 
 import { metaRobots } from "@/lib/metadata/constants"
 import { routing } from "@/lib/navigation"
-import type { StrapiLocalization } from "@/types/api"
 import type { NextMetadataTwitterCard, SocialMetadata } from "@/types/general"
 
 export const preprocessSocialMetadata = (
@@ -81,7 +80,10 @@ export const getMetaAlternates = ({
   seo: Data.Component<"seo-utilities.seo"> | null | undefined
   fullPath: string | null
   locale: Locale
-  localizations?: StrapiLocalization[]
+  localizations?: {
+    locale?: string | null
+    fullPath?: string | null
+  }[]
 }) => {
   const canonicalUrl = seo?.canonicalUrl ?? fullPath ?? ""
   let languages: Record<string, string> | undefined
@@ -96,8 +98,8 @@ export const getMetaAlternates = ({
       }
 
       languages[localization.locale] = normalizePageFullPath(
-        [canonicalUrl],
-        localization.locale
+        [localization.fullPath ?? canonicalUrl],
+        localization.locale as Locale
       )
     }
 

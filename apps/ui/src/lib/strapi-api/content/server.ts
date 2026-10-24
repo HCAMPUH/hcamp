@@ -87,7 +87,7 @@ export async function fetchPost(slug: string, locale: Locale) {
     {
       locale,
       status: dm.isEnabled ? "draft" : "published",
-      populate: { coverImage: true, content: "smart" },
+      populate: { coverImage: true, content: "smart", seo: "smart" },
     },
     {
       next: { revalidate: 120 },
@@ -125,21 +125,30 @@ export async function fetchAllPosts(locale: Locale) {
 
 export async function fetchSeo(
   // eslint-disable-next-line @typescript-eslint/default-param-last
-  uid: Extract<UID.ContentType, "api::page.page"> = "api::page.page",
-  fullPath: string | null,
+  uid: Extract<
+    UID.ContentType,
+    "api::page.page" | "api::post.post"
+  > = "api::page.page",
+  identifier: string | null,
   locale: Locale
 ) {
   try {
-    return await PublicStrapiClient.fetchOneByFullPath(uid, fullPath, {
+    const params = {
       locale,
       populate: {
         seo: "smart",
         localizations: true,
       },
-    })
+    } as const
+
+    if (uid === "api::post.post") {
+      return await PublicStrapiClient.fetchOneBySlug(uid, identifier, params)
+    }
+
+    return await PublicStrapiClient.fetchOneByFullPath(uid, identifier, params)
   } catch (e: unknown) {
     logNonBlockingError({
-      message: `Error fetching SEO for '${uid}' with fullPath '${fullPath}' for locale '${locale}'`,
+      message: `Error fetching SEO for '${uid}' with identifier '${identifier}' for locale '${locale}'`,
       error: {
         error: e instanceof Error ? e.message : String(e),
         stack: e instanceof Error ? e.stack : undefined,

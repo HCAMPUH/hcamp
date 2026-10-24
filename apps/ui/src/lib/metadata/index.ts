@@ -23,15 +23,17 @@ import type { SocialMetadata } from "@/types/general"
 
 export async function getMetadataFromStrapi({
   fullPath,
+  slug,
   locale,
   customMetadata,
   uid = "api::page.page",
 }: {
   fullPath?: string
+  slug?: string
   locale: Locale
   customMetadata?: Metadata
   // Add more content types here if we want to fetch SEO components for them
-  uid?: Extract<UID.ContentType, "api::page.page">
+  uid?: Extract<UID.ContentType, "api::page.page" | "api::post.post">
 }): Promise<Metadata | null> {
   const t = await getTranslations({ locale, namespace: "seo" })
   const siteUrl = getEnvVar("APP_PUBLIC_URL")
@@ -66,6 +68,7 @@ export async function getMetadataFromStrapi({
       defaultOgMeta,
       defaultTwitterMeta,
       customMetadata,
+      slug,
       uid
     )
   } catch (e: unknown) {
@@ -90,10 +93,18 @@ async function fetchAndMapStrapiMetadata(
   defaultOgMeta: Metadata["openGraph"],
   defaultTwitterMeta: Metadata["twitter"],
   customMetadata?: Metadata,
-  uid: Extract<UID.ContentType, "api::page.page"> = "api::page.page"
+  slug?: string,
+  uid: Extract<
+    UID.ContentType,
+    "api::page.page" | "api::post.post"
+  > = "api::page.page"
 ) {
   const forbidIndexing = !isProduction()
-  const res = await fetchSeo(uid, fullPath, locale)
+  const res = await fetchSeo(
+    uid,
+    uid === "api::post.post" ? (slug ?? null) : (fullPath ?? null),
+    locale
+  )
 
   const { seo, localizations } = res?.data || {}
 
@@ -110,7 +121,12 @@ async function fetchAndMapStrapiMetadata(
     seo,
     fullPath,
     locale,
-    localizations,
+    localizations: Array.isArray(localizations)
+      ? localizations.map((localization) => ({
+          locale: localization.locale,
+          fullPath: "fullPath" in localization ? localization.fullPath : null,
+        }))
+      : undefined,
   })
   const strapiSocialMeta: SocialMetadata = preprocessSocialMetadata(
     seo,
