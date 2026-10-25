@@ -516,7 +516,7 @@ export interface SharedPortalCourse extends Struct.ComponentSchema {
     displayName: "Portal Course"
   }
   attributes: {
-    audience: Schema.Attribute.String & Schema.Attribute.Required
+    audience: Schema.Attribute.String
     link: Schema.Attribute.Component<"utilities.link", false>
     title: Schema.Attribute.String & Schema.Attribute.Required
   }
@@ -544,7 +544,7 @@ export interface SharedPortalRole extends Struct.ComponentSchema {
     coursesLabel: Schema.Attribute.String
     description: Schema.Attribute.Text & Schema.Attribute.Required
     icon: Schema.Attribute.Enumeration<
-      ["users", "megaphone", "trophy", "book-open", "flag"]
+      ["users", "megaphone", "trophy", "book-open", "flag", "heart-pulse"]
     > &
       Schema.Attribute.DefaultTo<"users">
     label: Schema.Attribute.String & Schema.Attribute.Required

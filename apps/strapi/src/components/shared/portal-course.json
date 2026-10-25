@@ -6,8 +6,7 @@
   "options": {},
   "attributes": {
     "audience": {
-      "type": "string",
-      "required": true
+      "type": "string"
     },
     "title": {
       "type": "string",

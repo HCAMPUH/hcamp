@@ -296,6 +296,59 @@ const data = {
         },
       ],
     },
+    {
+      id: 6,
+      label: "Healthcare Providers",
+      icon: "heart-pulse",
+      category: "Clinical Care & Recovery",
+      title: "Healthcare Provider Portal",
+      description:
+        "Healthcare providers support accurate evaluation, coordinated recovery planning, and safe return-to-learn and return-to-play decisions.",
+      responsibilityHeading: "Key Responsibilities & Resources:",
+      responsibilities: [
+        { id: 20, text: "Clinical evaluation and symptom monitoring" },
+        {
+          id: 21,
+          text: "Coordinating recovery plans with families and schools",
+        },
+        {
+          id: 22,
+          text: "Guiding graduated return-to-learn and return-to-play protocols",
+        },
+      ],
+      primaryAction: {
+        id: 18,
+        __component: "utilities.link",
+        type: "external",
+        label: "Access Portal Features",
+        href: "#",
+        newTab: false,
+      },
+      secondaryAction: {
+        id: 19,
+        __component: "utilities.link",
+        type: "external",
+        label: "Download Provider Resource Guide",
+        href: "#",
+        newTab: false,
+      },
+      coursesLabel: "Free Enrollment",
+      coursesHeading: "BrainSpace Online Courses",
+      courses: [
+        {
+          id: 8,
+          title: "BrainSpace Course for Healthcare Providers",
+          link: {
+            id: 18,
+            __component: "utilities.link",
+            type: "external",
+            label: "Open course",
+            href: "#",
+            newTab: false,
+          },
+        },
+      ],
+    },
   ],
 } as unknown as Data.Component<"sections.portals">
 

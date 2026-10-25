@@ -11,7 +11,14 @@
     },
     "icon": {
       "type": "enumeration",
-      "enum": ["users", "megaphone", "trophy", "book-open", "flag"],
+      "enum": [
+        "users",
+        "megaphone",
+        "trophy",
+        "book-open",
+        "flag",
+        "heart-pulse"
+      ],
       "default": "users"
     },
     "category": {

@@ -6,6 +6,7 @@ import {
   CheckCircle2,
   Download,
   Flag,
+  HeartPulse,
   Megaphone,
   Trophy,
   Users,
@@ -24,6 +25,7 @@ const icons = {
   trophy: Trophy,
   "book-open": BookOpen,
   flag: Flag,
+  "heart-pulse": HeartPulse,
 }
 
 export function StrapiPortals({
@@ -40,26 +42,29 @@ export function StrapiPortals({
   const courses = activeRole.courses ?? []
 
   return (
-    <section className="border-b border-slate-200 bg-white py-20">
-      <Container>
+    <section>
+      <Container className="py-8">
         <div className="mx-auto mb-12 max-w-3xl text-center">
-          <span className="inline-flex rounded-full border border-red-100 bg-red-50 px-3 py-1 text-xs font-bold tracking-widest text-red-900 uppercase">
+          <span className="inline-flex rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-[0.12em] text-red-800 uppercase dark:border-red-800 dark:bg-red-950/40 dark:text-red-200">
             {component.eyebrow}
           </span>
           <Typography
             tag="h2"
-            variant="heading1"
+            variant="heading2"
             fontWeight="extraBold"
-            className="mt-3 mb-4"
+            className="mt-3 !text-3xl leading-tight"
           >
             {component.title}
           </Typography>
-          <Typography variant="medium" className="text-slate-600">
+          <Typography
+            variant="medium"
+            className="text-muted-foreground mt-2 text-sm"
+          >
             {component.description}
           </Typography>
         </div>
 
-        <div className="mx-auto mb-10 flex max-w-4xl flex-wrap justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-100 p-1.5 shadow-inner">
+        <div className="border-border bg-muted mx-auto mb-10 flex max-w-5xl flex-wrap justify-center gap-2 rounded-2xl border p-1.5 shadow-inner">
           <div className="contents">
             {roles.map((role, index) => {
               const Icon = icons[role.icon ?? "users"] ?? Users
@@ -73,8 +78,9 @@ export function StrapiPortals({
                   role="tab"
                   onClick={() => setActiveIndex(index)}
                   className={cn(
-                    "flex items-center gap-2 rounded-xl px-5 py-3 text-xs font-bold text-slate-600 transition-colors sm:text-sm",
-                    isActive && "bg-white text-red-900 shadow-sm"
+                    "text-muted-foreground flex items-center gap-2 rounded-xl px-5 py-3 text-xs font-bold transition-colors sm:text-sm",
+                    isActive &&
+                      "bg-background text-red-900 shadow-sm dark:text-red-200"
                   )}
                 >
                   <Icon className="size-4" aria-hidden="true" />
@@ -85,13 +91,15 @@ export function StrapiPortals({
           </div>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-sm sm:p-10">
+        <div className="border-border bg-muted/30 rounded-2xl border p-6 sm:p-10">
           <div className="grid items-start gap-8 lg:grid-cols-12">
             <div className="space-y-6 lg:col-span-7">
               <div>
-                <div className="bg-brand-gold-soft text-brand-gold-muted mb-2 inline-flex rounded-full px-3 py-1 text-xs font-extrabold uppercase">
-                  {activeRole.category}
-                </div>
+                {activeRole.category ? (
+                  <div className="bg-brand-gold-soft text-brand-gold-muted dark:bg-brand-gold-muted/20 mb-2 inline-flex rounded-full px-3 py-1 text-xs font-extrabold uppercase dark:text-yellow-200">
+                    {activeRole.category}
+                  </div>
+                ) : null}
                 <Typography
                   tag="h3"
                   variant="medium"
@@ -102,7 +110,7 @@ export function StrapiPortals({
                 </Typography>
                 <Typography
                   variant="medium"
-                  className="mt-2 leading-relaxed text-slate-600"
+                  className="text-muted-foreground mt-2 text-sm leading-relaxed"
                 >
                   {activeRole.description}
                 </Typography>
@@ -122,7 +130,7 @@ export function StrapiPortals({
                   {(activeRole.responsibilities ?? []).map((item) => (
                     <li
                       key={item.id ?? item.text}
-                      className="flex items-start gap-2 text-xs text-slate-600"
+                      className="text-muted-foreground flex items-start gap-2 text-xs"
                     >
                       <CheckCircle2
                         className="mt-0.5 size-4 shrink-0 text-red-800"
@@ -136,11 +144,11 @@ export function StrapiPortals({
               <div className="flex flex-wrap gap-3 pt-2">
                 <StrapiLink
                   component={activeRole.primaryAction}
-                  className="h-auto rounded-xl bg-red-900 px-5 py-2.5 text-xs font-bold text-white shadow transition-colors hover:bg-red-800"
+                  className="h-auto rounded-xl bg-red-900 px-5 py-2.5 text-xs font-bold text-white shadow transition-colors hover:bg-red-800 dark:bg-red-800 dark:hover:bg-red-700"
                 />
                 <StrapiLink
                   component={activeRole.secondaryAction}
-                  className="h-auto rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-xs font-bold text-slate-700 transition-colors hover:bg-slate-100"
+                  className="border-border bg-background text-foreground hover:bg-muted h-auto rounded-xl border px-5 py-2.5 text-xs font-bold transition-colors"
                 >
                   <Download
                     className="size-4 text-red-900"
@@ -154,8 +162,8 @@ export function StrapiPortals({
             {activeRole.coursesHeading ||
             activeRole.coursesLabel ||
             courses.length > 0 ? (
-              <div className="space-y-4 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm lg:col-span-5">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+              <div className="border-border bg-card space-y-4 rounded-2xl border p-5 lg:col-span-5">
+                <div className="border-border flex items-center justify-between border-b pb-4">
                   {activeRole.coursesHeading ? (
                     <Typography
                       tag="h4"
@@ -167,7 +175,7 @@ export function StrapiPortals({
                     </Typography>
                   ) : null}
                   {activeRole.coursesLabel ? (
-                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-extrabold text-emerald-700">
+                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-extrabold text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300">
                       {activeRole.coursesLabel}
                     </span>
                   ) : null}
@@ -177,17 +185,19 @@ export function StrapiPortals({
                     <StrapiLink
                       key={course.id ?? course.title}
                       component={course.link}
-                      className="group h-auto min-h-20 w-full items-center justify-between rounded-xl border border-slate-200 bg-white p-3.5 text-left transition-all hover:border-red-900"
+                      className="group border-border bg-background h-auto min-h-20 w-full items-center justify-between rounded-xl border p-3.5 text-left transition-all hover:border-red-900 dark:hover:border-red-700"
                     >
                       <div className="min-w-0">
-                        <span className="rounded bg-red-50 px-2 py-0.5 text-[10px] font-bold text-red-900">
-                          {course.audience}
-                        </span>
+                        {course.audience ? (
+                          <span className="rounded bg-red-50 px-2 py-0.5 text-[10px] font-bold text-red-900 dark:bg-red-950/40 dark:text-red-200">
+                            {course.audience}
+                          </span>
+                        ) : null}
                         <Typography
                           tag="p"
                           variant="small"
                           fontWeight="semiBold"
-                          className="mt-0.5 leading-tight break-words whitespace-normal text-slate-800"
+                          className="text-foreground mt-0.5 leading-tight break-words whitespace-normal"
                         >
                           {course.title}
                         </Typography>

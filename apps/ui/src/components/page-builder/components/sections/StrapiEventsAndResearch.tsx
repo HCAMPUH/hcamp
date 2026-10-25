@@ -40,7 +40,7 @@ export function StrapiEventsAndResearch({
             ))}
           </div>
           {component.eventHighlightTitle || component.eventHighlightPost ? (
-            <div className="bg-foreground text-background mt-8 rounded-2xl p-6">
+            <div className="bg-foreground text-background dark:border-border dark:bg-muted/30 dark:text-foreground mt-8 rounded-2xl p-6 dark:border">
               {component.eventHighlightLabel ? (
                 <Typography
                   variant="small"
@@ -54,13 +54,13 @@ export function StrapiEventsAndResearch({
                 <AppLink
                   href={`/posts/${component.eventHighlightPost.slug}`}
                   variant="ghost"
-                  className="text-background hover:text-background mt-4 h-auto min-w-0 justify-start p-0 text-left whitespace-normal no-underline hover:bg-transparent hover:no-underline"
+                  className="text-background hover:text-background dark:text-foreground dark:hover:text-foreground mt-4 h-auto min-w-0 justify-start p-0 text-left whitespace-normal no-underline hover:bg-transparent hover:no-underline"
                 >
                   <Typography
                     tag="h3"
                     variant="heading4"
                     fontWeight="semiBold"
-                    className="text-background min-w-0 break-words"
+                    className="text-background dark:text-foreground min-w-0 break-words"
                   >
                     {component.eventHighlightTitle ??
                       component.eventHighlightPost.title}
@@ -71,7 +71,7 @@ export function StrapiEventsAndResearch({
                   tag="h3"
                   variant="heading4"
                   fontWeight="semiBold"
-                  className="text-background mt-4"
+                  className="text-background dark:text-foreground mt-4"
                 >
                   {component.eventHighlightTitle ??
                     component.eventHighlightPost?.title}
@@ -79,7 +79,10 @@ export function StrapiEventsAndResearch({
               )}
               {component.eventHighlightDescription ||
               component.eventHighlightPost?.excerpt ? (
-                <Typography variant="small" className="text-background/70 mt-3">
+                <Typography
+                  variant="small"
+                  className="text-background/70 dark:text-muted-foreground mt-3"
+                >
                   {component.eventHighlightDescription ??
                     component.eventHighlightPost?.excerpt}
                 </Typography>
