@@ -42,7 +42,7 @@ export function StrapiPortals({
   const courses = activeRole.courses ?? []
 
   return (
-    <section>
+    <section id="hcamp-portals">
       <Container className="py-8">
         <div className="mx-auto mb-12 max-w-3xl text-center">
           <span className="inline-flex rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-[0.12em] text-red-800 uppercase dark:border-red-800 dark:bg-red-950/40 dark:text-red-200">

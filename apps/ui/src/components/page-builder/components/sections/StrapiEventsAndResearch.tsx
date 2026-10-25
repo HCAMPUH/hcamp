@@ -26,7 +26,7 @@ export function StrapiEventsAndResearch({
   component: Data.Component<"sections.events-and-research">
 }) {
   return (
-    <section>
+    <section id="hcamp-events-and-research">
       <Container className="grid gap-12 py-8 lg:grid-cols-2 lg:gap-12">
         <div>
           <SectionIntro
