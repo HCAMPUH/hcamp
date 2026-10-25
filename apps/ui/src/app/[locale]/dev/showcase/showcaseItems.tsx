@@ -24,6 +24,7 @@ import MockedStrapiFigures from "@/app/[locale]/dev/showcase/components/strapiCo
 import MockedStrapiHeadingWithCTAButton from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiHeadingWithCTAButton"
 import MockedStrapiHero from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiHero"
 import MockedStrapiImageWithCTAButton from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiImageWithCTAButton"
+import MockedStrapiPortals from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiPortals"
 import MockedStrapiPostList from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiPostList"
 
 export const showcaseItems = [
@@ -222,6 +223,14 @@ export const showcaseItems = [
     component: MockedStrapiEventsAndResearch,
     description:
       "A two-column section for selected event posts, research pages, and a featured event callout",
+  },
+  {
+    id: "portals",
+    label: "Portals",
+    kind: "component",
+    component: MockedStrapiPortals,
+    description:
+      "Tabbed population portals with role-specific resources and courses",
   },
 ] as const
 

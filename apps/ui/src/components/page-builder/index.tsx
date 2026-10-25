@@ -15,6 +15,7 @@ import { StrapiStatistics } from "@/components/page-builder/components/sections/
 import StrapiHeadingWithCTAButton from "@/components/page-builder/components/sections/StrapiHeadingWithCTAButton"
 import StrapiHero from "@/components/page-builder/components/sections/StrapiHero"
 import StrapiImageWithCTAButton from "@/components/page-builder/components/sections/StrapiImageWithCTAButton"
+import StrapiPortals from "@/components/page-builder/components/sections/StrapiPortals"
 import StrapiPostList from "@/components/page-builder/components/sections/StrapiPostList"
 import StrapiTable from "@/components/page-builder/components/sections/StrapiTable"
 import StrapiTabs from "@/components/page-builder/components/sections/StrapiTabs"
@@ -56,6 +57,7 @@ export const PageContentComponents: Partial<
   "sections.dialog": StrapiDialog,
   "sections.tooltip": StrapiTooltip,
   "sections.accordion": StrapiAccordion,
+  "sections.portals": StrapiPortals,
 
   // Forms
   "forms.contact-form": StrapiContactForm,

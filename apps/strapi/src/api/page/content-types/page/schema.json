@@ -81,7 +81,8 @@
         "sections.table",
         "sections.dialog",
         "sections.tooltip",
-        "sections.accordion"
+        "sections.accordion",
+        "sections.portals"
       ]
     },
     "children": {

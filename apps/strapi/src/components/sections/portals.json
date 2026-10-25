@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_sections_portals",
+  "info": {
+    "displayName": "Portals",
+    "icon": "layers"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "roles": {
+      "type": "component",
+      "component": "shared.portal-role",
+      "repeatable": true
+    }
+  }
+}

@@ -296,6 +296,20 @@ export interface SectionsImageWithCtaButton extends Struct.ComponentSchema {
   }
 }
 
+export interface SectionsPortals extends Struct.ComponentSchema {
+  collectionName: "components_sections_portals"
+  info: {
+    displayName: "Portals"
+    icon: "layers"
+  }
+  attributes: {
+    description: Schema.Attribute.Text & Schema.Attribute.Required
+    eyebrow: Schema.Attribute.String & Schema.Attribute.Required
+    roles: Schema.Attribute.Component<"shared.portal-role", true>
+    title: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
 export interface SectionsPostList extends Struct.ComponentSchema {
   collectionName: "components_sections_post_lists"
   info: {
@@ -493,6 +507,55 @@ export interface SharedImageWithTitleAndDescription
           preset: "defaultCkEditor"
         }
       >
+  }
+}
+
+export interface SharedPortalCourse extends Struct.ComponentSchema {
+  collectionName: "components_shared_portal_courses"
+  info: {
+    displayName: "Portal Course"
+  }
+  attributes: {
+    audience: Schema.Attribute.String & Schema.Attribute.Required
+    link: Schema.Attribute.Component<"utilities.link", false>
+    title: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SharedPortalResponsibility extends Struct.ComponentSchema {
+  collectionName: "components_shared_portal_responsibilities"
+  info: {
+    displayName: "Portal Responsibility"
+  }
+  attributes: {
+    text: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SharedPortalRole extends Struct.ComponentSchema {
+  collectionName: "components_shared_portal_roles"
+  info: {
+    displayName: "Portal Role"
+  }
+  attributes: {
+    category: Schema.Attribute.String
+    courses: Schema.Attribute.Component<"shared.portal-course", true>
+    coursesHeading: Schema.Attribute.String
+    coursesLabel: Schema.Attribute.String
+    description: Schema.Attribute.Text & Schema.Attribute.Required
+    icon: Schema.Attribute.Enumeration<
+      ["users", "megaphone", "trophy", "book-open", "flag"]
+    > &
+      Schema.Attribute.DefaultTo<"users">
+    label: Schema.Attribute.String & Schema.Attribute.Required
+    primaryAction: Schema.Attribute.Component<"utilities.link", false>
+    responsibilities: Schema.Attribute.Component<
+      "shared.portal-responsibility",
+      true
+    >
+    responsibilityHeading: Schema.Attribute.String
+    secondaryAction: Schema.Attribute.Component<"utilities.link", false>
+    title: Schema.Attribute.String & Schema.Attribute.Required
   }
 }
 
@@ -721,6 +784,7 @@ declare module "@strapi/strapi" {
       "sections.heading-with-cta-button": SectionsHeadingWithCtaButton
       "sections.hero": SectionsHero
       "sections.image-with-cta-button": SectionsImageWithCtaButton
+      "sections.portals": SectionsPortals
       "sections.post-list": SectionsPostList
       "sections.statistics": SectionsStatistics
       "sections.table": SectionsTable
@@ -733,6 +797,9 @@ declare module "@strapi/strapi" {
       "shared.figure": SharedFigure
       "shared.image-with-config": SharedImageWithConfig
       "shared.image-with-title-and-description": SharedImageWithTitleAndDescription
+      "shared.portal-course": SharedPortalCourse
+      "shared.portal-responsibility": SharedPortalResponsibility
+      "shared.portal-role": SharedPortalRole
       "shared.research-item": SharedResearchItem
       "shared.tab-item": SharedTabItem
       "shared.table-row": SharedTableRow

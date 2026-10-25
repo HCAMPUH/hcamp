@@ -1,0 +1,58 @@
+{
+  "collectionName": "components_shared_portal_roles",
+  "info": {
+    "displayName": "Portal Role"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "icon": {
+      "type": "enumeration",
+      "enum": ["users", "megaphone", "trophy", "book-open", "flag"],
+      "default": "users"
+    },
+    "category": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "responsibilityHeading": {
+      "type": "string"
+    },
+    "responsibilities": {
+      "type": "component",
+      "component": "shared.portal-responsibility",
+      "repeatable": true
+    },
+    "primaryAction": {
+      "type": "component",
+      "component": "utilities.link",
+      "repeatable": false
+    },
+    "secondaryAction": {
+      "type": "component",
+      "component": "utilities.link",
+      "repeatable": false
+    },
+    "coursesLabel": {
+      "type": "string"
+    },
+    "coursesHeading": {
+      "type": "string"
+    },
+    "courses": {
+      "type": "component",
+      "component": "shared.portal-course",
+      "repeatable": true
+    }
+  }
+}

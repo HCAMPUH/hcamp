@@ -36,6 +36,12 @@
     "readPost": "Read"
   },
 
+  "portals": {
+    "responsibilities": "Key responsibilities & resources:",
+    "courses": "BrainSpace online courses",
+    "freeEnrollment": "Free Enrollment"
+  },
+
   "tables": {
     "previousPage": "Previous page",
     "nextPage": "Next page",

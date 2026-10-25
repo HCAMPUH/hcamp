@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_portal_courses",
+  "info": {
+    "displayName": "Portal Course"
+  },
+  "options": {},
+  "attributes": {
+    "audience": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "link": {
+      "type": "component",
+      "component": "utilities.link",
+      "repeatable": false
+    }
+  }
+}

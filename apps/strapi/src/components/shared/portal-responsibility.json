@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_shared_portal_responsibilities",
+  "info": {
+    "displayName": "Portal Responsibility"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true
+    }
+  }
+}
