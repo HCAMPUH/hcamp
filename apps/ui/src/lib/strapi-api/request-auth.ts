@@ -5,6 +5,8 @@ const ALLOWED_STRAPI_ENDPOINTS: Record<string, string[]> = {
     "api/pages",
     "api/footer",
     "api/navbar",
+    "api/pledges/count",
+    "api/pledges/list",
     "api/users/me",
     "api/auth/local",
     // Allow specific providers callbacks if needed
@@ -12,6 +14,7 @@ const ALLOWED_STRAPI_ENDPOINTS: Record<string, string[]> = {
   ],
   POST: [
     "api/subscribers",
+    "api/pledges/submit",
     "api/auth/local/register",
     "api/auth/forgot-password",
     "api/auth/reset-password",
@@ -42,11 +45,17 @@ export const isStrapiEndpointAllowed = (
 export const createStrapiAuthHeader = async ({
   isReadOnly,
   isPrivate,
+  usePublicRole = false,
 }: {
   isReadOnly?: boolean
   isPrivate: boolean
+  usePublicRole?: boolean
 }) => {
-  if (isPrivate) {
+  if (isPrivate || usePublicRole) {
+    if (usePublicRole) {
+      return {}
+    }
+
     const userToken = await getStrapiUserTokenFromBetterAuth()
 
     return formatStrapiAuthorizationHeader(userToken)

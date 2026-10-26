@@ -36,6 +36,20 @@ export interface FormsNewsletterForm extends Struct.ComponentSchema {
   }
 }
 
+export interface FormsPledge extends Struct.ComponentSchema {
+  collectionName: "components_forms_pledges"
+  info: {
+    displayName: "Pledge"
+    icon: "handHeart"
+  }
+  attributes: {
+    description: Schema.Attribute.Text
+    eyebrow: Schema.Attribute.String
+    submitLabel: Schema.Attribute.String & Schema.Attribute.Required
+    title: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
 export interface LayoutNavbarItem extends Struct.ComponentSchema {
   collectionName: "components_layout_navbar_items"
   info: {
@@ -815,6 +829,7 @@ declare module "@strapi/strapi" {
       "elements.footer-item": ElementsFooterItem
       "forms.contact-form": FormsContactForm
       "forms.newsletter-form": FormsNewsletterForm
+      "forms.pledge": FormsPledge
       "layout.navbar-item": LayoutNavbarItem
       "sections.about": SectionsAbout
       "sections.accordion": SectionsAccordion

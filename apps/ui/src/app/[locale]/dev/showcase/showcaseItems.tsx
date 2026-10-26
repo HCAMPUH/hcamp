@@ -25,6 +25,7 @@ import MockedStrapiFigures from "@/app/[locale]/dev/showcase/components/strapiCo
 import MockedStrapiHeadingWithCTAButton from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiHeadingWithCTAButton"
 import MockedStrapiHero from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiHero"
 import MockedStrapiImageWithCTAButton from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiImageWithCTAButton"
+import MockedStrapiPledge from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiPledge"
 import MockedStrapiPortals from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiPortals"
 import MockedStrapiPostList from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiPostList"
 
@@ -240,6 +241,13 @@ export const showcaseItems = [
     component: MockedStrapiAbout,
     description:
       "Institutional program introduction with resource links, affiliation, and partner pills",
+  },
+  {
+    id: "pledge",
+    label: "Pledge",
+    kind: "component",
+    component: MockedStrapiPledge,
+    description: "A themed pledge form for collecting participant details",
   },
 ] as const
 

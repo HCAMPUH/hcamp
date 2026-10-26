@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pledges",
+  "info": {
+    "singularName": "pledge",
+    "pluralName": "pledges",
+    "displayName": "Pledge"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "firstName": {
+      "type": "string",
+      "required": true
+    },
+    "lastName": {
+      "type": "string",
+      "required": true
+    },
+    "schoolOrganization": {
+      "type": "string",
+      "required": true
+    },
+    "submittedAt": {
+      "type": "datetime",
+      "required": true
+    }
+  }
+}

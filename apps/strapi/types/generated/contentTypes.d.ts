@@ -606,6 +606,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         "sections.animated-logo-row",
         "forms.newsletter-form",
         "forms.contact-form",
+        "forms.pledge",
         "utilities.ck-editor-content",
         "sections.statistics",
         "sections.features-list",
@@ -668,6 +669,37 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
   }
 }
 
+export interface ApiPledgePledge extends Struct.CollectionTypeSchema {
+  collectionName: "pledges"
+  info: {
+    displayName: "Pledge"
+    pluralName: "pledges"
+    singularName: "pledge"
+  }
+  options: {
+    draftAndPublish: false
+  }
+  attributes: {
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    firstName: Schema.Attribute.String & Schema.Attribute.Required
+    lastName: Schema.Attribute.String & Schema.Attribute.Required
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "api::pledge.pledge"
+    > &
+      Schema.Attribute.Private
+    publishedAt: Schema.Attribute.DateTime
+    schoolOrganization: Schema.Attribute.String & Schema.Attribute.Required
+    submittedAt: Schema.Attribute.DateTime & Schema.Attribute.Required
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+  }
+}
+
 export interface ApiPostPost extends Struct.CollectionTypeSchema {
   collectionName: "posts"
   info: {
@@ -689,6 +721,7 @@ export interface ApiPostPost extends Struct.CollectionTypeSchema {
         "sections.animated-logo-row",
         "forms.newsletter-form",
         "forms.contact-form",
+        "forms.pledge",
         "utilities.ck-editor-content",
         "sections.statistics",
         "sections.features-list",
@@ -1765,6 +1798,7 @@ declare module "@strapi/strapi" {
       "api::hierarchy.hierarchy": ApiHierarchyHierarchy
       "api::navbar.navbar": ApiNavbarNavbar
       "api::page.page": ApiPagePage
+      "api::pledge.pledge": ApiPledgePledge
       "api::post.post": ApiPostPost
       "api::redirect.redirect": ApiRedirectRedirect
       "api::subscriber.subscriber": ApiSubscriberSubscriber

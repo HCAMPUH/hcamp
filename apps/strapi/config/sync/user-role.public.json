@@ -36,6 +36,11 @@
       "locale": null
     },
     {
+      "action": "api::pledge.pledge.create",
+      "documentId": "c1d2e3f4a5b6012345678901",
+      "locale": null
+    },
+    {
       "action": "plugin::users-permissions.auth.callback",
       "documentId": "tr6d6pxzwqnkhmmf8qhrgvt7",
       "locale": null

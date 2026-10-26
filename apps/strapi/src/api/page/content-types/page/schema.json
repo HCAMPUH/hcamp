@@ -69,6 +69,7 @@
         "sections.animated-logo-row",
         "forms.newsletter-form",
         "forms.contact-form",
+        "forms.pledge",
         "utilities.ck-editor-content",
         "sections.statistics",
         "sections.features-list",

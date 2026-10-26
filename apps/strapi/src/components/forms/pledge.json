@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_forms_pledges",
+  "info": {
+    "displayName": "Pledge",
+    "icon": "handHeart"
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "submitLabel": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

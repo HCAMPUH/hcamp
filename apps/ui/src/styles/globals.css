@@ -119,6 +119,153 @@
     transform: translateX(100%);
   }
 }
+
+.pledge-button[data-submitted="true"] {
+  animation: pledgeButtonCelebrate 850ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pledge-button[data-submitted="true"]::before,
+.pledge-button[data-submitted="true"]::after {
+  position: absolute;
+  pointer-events: none;
+  content: "";
+  border: 2px solid color-mix(in srgb, currentColor 45%, transparent);
+  border-radius: inherit;
+  inset: -0.35rem;
+  opacity: 0;
+  animation: pledgeButtonRipple 900ms ease-out;
+}
+
+.pledge-button[data-submitted="true"]::after {
+  animation-delay: 120ms;
+}
+
+.pledge-button-check {
+  animation: pledgeButtonCheck 650ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pledge-button-spark {
+  position: absolute;
+  z-index: 1;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 9999px;
+  background: currentColor;
+  pointer-events: none;
+  opacity: 0;
+  animation: pledgeButtonSpark 700ms ease-out both;
+}
+
+.pledge-button-spark-one {
+  top: 22%;
+  left: 28%;
+  animation-delay: 80ms;
+}
+
+.pledge-button-spark-two {
+  top: 18%;
+  right: 27%;
+  animation-delay: 150ms;
+}
+
+.pledge-button-spark-three {
+  right: 20%;
+  bottom: 18%;
+  animation-delay: 220ms;
+}
+
+.pledge-button-spark-four {
+  bottom: 16%;
+  left: 22%;
+  animation-delay: 290ms;
+}
+
+@keyframes pledgeButtonCelebrate {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.035) translateY(-0.15rem);
+  }
+  65% {
+    transform: scale(0.985) translateY(0.04rem);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes pledgeButtonCheck {
+  0% {
+    opacity: 0;
+    transform: scale(0.2) rotate(-35deg);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1.25) rotate(8deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes pledgeButtonRipple {
+  0% {
+    opacity: 0.65;
+    transform: scale(0.92);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.12);
+  }
+}
+
+@keyframes pledgeButtonSpark {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.3);
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--spark-x, 0.9rem), var(--spark-y, -0.9rem))
+      scale(0.8);
+  }
+}
+
+.pledge-button-spark-one {
+  --spark-x: -0.8rem;
+  --spark-y: -0.9rem;
+}
+
+.pledge-button-spark-two {
+  --spark-x: 0.8rem;
+  --spark-y: -0.8rem;
+}
+
+.pledge-button-spark-three {
+  --spark-x: 0.9rem;
+  --spark-y: 0.8rem;
+}
+
+.pledge-button-spark-four {
+  --spark-x: -0.8rem;
+  --spark-y: 0.8rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pledge-button[data-submitted="true"],
+  .pledge-button[data-submitted="true"]::before,
+  .pledge-button[data-submitted="true"]::after,
+  .pledge-button-check,
+  .pledge-button-spark {
+    animation: none;
+  }
+}
+
 /* Use this when you need a hard inversion for img/svg elements that don't follow currentColor.
      .icon--invert-on-dark: when in .dark mode, apply a filter that inverts light<->dark.
 */

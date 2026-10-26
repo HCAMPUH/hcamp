@@ -61,6 +61,7 @@ async function handler(
   const authHeader = await createStrapiAuthHeader({
     isReadOnly,
     isPrivate: false,
+    usePublicRole: path === "api/pledges/submit" && request.method === "POST",
   })
 
   const response = await fetch(url, {

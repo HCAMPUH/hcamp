@@ -2,6 +2,7 @@ import type { UID } from "@repo/strapi-types"
 
 import StrapiContactForm from "@/components/page-builder/components/forms/StrapiContactForm"
 import StrapiNewsletterForm from "@/components/page-builder/components/forms/StrapiNewsletterForm"
+import StrapiPledge from "@/components/page-builder/components/forms/StrapiPledge"
 import StrapiAbout from "@/components/page-builder/components/sections/StrapiAbout"
 import StrapiAccordion from "@/components/page-builder/components/sections/StrapiAccordion"
 import StrapiAnimatedLogoRow from "@/components/page-builder/components/sections/StrapiAnimatedLogoRow"
@@ -64,6 +65,7 @@ export const PageContentComponents: Partial<
   // Forms
   "forms.contact-form": StrapiContactForm,
   "forms.newsletter-form": StrapiNewsletterForm,
+  "forms.pledge": StrapiPledge,
 
   // Add more components here
 }

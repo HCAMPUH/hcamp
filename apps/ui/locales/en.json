@@ -161,6 +161,20 @@
     "gdprLink": "Read more about the processing of personal data"
   },
 
+  "pledgeForm": {
+    "firstName": "First name",
+    "firstNamePlaceholder": "Enter your first name",
+    "lastName": "Last name",
+    "lastNamePlaceholder": "Enter your last name",
+    "schoolOrganization": "School/Organization",
+    "schoolOrganizationPlaceholder": "Enter an organization name",
+    "submit": "Pledge",
+    "submitted": "Pledge recorded",
+    "countLabel": "Have pledged to report",
+    "success": "Your pledge has been recorded.",
+    "error": "The pledge could not be recorded. Please try again later."
+  },
+
   "auth": {
     "signIn": {
       "status": {
