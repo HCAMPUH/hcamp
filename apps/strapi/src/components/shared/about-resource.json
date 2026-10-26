@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_about_resources",
+  "info": {
+    "displayName": "About Resource"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "link": {
+      "type": "component",
+      "component": "utilities.link",
+      "repeatable": false
+    }
+  }
+}

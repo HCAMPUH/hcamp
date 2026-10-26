@@ -49,6 +49,27 @@ export interface LayoutNavbarItem extends Struct.ComponentSchema {
   }
 }
 
+export interface SectionsAbout extends Struct.ComponentSchema {
+  collectionName: "components_sections_abouts"
+  info: {
+    displayName: "About"
+    icon: "information"
+  }
+  attributes: {
+    backgroundColor: Schema.Attribute.String &
+      Schema.Attribute.CustomField<"plugin::color-picker.color">
+    description: Schema.Attribute.Text & Schema.Attribute.Required
+    eyebrow: Schema.Attribute.String & Schema.Attribute.Required
+    institutionDescription: Schema.Attribute.Text
+    institutionEyebrow: Schema.Attribute.String
+    institutionLogo: Schema.Attribute.Component<"utilities.basic-image", false>
+    partners: Schema.Attribute.Component<"shared.about-partner", true>
+    partnersEyebrow: Schema.Attribute.String
+    resources: Schema.Attribute.Component<"shared.about-resource", true>
+    title: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
 export interface SectionsAccordion extends Struct.ComponentSchema {
   collectionName: "components_sections_accordions"
   info: {
@@ -455,6 +476,29 @@ export interface SeoUtilitiesSocialIcons extends Struct.ComponentSchema {
   }
 }
 
+export interface SharedAboutPartner extends Struct.ComponentSchema {
+  collectionName: "components_shared_about_partners"
+  info: {
+    displayName: "About Partner"
+  }
+  attributes: {
+    link: Schema.Attribute.Component<"utilities.link", false>
+    name: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SharedAboutResource extends Struct.ComponentSchema {
+  collectionName: "components_shared_about_resources"
+  info: {
+    displayName: "About Resource"
+  }
+  attributes: {
+    description: Schema.Attribute.Text & Schema.Attribute.Required
+    link: Schema.Attribute.Component<"utilities.link", false>
+    title: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
 export interface SharedFigure extends Struct.ComponentSchema {
   collectionName: "components_shared_figures"
   info: {
@@ -772,6 +816,7 @@ declare module "@strapi/strapi" {
       "forms.contact-form": FormsContactForm
       "forms.newsletter-form": FormsNewsletterForm
       "layout.navbar-item": LayoutNavbarItem
+      "sections.about": SectionsAbout
       "sections.accordion": SectionsAccordion
       "sections.animated-logo-row": SectionsAnimatedLogoRow
       "sections.card": SectionsCard
@@ -794,6 +839,8 @@ declare module "@strapi/strapi" {
       "seo-utilities.seo-og": SeoUtilitiesSeoOg
       "seo-utilities.seo-twitter": SeoUtilitiesSeoTwitter
       "seo-utilities.social-icons": SeoUtilitiesSocialIcons
+      "shared.about-partner": SharedAboutPartner
+      "shared.about-resource": SharedAboutResource
       "shared.figure": SharedFigure
       "shared.image-with-config": SharedImageWithConfig
       "shared.image-with-title-and-description": SharedImageWithTitleAndDescription

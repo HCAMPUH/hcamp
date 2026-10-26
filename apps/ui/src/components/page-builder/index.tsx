@@ -2,6 +2,7 @@ import type { UID } from "@repo/strapi-types"
 
 import StrapiContactForm from "@/components/page-builder/components/forms/StrapiContactForm"
 import StrapiNewsletterForm from "@/components/page-builder/components/forms/StrapiNewsletterForm"
+import StrapiAbout from "@/components/page-builder/components/sections/StrapiAbout"
 import StrapiAccordion from "@/components/page-builder/components/sections/StrapiAccordion"
 import StrapiAnimatedLogoRow from "@/components/page-builder/components/sections/StrapiAnimatedLogoRow"
 import StrapiCard from "@/components/page-builder/components/sections/StrapiCard"
@@ -40,6 +41,7 @@ export const PageContentComponents: Partial<
   "utilities.tip-tap-rich-text": StrapiTipTapEditorContent,
 
   // Sections
+  "sections.about": StrapiAbout,
   "sections.animated-logo-row": StrapiAnimatedLogoRow,
   "sections.faq": StrapiFaq,
   "sections.carousel": StrapiCarousel,

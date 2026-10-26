@@ -14,6 +14,7 @@ import TableSection from "@/app/[locale]/dev/showcase/components/sections/TableS
 import TabsSection from "@/app/[locale]/dev/showcase/components/sections/TabsSection"
 import TextareaSection from "@/app/[locale]/dev/showcase/components/sections/TextareaSection"
 import TooltipSection from "@/app/[locale]/dev/showcase/components/sections/TooltipSection"
+import MockedStrapiAbout from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiAbout"
 import MockedStrapiAnimatedLogoRow from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiAnimatedLogoRow"
 import MockedStrapiCarousel from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiCarousel"
 import MockedStrapiCTABanner from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiCTABanner"
@@ -231,6 +232,14 @@ export const showcaseItems = [
     component: MockedStrapiPortals,
     description:
       "Tabbed population portals with role-specific resources and courses",
+  },
+  {
+    id: "about",
+    label: "About",
+    kind: "component",
+    component: MockedStrapiAbout,
+    description:
+      "Institutional program introduction with resource links, affiliation, and partner pills",
   },
 ] as const
 

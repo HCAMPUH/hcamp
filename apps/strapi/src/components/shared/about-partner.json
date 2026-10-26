@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shared_about_partners",
+  "info": {
+    "displayName": "About Partner"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "link": {
+      "type": "component",
+      "component": "utilities.link",
+      "repeatable": false
+    }
+  }
+}

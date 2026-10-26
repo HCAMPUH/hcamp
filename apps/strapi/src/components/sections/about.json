@@ -1,0 +1,51 @@
+{
+  "collectionName": "components_sections_abouts",
+  "info": {
+    "displayName": "About",
+    "icon": "information"
+  },
+  "options": {},
+  "attributes": {
+    "backgroundColor": {
+      "type": "customField",
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "eyebrow": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "resources": {
+      "type": "component",
+      "component": "shared.about-resource",
+      "repeatable": true
+    },
+    "institutionEyebrow": {
+      "type": "string"
+    },
+    "institutionLogo": {
+      "type": "component",
+      "component": "utilities.basic-image",
+      "repeatable": false
+    },
+    "institutionDescription": {
+      "type": "text"
+    },
+    "partnersEyebrow": {
+      "type": "string"
+    },
+    "partners": {
+      "type": "component",
+      "component": "shared.about-partner",
+      "repeatable": true
+    }
+  }
+}
