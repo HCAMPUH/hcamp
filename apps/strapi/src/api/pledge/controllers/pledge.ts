@@ -16,7 +16,7 @@ export default factories.createCoreController(
     async list(ctx) {
       const pledges = await strapi.documents("api::pledge.pledge").findMany({
         fields: ["firstName", "lastName", "schoolOrganization"],
-        sort: [{ submittedAt: "desc" }],
+        sort: [{ createdAt: "desc" }],
       })
 
       ctx.body = { data: pledges }
@@ -41,13 +41,11 @@ export default factories.createCoreController(
         )
       }
 
-      const now = new Date()
       const pledge = await strapi.documents("api::pledge.pledge").create({
         data: {
           firstName: firstName.trim(),
           lastName: lastName.trim(),
           schoolOrganization: schoolOrganization.trim(),
-          submittedAt: now.toISOString(),
         },
       })
 

@@ -693,7 +693,6 @@ export interface ApiPledgePledge extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private
     publishedAt: Schema.Attribute.DateTime
     schoolOrganization: Schema.Attribute.String & Schema.Attribute.Required
-    submittedAt: Schema.Attribute.DateTime & Schema.Attribute.Required
     updatedAt: Schema.Attribute.DateTime
     updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
       Schema.Attribute.Private
