@@ -103,7 +103,7 @@ export function PledgeForm({
         />
         <Button
           type="submit"
-          className="pledge-button relative min-h-12 w-full flex-1 overflow-visible px-8 text-base"
+          className="pledge-button relative mt-4 w-full overflow-visible"
           size="lg"
           form="pledge-form"
           isLoading={pledgeMutation.isPending}
