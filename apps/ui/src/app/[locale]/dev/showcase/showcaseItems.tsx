@@ -16,6 +16,7 @@ import TextareaSection from "@/app/[locale]/dev/showcase/components/sections/Tex
 import TooltipSection from "@/app/[locale]/dev/showcase/components/sections/TooltipSection"
 import MockedStrapiAbout from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiAbout"
 import MockedStrapiAnimatedLogoRow from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiAnimatedLogoRow"
+import MockedStrapiAnimatedPledge from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiAnimatedPledge"
 import MockedStrapiCarousel from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiCarousel"
 import MockedStrapiCTABanner from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiCTABanner"
 import MockedStrapiEventsAndResearch from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiEventsAndResearch"
@@ -167,6 +168,14 @@ export const showcaseItems = [
     component: MockedStrapiAnimatedLogoRow,
     description:
       "A horizontal list of partner or client logos with subtle animation",
+  },
+  {
+    id: "animated-pledge",
+    label: "Animated Pledge",
+    kind: "component",
+    component: MockedStrapiAnimatedPledge,
+    description:
+      "A scrolling ticker of recent athlete pledges from Pledge storage",
   },
   {
     id: "carousel",

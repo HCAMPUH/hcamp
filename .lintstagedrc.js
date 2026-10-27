@@ -11,9 +11,12 @@ const realFiles = (files) =>
     }
   })
 
+const lintableFiles = (files) =>
+  realFiles(files).filter((f) => !/(^|[\\/])types[\\/]generated[\\/]/.test(f))
+
 module.exports = {
   "*.{js,jsx,ts,tsx}": (files) => {
-    const real = realFiles(files)
+    const real = lintableFiles(files)
     return real.length
       ? [`eslint --fix ${real.map((f) => JSON.stringify(f)).join(" ")}`]
       : []

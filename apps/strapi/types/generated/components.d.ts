@@ -114,6 +114,22 @@ export interface SectionsAnimatedLogoRow extends Struct.ComponentSchema {
   }
 }
 
+export interface SectionsAnimatedPledge extends Struct.ComponentSchema {
+  collectionName: "components_sections_animated_pledges"
+  info: {
+    description: "A scrolling ticker of recent athlete pledges."
+    displayName: "AnimatedPledge"
+    icon: "award"
+  }
+  attributes: {
+    backgroundColor: Schema.Attribute.String &
+      Schema.Attribute.CustomField<"plugin::color-picker.color">
+    description: Schema.Attribute.Text
+    title: Schema.Attribute.String & Schema.Attribute.Required
+    titleLink: Schema.Attribute.Component<"utilities.link", false>
+  }
+}
+
 export interface SectionsCard extends Struct.ComponentSchema {
   collectionName: "components_sections_cards"
   info: {
@@ -753,7 +769,8 @@ export interface UtilitiesLink extends Struct.ComponentSchema {
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<false>
     page: Schema.Attribute.Relation<"oneToOne", "api::page.page">
-    type: Schema.Attribute.Enumeration<["external", "page"]> &
+    post: Schema.Attribute.Relation<"oneToOne", "api::post.post">
+    type: Schema.Attribute.Enumeration<["external", "page", "post"]> &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<"page">
   }
@@ -834,6 +851,7 @@ declare module "@strapi/strapi" {
       "sections.about": SectionsAbout
       "sections.accordion": SectionsAccordion
       "sections.animated-logo-row": SectionsAnimatedLogoRow
+      "sections.animated-pledge": SectionsAnimatedPledge
       "sections.card": SectionsCard
       "sections.carousel": SectionsCarousel
       "sections.cta-banner": SectionsCtaBanner

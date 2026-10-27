@@ -6,6 +6,7 @@ import StrapiPledge from "@/components/page-builder/components/forms/StrapiPledg
 import StrapiAbout from "@/components/page-builder/components/sections/StrapiAbout"
 import StrapiAccordion from "@/components/page-builder/components/sections/StrapiAccordion"
 import StrapiAnimatedLogoRow from "@/components/page-builder/components/sections/StrapiAnimatedLogoRow"
+import StrapiAnimatedPledge from "@/components/page-builder/components/sections/StrapiAnimatedPledge"
 import StrapiCard from "@/components/page-builder/components/sections/StrapiCard"
 import StrapiCarousel from "@/components/page-builder/components/sections/StrapiCarousel"
 import StrapiCTABanner from "@/components/page-builder/components/sections/StrapiCTABanner"
@@ -44,6 +45,7 @@ export const PageContentComponents: Partial<
   // Sections
   "sections.about": StrapiAbout,
   "sections.animated-logo-row": StrapiAnimatedLogoRow,
+  "sections.animated-pledge": StrapiAnimatedPledge,
   "sections.faq": StrapiFaq,
   "sections.carousel": StrapiCarousel,
   "sections.heading-with-cta-button": StrapiHeadingWithCTAButton,

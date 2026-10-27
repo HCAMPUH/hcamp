@@ -20,6 +20,8 @@ const getStrapiLinkHref = (
       return component.href
     case "page":
       return component.page?.fullPath ?? "#"
+    case "post":
+      return component.post?.slug ? `/posts/${component.post.slug}` : "#"
 
     default:
       return

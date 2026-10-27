@@ -22,12 +22,16 @@ const PledgeFormSchema = z.object({
 
 type PledgeFormValues = z.infer<typeof PledgeFormSchema>
 
+export type SubmittedPledge = PledgeFormValues & {
+  documentId: string
+}
+
 export function PledgeForm({
   submitLabel,
   onSubmitted,
 }: Readonly<{
   submitLabel?: string | null
-  onSubmitted?: () => void
+  onSubmitted?: (pledge: SubmittedPledge) => void
 }>) {
   const t = useTranslations("pledgeForm")
   const pledgeMutation = usePledgeForm()
@@ -45,22 +49,31 @@ export function PledgeForm({
   const onSubmit = (values: PledgeFormValues) => {
     setIsSubmitted(false)
     pledgeMutation.mutate(values, {
-      onSuccess: () => {
+      onSuccess: (response) => {
+        const submittedPledge = (
+          response as { data?: Partial<SubmittedPledge> }
+        ).data
+        const pledge: SubmittedPledge = {
+          ...values,
+          ...submittedPledge,
+          documentId: submittedPledge?.documentId ?? `local-${Date.now()}`,
+        }
+
         toast.success(t("success"))
         form.reset()
         setIsSubmitted(true)
-        onSubmitted?.()
+        onSubmitted?.(pledge)
       },
     })
   }
 
   return (
-    <div className="flex w-full flex-col">
+    <div className="flex w-full flex-1 flex-col">
       <AppForm
         form={form}
         onSubmit={onSubmit}
         id="pledge-form"
-        className="w-full"
+        className="flex h-full w-full flex-col [&>fieldset]:flex [&>fieldset]:h-full [&>fieldset]:flex-col"
         disabled={pledgeMutation.isPending}
       >
         <AppField
@@ -90,7 +103,7 @@ export function PledgeForm({
         />
         <Button
           type="submit"
-          className="pledge-button relative mt-4 w-full overflow-visible"
+          className="pledge-button relative min-h-12 w-full flex-1 overflow-visible px-8 text-base"
           size="lg"
           form="pledge-form"
           isLoading={pledgeMutation.isPending}

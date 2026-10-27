@@ -26,7 +26,7 @@ export async function StrapiPledge({
   )) as { data: { count: number } }
   const listResponse = (await PublicStrapiClient.fetchAPI(
     `${PublicStrapiClient.getStrapiApiPathByUId("api::pledge.pledge")}/list`,
-    {},
+    { all: true },
     { cache: "no-store" }
   )) as { data: PledgeListItem[] }
 

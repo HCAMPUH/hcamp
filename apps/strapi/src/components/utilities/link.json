@@ -9,7 +9,7 @@
       "type": "enumeration",
       "required": true,
       "default": "page",
-      "enum": ["external", "page"]
+      "enum": ["external", "page", "post"]
     },
     "label": {
       "type": "string",
@@ -45,6 +45,21 @@
               "var": "type"
             },
             "page"
+          ]
+        }
+      }
+    },
+    "post": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::post.post",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "type"
+            },
+            "post"
           ]
         }
       }

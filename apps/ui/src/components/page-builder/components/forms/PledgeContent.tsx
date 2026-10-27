@@ -4,7 +4,10 @@ import { UserRound } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
-import { PledgeForm } from "@/components/elementary/forms/PledgeForm"
+import {
+  PledgeForm,
+  type SubmittedPledge,
+} from "@/components/elementary/forms/PledgeForm"
 import { Typography } from "@/components/typography"
 
 type PledgeListItem = {
@@ -36,11 +39,27 @@ export function PledgeContent({
 }: Props) {
   const t = useTranslations("pledgeForm")
   const [pledgeCount, setPledgeCount] = useState(initialPledgeCount)
+  const [pledgeList, setPledgeList] = useState(pledges)
+  const [newPledgeId, setNewPledgeId] = useState<string | null>(null)
+  const [listAnimationKey, setListAnimationKey] = useState(0)
+
+  const handleSubmitted = (pledge: SubmittedPledge) => {
+    setPledgeCount((count) => count + 1)
+    setPledgeList((currentPledges) => [pledge, ...currentPledges])
+    setNewPledgeId(pledge.documentId)
+    setListAnimationKey((key) => key + 1)
+
+    window.setTimeout(() => {
+      setNewPledgeId((currentId) =>
+        currentId === pledge.documentId ? null : currentId
+      )
+    }, 900)
+  }
 
   return (
     <div className="border-border bg-muted/30 mx-auto max-w-5xl rounded-2xl border p-6 sm:p-10">
-      <div className="grid items-start gap-8 lg:grid-cols-12">
-        <div className="space-y-6 lg:col-span-7">
+      <div className="grid items-stretch gap-8 lg:grid-cols-12">
+        <div className="flex flex-col space-y-6 lg:col-span-7">
           <div>
             {eyebrow ? (
               <div className="bg-brand-gold-soft text-brand-gold-muted dark:bg-brand-gold-muted/20 mb-2 inline-flex rounded-full px-3 py-1 text-xs font-extrabold uppercase dark:text-yellow-200">
@@ -64,15 +83,12 @@ export function PledgeContent({
               </Typography>
             ) : null}
           </div>
-          <PledgeForm
-            submitLabel={submitLabel}
-            onSubmitted={() => setPledgeCount((count) => count + 1)}
-          />
+          <PledgeForm submitLabel={submitLabel} onSubmitted={handleSubmitted} />
         </div>
 
         <div className="border-border bg-card space-y-4 rounded-2xl border p-5 lg:col-span-5">
           <Typography
-            className="border-border flex min-w-0 items-center justify-between gap-3 border-b pb-4"
+            className="border-border flex min-w-0 items-center justify-between gap-3 pb-4"
             variant="large"
           >
             <span className="text-muted-foreground min-w-0 text-sm leading-tight">
@@ -85,11 +101,18 @@ export function PledgeContent({
               <UserRound className="size-4" aria-hidden="true" />
             </span>
           </Typography>
-          <div className="divide-border max-h-[34rem] min-w-0 divide-y overflow-x-hidden overflow-y-auto pr-1">
-            {pledges.map((pledge) => (
+          <div
+            key={listAnimationKey}
+            className="pledge-list-updated divide-border max-h-[34rem] min-w-0 divide-y overflow-x-hidden overflow-y-auto pr-1"
+          >
+            {pledgeList.map((pledge) => (
               <div
                 key={pledge.documentId}
-                className="hover:bg-muted/40 min-w-0 px-1 py-2 transition-colors"
+                className={`hover:bg-muted/40 min-w-0 px-1 py-2 transition-colors ${
+                  pledge.documentId === newPledgeId
+                    ? "pledge-list-item-new"
+                    : ""
+                }`}
               >
                 <Typography
                   variant="small"

@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_sections_animated_pledges",
+  "info": {
+    "displayName": "AnimatedPledge",
+    "icon": "award",
+    "description": "A scrolling ticker of recent athlete pledges."
+  },
+  "options": {},
+  "attributes": {
+    "backgroundColor": {
+      "type": "customField",
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "titleLink": {
+      "type": "component",
+      "repeatable": false,
+      "component": "utilities.link"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

@@ -72,6 +72,10 @@
   }
 }
 
+.pledge-ticker {
+  will-change: transform;
+}
+
 .infinite-scroll-container-horizontal {
   overflow: hidden;
   white-space: nowrap;
@@ -256,7 +260,42 @@
   --spark-y: 0.8rem;
 }
 
+@keyframes pledgeListItemNew {
+  0% {
+    opacity: 0;
+    transform: translateY(-1rem) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.pledge-list-item-new {
+  animation: pledgeListItemNew 1100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes pledgeListUpdated {
+  0% {
+    opacity: 0.65;
+    transform: translateY(0.5rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pledge-list-updated {
+  animation: pledgeListUpdated 700ms ease-out both;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .pledge-list-item-new,
+  .pledge-list-updated {
+    animation: none;
+  }
+
   .pledge-button[data-submitted="true"],
   .pledge-button[data-submitted="true"]::before,
   .pledge-button[data-submitted="true"]::after,
