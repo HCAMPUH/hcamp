@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs"
 
+// @ts-expect-error - Import from monorepo
 import colorConfig from "@repo/design-system/tiptap-color-config.json"
 
 export function tipTapEditorConfig() {
