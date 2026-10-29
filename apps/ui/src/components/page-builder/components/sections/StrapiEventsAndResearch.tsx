@@ -2,12 +2,14 @@ import "server-only"
 
 import type { Data } from "@repo/strapi-types"
 import { Clock3, ExternalLink, MapPin, UserRound } from "lucide-react"
+import Image from "next/image"
 
 import AppLink from "@/components/elementary/AppLink"
 import CkEditorRenderer from "@/components/elementary/ck-editor"
 import { Container } from "@/components/elementary/Container"
 import { StrapiLink } from "@/components/page-builder/components/utilities/StrapiLink"
 import Typography from "@/components/typography"
+import { formatStrapiMediaUrl } from "@/lib/strapi-helpers"
 import type { PageBuilderComponentProps } from "@/types/general"
 
 type Event = NonNullable<
@@ -40,54 +42,19 @@ export function StrapiEventsAndResearch({
             ))}
           </div>
           {component.eventHighlightTitle || component.eventHighlightPost ? (
-            <div className="bg-foreground text-background dark:border-border dark:bg-muted/30 dark:text-foreground mt-8 rounded-2xl p-6 dark:border">
-              {component.eventHighlightLabel ? (
-                <Typography
-                  variant="small"
-                  fontWeight="semiBold"
-                  className="text-amber-400"
-                >
-                  {component.eventHighlightLabel}
-                </Typography>
-              ) : null}
-              {component.eventHighlightPost?.slug ? (
-                <AppLink
-                  href={`/posts/${component.eventHighlightPost.slug}`}
-                  variant="ghost"
-                  className="text-background hover:text-background dark:text-foreground dark:hover:text-foreground mt-4 h-auto min-w-0 justify-start p-0 text-left whitespace-normal no-underline hover:bg-transparent hover:no-underline"
-                >
-                  <Typography
-                    tag="h3"
-                    variant="heading4"
-                    fontWeight="semiBold"
-                    className="text-background dark:text-foreground min-w-0 break-words"
-                  >
-                    {component.eventHighlightTitle ??
-                      component.eventHighlightPost.title}
-                  </Typography>
-                </AppLink>
-              ) : (
-                <Typography
-                  tag="h3"
-                  variant="heading4"
-                  fontWeight="semiBold"
-                  className="text-background dark:text-foreground mt-4"
-                >
-                  {component.eventHighlightTitle ??
-                    component.eventHighlightPost?.title}
-                </Typography>
-              )}
-              {component.eventHighlightDescription ||
-              component.eventHighlightPost?.excerpt ? (
-                <Typography
-                  variant="small"
-                  className="text-background/70 dark:text-muted-foreground mt-3"
-                >
-                  {component.eventHighlightDescription ??
-                    component.eventHighlightPost?.excerpt}
-                </Typography>
-              ) : null}
-            </div>
+            component.eventHighlightPost?.slug ? (
+              <AppLink
+                href={`/posts/${component.eventHighlightPost.slug}`}
+                variant="ghost"
+                className="bg-foreground text-background dark:border-border dark:bg-muted/30 dark:text-foreground hover:bg-foreground hover:text-background dark:hover:bg-muted/30 dark:hover:text-foreground mt-8 h-auto w-full flex-col items-stretch gap-0 rounded-2xl border p-6 text-left whitespace-normal no-underline hover:no-underline"
+              >
+                <EventHighlightContent component={component} />
+              </AppLink>
+            ) : (
+              <div className="bg-foreground text-background dark:border-border dark:bg-muted/30 dark:text-foreground mt-8 rounded-2xl p-6 dark:border">
+                <EventHighlightContent component={component} />
+              </div>
+            )
           ) : null}
         </div>
 
@@ -105,6 +72,44 @@ export function StrapiEventsAndResearch({
         </div>
       </Container>
     </section>
+  )
+}
+
+function EventHighlightContent({
+  component,
+}: {
+  component: Data.Component<"sections.events-and-research">
+}) {
+  return (
+    <>
+      {component.eventHighlightLabel ? (
+        <Typography
+          variant="small"
+          fontWeight="semiBold"
+          className="text-amber-400"
+        >
+          {component.eventHighlightLabel}
+        </Typography>
+      ) : null}
+      <Typography
+        tag="h3"
+        variant="heading4"
+        fontWeight="semiBold"
+        className="text-background dark:text-foreground mt-4 min-w-0 break-words"
+      >
+        {component.eventHighlightTitle ?? component.eventHighlightPost?.title}
+      </Typography>
+      {component.eventHighlightDescription ||
+      component.eventHighlightPost?.excerpt ? (
+        <Typography
+          variant="small"
+          className="text-background/70 dark:text-muted-foreground mt-3"
+        >
+          {component.eventHighlightDescription ??
+            component.eventHighlightPost?.excerpt}
+        </Typography>
+      ) : null}
+    </>
   )
 }
 
@@ -144,6 +149,10 @@ function EventCard({ event }: { event: Event }) {
   const accentColor =
     BRAND_COLORS[Math.abs(Number(event.id)) % BRAND_COLORS.length] ??
     BRAND_COLORS[0]
+  const imageUrl =
+    !hasValidDate && event.coverImage
+      ? formatStrapiMediaUrl(event.coverImage.url)
+      : null
 
   return (
     <AppLink
@@ -151,6 +160,17 @@ function EventCard({ event }: { event: Event }) {
       variant="ghost"
       className="group border-border bg-muted/30 hover:bg-muted/50 h-auto items-stretch justify-start gap-4 rounded-2xl border p-5 text-left whitespace-normal no-underline hover:no-underline"
     >
+      {imageUrl ? (
+        <div className="relative size-16 shrink-0 overflow-hidden rounded-xl">
+          <Image
+            src={imageUrl}
+            alt={event.coverImage?.alternativeText ?? event.title}
+            fill
+            className="object-cover"
+            unoptimized
+          />
+        </div>
+      ) : null}
       {hasValidDate ? (
         <time
           dateTime={parsedDate.toISOString()}
@@ -180,26 +200,36 @@ function EventCard({ event }: { event: Event }) {
         >
           {event.title}
         </Typography>
-        <div className="text-muted-foreground mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs">
-          {event.location ? (
-            <span className="inline-flex items-center gap-1">
-              <MapPin className="size-3.5" aria-hidden="true" />
-              {event.location}
-            </span>
-          ) : null}
-          {event.eventTime ? (
-            <span className="inline-flex items-center gap-1">
-              <Clock3 className="size-3.5" aria-hidden="true" />
-              {event.eventTime}
-            </span>
-          ) : null}
-          {event.eventSpeakers ? (
-            <span className="inline-flex items-center gap-1">
-              <UserRound className="size-3.5" aria-hidden="true" />
-              {event.eventSpeakers}
-            </span>
-          ) : null}
-        </div>
+        {!event.featured && event.excerpt ? (
+          <Typography
+            variant="small"
+            className="text-muted-foreground mt-2 line-clamp-2"
+          >
+            {event.excerpt}
+          </Typography>
+        ) : null}
+        {event.featured ? (
+          <div className="text-muted-foreground mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs">
+            {event.location ? (
+              <span className="inline-flex items-center gap-1">
+                <MapPin className="size-3.5" aria-hidden="true" />
+                {event.location}
+              </span>
+            ) : null}
+            {event.eventTime ? (
+              <span className="inline-flex items-center gap-1">
+                <Clock3 className="size-3.5" aria-hidden="true" />
+                {event.eventTime}
+              </span>
+            ) : null}
+            {event.eventSpeakers ? (
+              <span className="inline-flex items-center gap-1">
+                <UserRound className="size-3.5" aria-hidden="true" />
+                {event.eventSpeakers}
+              </span>
+            ) : null}
+          </div>
+        ) : null}
       </div>
     </AppLink>
   )

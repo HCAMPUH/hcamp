@@ -342,7 +342,7 @@ export interface SectionsImageWithCtaButton extends Struct.ComponentSchema {
   attributes: {
     image: Schema.Attribute.Component<"utilities.basic-image", false>
     link: Schema.Attribute.Component<"utilities.link", false>
-    subText: Schema.Attribute.String
+    subText: Schema.Attribute.Text
     title: Schema.Attribute.String & Schema.Attribute.Required
   }
 }

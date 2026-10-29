@@ -46,11 +46,16 @@ const populateOverrides = [
         fields: [
           "title",
           "slug",
+          "excerpt",
           "eventDate",
           "eventTime",
           "eventSpeakers",
           "location",
+          "featured",
         ],
+        populate: {
+          coverImage: true,
+        },
       },
       eventHighlightPost: {
         fields: ["title", "slug", "excerpt"],

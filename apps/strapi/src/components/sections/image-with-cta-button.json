@@ -11,17 +11,17 @@
       "required": true
     },
     "subText": {
-      "type": "string"
+      "type": "text"
     },
     "image": {
       "type": "component",
-      "repeatable": false,
-      "component": "utilities.basic-image"
+      "component": "utilities.basic-image",
+      "repeatable": false
     },
     "link": {
       "type": "component",
-      "repeatable": false,
-      "component": "utilities.link"
+      "component": "utilities.link",
+      "repeatable": false
     }
   }
 }
