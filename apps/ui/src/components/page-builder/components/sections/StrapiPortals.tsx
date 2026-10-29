@@ -14,6 +14,7 @@ import {
 import { useState } from "react"
 
 import { Container } from "@/components/elementary/Container"
+import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"
 import StrapiLink from "@/components/page-builder/components/utilities/StrapiLink"
 import Typography from "@/components/typography"
 import { cn } from "@/lib/styles"
@@ -180,6 +181,14 @@ export function StrapiPortals({
                     </span>
                   ) : null}
                 </div>
+                {activeRole.image ? (
+                  <div className="border-border border-b pb-4">
+                    <StrapiBasicImage
+                      component={activeRole.image}
+                      className="mx-auto max-h-48 w-full object-contain"
+                    />
+                  </div>
+                ) : null}
                 <div className="space-y-3">
                   {courses.map((course) => (
                     <StrapiLink

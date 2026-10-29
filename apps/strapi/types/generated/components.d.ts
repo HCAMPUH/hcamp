@@ -621,6 +621,7 @@ export interface SharedPortalRole extends Struct.ComponentSchema {
       ["users", "megaphone", "trophy", "book-open", "flag", "heart-pulse"]
     > &
       Schema.Attribute.DefaultTo<"users">
+    image: Schema.Attribute.Component<"utilities.basic-image", false>
     label: Schema.Attribute.String & Schema.Attribute.Required
     primaryAction: Schema.Attribute.Component<"utilities.link", false>
     responsibilities: Schema.Attribute.Component<

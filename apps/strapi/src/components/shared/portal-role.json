@@ -56,6 +56,11 @@
     "coursesHeading": {
       "type": "string"
     },
+    "image": {
+      "type": "component",
+      "component": "utilities.basic-image",
+      "repeatable": false
+    },
     "courses": {
       "type": "component",
       "component": "shared.portal-course",
