@@ -59,6 +59,9 @@ const populateOverrides = [
       },
       eventHighlightPost: {
         fields: ["title", "slug", "excerpt"],
+        populate: {
+          coverImage: true,
+        },
       },
       researchItems: {
         populate: {

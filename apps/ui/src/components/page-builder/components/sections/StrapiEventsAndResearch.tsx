@@ -48,11 +48,15 @@ export function StrapiEventsAndResearch({
                 variant="ghost"
                 className="bg-foreground text-background dark:border-border dark:bg-muted/30 dark:text-foreground hover:bg-foreground hover:text-background dark:hover:bg-muted/30 dark:hover:text-foreground mt-8 h-auto w-full flex-col items-stretch gap-0 rounded-2xl border p-6 text-left whitespace-normal no-underline hover:no-underline"
               >
-                <EventHighlightContent component={component} />
+                <EventHighlightLayout component={component} />
               </AppLink>
             ) : (
               <div className="bg-foreground text-background dark:border-border dark:bg-muted/30 dark:text-foreground mt-8 rounded-2xl p-6 dark:border">
-                <EventHighlightContent component={component} />
+                {component.eventHighlightPost ? (
+                  <EventHighlightLayout component={component} />
+                ) : (
+                  <EventHighlightContent component={component} />
+                )}
               </div>
             )
           ) : null}
@@ -72,6 +76,39 @@ export function StrapiEventsAndResearch({
         </div>
       </Container>
     </section>
+  )
+}
+
+function EventHighlightLayout({
+  component,
+}: {
+  component: Data.Component<"sections.events-and-research">
+}) {
+  const imageUrl = component.eventHighlightPost?.coverImage?.url
+    ? formatStrapiMediaUrl(component.eventHighlightPost.coverImage.url)
+    : null
+
+  return (
+    <div className="flex w-full flex-col gap-6 sm:flex-row sm:items-stretch sm:justify-between">
+      <div className="min-w-0 flex-1">
+        <EventHighlightContent component={component} />
+      </div>
+      {imageUrl ? (
+        <div className="relative aspect-video w-full shrink-0 overflow-hidden rounded-xl sm:aspect-square sm:w-40">
+          <Image
+            src={imageUrl}
+            alt={
+              component.eventHighlightPost?.coverImage?.alternativeText ??
+              component.eventHighlightPost?.title ??
+              ""
+            }
+            fill
+            className="object-cover"
+            unoptimized
+          />
+        </div>
+      ) : null}
+    </div>
   )
 }
 
