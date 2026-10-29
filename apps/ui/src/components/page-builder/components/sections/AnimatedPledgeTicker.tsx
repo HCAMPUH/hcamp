@@ -33,9 +33,11 @@ export function AnimatedPledgeTicker({
   const pausedRef = useRef(false)
   const activeRef = useRef(true)
   const queueRef = useRef<PledgeListItem[]>([])
+  const retryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const appendPageRef = useRef<(page: number) => void>(() => {})
 
   const appendPage = useCallback(async (page: number) => {
-    if (loadingRef.current) return
+    if (loadingRef.current || retryTimeoutRef.current) return
 
     loadingRef.current = true
     try {
@@ -50,15 +52,31 @@ export function AnimatedPledgeTicker({
       }
 
       if (activeRef.current && Array.isArray(response.data)) {
-        queueRef.current.push(...response.data)
-        nextPageRef.current = response.meta?.hasMore ? page + 1 : 1
+        if (response.data.length > 0) {
+          queueRef.current.push(...response.data)
+          nextPageRef.current = response.meta?.hasMore ? page + 1 : 1
+        } else {
+          throw new Error(`Pledge page ${page} returned no records`)
+        }
       }
     } catch (error) {
       console.error("Failed to load animated pledge page", error)
+      if (activeRef.current) {
+        retryTimeoutRef.current = setTimeout(() => {
+          retryTimeoutRef.current = null
+          appendPageRef.current(page)
+        }, 2000)
+      }
     } finally {
       loadingRef.current = false
     }
   }, [])
+
+  useEffect(() => {
+    appendPageRef.current = (page) => {
+      void appendPage(page)
+    }
+  }, [appendPage])
 
   useEffect(() => {
     activeRef.current = true
@@ -100,15 +118,18 @@ export function AnimatedPledgeTicker({
           const itemWidth = firstItem.getBoundingClientRect().width + gap
 
           if (offsetRef.current >= itemWidth) {
-            offsetRef.current -= itemWidth
             const next = queueRef.current.shift()
-            if (next) {
-              firstItem.textContent = formatPledge(next, statusLabel)
-            }
-            track.append(firstItem)
-
-            if (queueRef.current.length <= 6) {
+            if (!next) {
+              offsetRef.current = itemWidth
               void appendPage(nextPageRef.current)
+            } else {
+              offsetRef.current -= itemWidth
+              firstItem.textContent = formatPledge(next, statusLabel)
+              track.append(firstItem)
+
+              if (queueRef.current.length <= 6) {
+                void appendPage(nextPageRef.current)
+              }
             }
           }
         }
@@ -124,6 +145,10 @@ export function AnimatedPledgeTicker({
     return () => {
       activeRef.current = false
       window.cancelAnimationFrame(frameId)
+      if (retryTimeoutRef.current) {
+        clearTimeout(retryTimeoutRef.current)
+        retryTimeoutRef.current = null
+      }
       mediaQuery.removeEventListener("change", handleMotionChange)
       track.removeEventListener("mouseenter", handlePointerEnter)
       track.removeEventListener("mouseleave", handlePointerLeave)
