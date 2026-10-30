@@ -13,14 +13,14 @@ type Props = {
   initialPledges: PledgeListItem[]
   statusLabel: string
   ariaLabel: string
+  speed: number
 }
-
-const SPEED = 35
 
 export function AnimatedPledgeTicker({
   initialPledges,
   statusLabel,
   ariaLabel,
+  speed,
 }: Props) {
   const trackRef = useRef<HTMLDivElement>(null)
   const cycleRef = useRef<HTMLDivElement>(null)
@@ -77,7 +77,7 @@ export function AnimatedPledgeTicker({
 
       if (Number.isFinite(cycleWidthRef.current) && cycleWidthRef.current > 0) {
         offsetRef.current =
-          (offsetRef.current + (SPEED * elapsed) / 1000) % cycleWidthRef.current
+          (offsetRef.current + (speed * elapsed) / 1000) % cycleWidthRef.current
 
         track.style.transform = `translate3d(-${offsetRef.current}px, 0, 0)`
       }
@@ -130,7 +130,7 @@ export function AnimatedPledgeTicker({
       intersectionObserver.disconnect()
       resizeObserver.disconnect()
     }
-  }, [])
+  }, [speed])
 
   if (!initialPledges.length) return null
 

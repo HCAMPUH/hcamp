@@ -68,6 +68,7 @@ export async function StrapiAnimatedPledge({
             initialPledges={pledges}
             statusLabel={t("status")}
             ariaLabel={t("ariaLabel")}
+            speed={Math.min(Math.max(component.speed ?? 35, 1), 100)}
           />
         </div>
       </Container>

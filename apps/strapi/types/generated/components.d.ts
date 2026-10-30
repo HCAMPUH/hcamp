@@ -134,6 +134,15 @@ export interface SectionsAnimatedPledge extends Struct.ComponentSchema {
         number
       > &
       Schema.Attribute.DefaultTo<30>
+    speed: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 100
+          min: 1
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<35>
     title: Schema.Attribute.String & Schema.Attribute.Required
     titleLink: Schema.Attribute.Component<"utilities.link", false>
   }
