@@ -19,7 +19,7 @@ type ResearchItem = NonNullable<
   Data.Component<"sections.events-and-research">["researchItems"]
 >[number]
 
-const BRAND_COLORS = ["#024731", "#008751", "#aa0000", "#ae5e00"] as const
+const BRAND_COLORS = ["#024731", "#009a44", "#aa0000", "#ae5e00"] as const
 const CARD_TITLE_CLASS = "!text-base leading-tight"
 
 export function StrapiEventsAndResearch({
@@ -46,12 +46,22 @@ export function StrapiEventsAndResearch({
               <AppLink
                 href={`/posts/${component.eventHighlightPost.slug}`}
                 variant="ghost"
-                className="bg-foreground text-background dark:border-border dark:bg-muted/30 dark:text-foreground hover:bg-foreground hover:text-background dark:hover:bg-muted/30 dark:hover:text-foreground mt-8 h-auto w-full flex-col items-stretch gap-0 rounded-2xl border p-6 text-left whitespace-normal no-underline hover:no-underline"
+                className="text-background dark:border-border dark:text-foreground hover:text-background dark:hover:text-foreground mt-8 h-auto w-full flex-col items-stretch gap-0 rounded-2xl border p-6 text-left whitespace-normal no-underline hover:no-underline"
+                style={{
+                  backgroundColor: component.eventHighlightColor ?? undefined,
+                }}
               >
                 <EventHighlightLayout component={component} />
               </AppLink>
             ) : (
-              <div className="bg-foreground text-background dark:border-border dark:bg-muted/30 dark:text-foreground mt-8 rounded-2xl p-6 dark:border">
+              <div
+                className="bg-foreground text-background dark:border-border dark:text-foreground mt-8 rounded-2xl p-6 dark:border"
+                style={
+                  component.eventHighlightColor
+                    ? { backgroundColor: component.eventHighlightColor }
+                    : undefined
+                }
+              >
                 {component.eventHighlightPost ? (
                   <EventHighlightLayout component={component} />
                 ) : (

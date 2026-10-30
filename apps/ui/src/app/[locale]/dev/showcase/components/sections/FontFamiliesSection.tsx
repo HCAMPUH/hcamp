@@ -4,13 +4,13 @@ import Typography from "@/components/typography"
 function FontFamiliesSection() {
   return (
     <div className="flex flex-col gap-4">
-      <Typography tag="h6">Roboto</Typography>
+      <Typography tag="h6">Inter</Typography>
       <ManualItem description='<Typography variant="heading6">Typography showcase example</Typography>'>
         <Typography variant="heading6">Typography showcase example</Typography>
       </ManualItem>
       <Typography variant="small">
-        We use font Roboto for both: headings and body text - it is imported
-        Google Font
+        Inter is the primary font for UI and body text. Source Serif 4 is used
+        for headings and long-form web content. Both are Google Fonts.
       </Typography>
     </div>
   )

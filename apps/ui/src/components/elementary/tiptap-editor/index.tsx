@@ -121,7 +121,7 @@ export function TiptapRichText({
       markMapping: {
         code({ children }) {
           return (
-            <code id={id} className="bg-gray-100 px-2 py-1 font-mono">
+            <code id={id} className="bg-gray-100 px-2 py-1 font-sans">
               {children}
             </code>
           )

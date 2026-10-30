@@ -16,7 +16,7 @@ import { ServerProviders } from "@/components/providers/ServerProviders"
 import TrackingScripts from "@/components/providers/TrackingScripts"
 import { Toaster } from "@/components/ui/sonner"
 import { debugStaticParams } from "@/lib/build"
-import { fontRoboto } from "@/lib/fonts"
+import { fontInter, fontSourceSerif } from "@/lib/fonts"
 import { isValidLocale, routing } from "@/lib/navigation"
 import { cn } from "@/lib/styles"
 
@@ -99,7 +99,8 @@ export default async function RootLayout({
       <body
         className={cn(
           "min-h-screen font-sans antialiased",
-          fontRoboto.variable
+          fontInter.variable,
+          fontSourceSerif.variable
         )}
       >
         <AccessibilityWidgetScript />

@@ -235,6 +235,8 @@ export interface SectionsEventsAndResearch extends Struct.ComponentSchema {
     icon: "calendar"
   }
   attributes: {
+    eventHighlightColor: Schema.Attribute.String &
+      Schema.Attribute.CustomField<"plugin::color-picker.color">
     eventHighlightDescription: Schema.Attribute.Text
     eventHighlightLabel: Schema.Attribute.String
     eventHighlightPost: Schema.Attribute.Relation<"oneToOne", "api::post.post">

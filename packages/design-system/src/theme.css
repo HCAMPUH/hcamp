@@ -32,22 +32,25 @@
   --color-card-foreground: oklch(0.145 0 0);
   --color-popover: oklch(1 0 0);
   --color-popover-foreground: oklch(0.145 0 0);
-  --color-primary: oklch(0.205 0 0);
-  --color-primary-foreground: oklch(0.985 0 0);
-  --color-secondary: oklch(0.97 0 0);
-  --color-secondary-foreground: oklch(0.205 0 0);
+  --color-primary: #024731;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #009a44;
+  --color-secondary-foreground: #ffffff;
   --color-muted: oklch(0.97 0 0);
-  --color-muted-foreground: oklch(0.556 0 0);
-  --color-accent: oklch(0.97 0 0);
-  --color-accent-foreground: oklch(0.205 0 0);
+  --color-muted-foreground: #475569;
+  --color-accent: #e6f4ec;
+  --color-accent-foreground: #024731;
   --color-destructive: oklch(0.577 0.245 27.325);
   --color-destructive-foreground: oklch(0.985 0 0);
   --color-border: oklch(0.922 0 0);
   --color-input: oklch(0.922 0 0);
-  --color-ring: oklch(0.708 0 0);
+  --color-ring: #024731;
 
   /* Tailwind v4 config */
-  --font-sans: "Roboto", sans-serif;
+  --font-sans: var(--font-inter), sans-serif;
+  --font-serif: var(--font-source-serif), serif;
+  --color-brand-manoa-green: #024731;
+  --color-brand-kelly-green: #009a44;
   --color-brand-gold-soft: #f1ebd7;
   --color-brand-gold-muted: #b5952f;
   --color-red-50: oklch(0.971 0.013 17.38);

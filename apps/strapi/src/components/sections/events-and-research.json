@@ -36,6 +36,11 @@
       "relation": "oneToOne",
       "target": "api::post.post"
     },
+    "eventHighlightColor": {
+      "type": "customField",
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
     "researchEyebrow": {
       "type": "string",
       "required": true
