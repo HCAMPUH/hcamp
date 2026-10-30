@@ -40,8 +40,8 @@ export default factories.createCoreController(
           : 1
       const pageSize =
         Number.isFinite(requestedPageSize) && requestedPageSize > 0
-          ? Math.min(Math.floor(requestedPageSize), 12)
-          : 12
+          ? Math.min(Math.floor(requestedPageSize), 100)
+          : 6
       const pledges = await strapi.documents("api::pledge.pledge").findMany({
         fields: ["firstName", "lastName", "schoolOrganization"],
         limit: pageSize,

@@ -1,8 +1,6 @@
 "use client"
 
-import { useCallback, useEffect, useRef } from "react"
-
-import { PublicStrapiClient } from "@/lib/strapi-api"
+import { useEffect, useRef } from "react"
 
 type PledgeListItem = {
   documentId: string
@@ -17,7 +15,6 @@ type Props = {
   ariaLabel: string
 }
 
-const PAGE_SIZE = 12
 const SPEED = 35
 
 export function AnimatedPledgeTicker({
@@ -26,109 +23,114 @@ export function AnimatedPledgeTicker({
   ariaLabel,
 }: Props) {
   const trackRef = useRef<HTMLDivElement>(null)
+  const cycleRef = useRef<HTMLDivElement>(null)
   const offsetRef = useRef(0)
+  const cycleWidthRef = useRef(0)
   const lastFrameRef = useRef<number | null>(null)
-  const nextPageRef = useRef(2)
-  const loadingRef = useRef(false)
   const pausedRef = useRef(false)
-  const activeRef = useRef(true)
-  const queueRef = useRef<PledgeListItem[]>([])
-
-  const appendPage = useCallback(async (page: number) => {
-    if (loadingRef.current) return
-
-    loadingRef.current = true
-    try {
-      const response = (await PublicStrapiClient.fetchAPI(
-        `${PublicStrapiClient.getStrapiApiPathByUId("api::pledge.pledge")}/list`,
-        { page, pageSize: PAGE_SIZE },
-        undefined,
-        { useProxy: true }
-      )) as {
-        data: PledgeListItem[]
-        meta: { hasMore: boolean }
-      }
-
-      if (activeRef.current && Array.isArray(response.data)) {
-        queueRef.current.push(...response.data)
-        nextPageRef.current = response.meta?.hasMore ? page + 1 : 1
-      }
-    } catch (error) {
-      console.error("Failed to load animated pledge page", error)
-    } finally {
-      loadingRef.current = false
-    }
-  }, [])
+  const visibleRef = useRef(true)
+  const frameRef = useRef<number | null>(null)
 
   useEffect(() => {
-    activeRef.current = true
-    void appendPage(nextPageRef.current)
-
     const track = trackRef.current
-    if (!track) return
+    const cycle = cycleRef.current
+    if (!track || !cycle) return
 
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
     pausedRef.current = mediaQuery.matches
-    const handleMotionChange = () => {
-      if (mediaQuery.matches) {
-        pausedRef.current = true
+    const shouldAnimate = () => !pausedRef.current && visibleRef.current
+    const stopAnimation = () => {
+      if (frameRef.current !== null) {
+        window.cancelAnimationFrame(frameRef.current)
+        frameRef.current = null
       }
+      lastFrameRef.current = null
     }
-    const handlePointerEnter = () => {
-      pausedRef.current = true
-    }
-    const handlePointerLeave = () => {
-      pausedRef.current = mediaQuery.matches
+    const updateCycleWidth = () => {
+      const width = cycle.getBoundingClientRect().width
+      if (!Number.isFinite(width) || width <= 0) return
+
+      const previousWidth = cycleWidthRef.current
+      const progress =
+        previousWidth > 0 && Number.isFinite(offsetRef.current)
+          ? offsetRef.current / previousWidth
+          : 0
+      cycleWidthRef.current = width
+      offsetRef.current = (progress * width) % width
+      track.style.transform = `translate3d(-${offsetRef.current}px, 0, 0)`
     }
 
-    mediaQuery.addEventListener("change", handleMotionChange)
-    track.addEventListener("mouseenter", handlePointerEnter)
-    track.addEventListener("mouseleave", handlePointerLeave)
-
-    let frameId: number
     const animate = (timestamp: number) => {
+      if (!shouldAnimate()) {
+        stopAnimation()
+
+        return
+      }
+
       if (lastFrameRef.current === null) lastFrameRef.current = timestamp
-      const elapsed = Math.min(timestamp - lastFrameRef.current, 100)
+
+      const elapsed = Math.max(
+        0,
+        Math.min(timestamp - lastFrameRef.current, 100)
+      )
       lastFrameRef.current = timestamp
 
-      if (!pausedRef.current) {
-        offsetRef.current += (SPEED * elapsed) / 1000
-
-        const firstItem = track.firstElementChild
-        if (firstItem) {
-          const gap = Number(getComputedStyle(track).columnGap || "0")
-          const itemWidth = firstItem.getBoundingClientRect().width + gap
-
-          if (offsetRef.current >= itemWidth) {
-            offsetRef.current -= itemWidth
-            const next = queueRef.current.shift()
-            if (next) {
-              firstItem.textContent = formatPledge(next, statusLabel)
-            }
-            track.append(firstItem)
-
-            if (queueRef.current.length <= 6) {
-              void appendPage(nextPageRef.current)
-            }
-          }
-        }
+      if (Number.isFinite(cycleWidthRef.current) && cycleWidthRef.current > 0) {
+        offsetRef.current =
+          (offsetRef.current + (SPEED * elapsed) / 1000) % cycleWidthRef.current
 
         track.style.transform = `translate3d(-${offsetRef.current}px, 0, 0)`
       }
 
-      frameId = window.requestAnimationFrame(animate)
+      frameRef.current = window.requestAnimationFrame(animate)
     }
+    const startAnimation = () => {
+      if (frameRef.current === null && shouldAnimate()) {
+        frameRef.current = window.requestAnimationFrame(animate)
+      }
+    }
+    const handleMotionChange = () => {
+      pausedRef.current = mediaQuery.matches
+      if (pausedRef.current) stopAnimation()
+      else startAnimation()
+    }
+    const handlePointerEnter = () => {
+      pausedRef.current = true
+      stopAnimation()
+    }
+    const handlePointerLeave = () => {
+      pausedRef.current = mediaQuery.matches
+      startAnimation()
+    }
+    const intersectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return
 
-    frameId = window.requestAnimationFrame(animate)
+        visibleRef.current = entry.isIntersecting
+        if (visibleRef.current) startAnimation()
+        else stopAnimation()
+      },
+      { threshold: 0 }
+    )
+
+    mediaQuery.addEventListener("change", handleMotionChange)
+    track.addEventListener("mouseenter", handlePointerEnter)
+    track.addEventListener("mouseleave", handlePointerLeave)
+    intersectionObserver.observe(track)
+    const resizeObserver = new ResizeObserver(updateCycleWidth)
+    resizeObserver.observe(cycle)
+    updateCycleWidth()
+    startAnimation()
 
     return () => {
-      activeRef.current = false
-      window.cancelAnimationFrame(frameId)
+      stopAnimation()
       mediaQuery.removeEventListener("change", handleMotionChange)
       track.removeEventListener("mouseenter", handlePointerEnter)
       track.removeEventListener("mouseleave", handlePointerLeave)
+      intersectionObserver.disconnect()
+      resizeObserver.disconnect()
     }
-  }, [appendPage, statusLabel])
+  }, [])
 
   if (!initialPledges.length) return null
 
@@ -136,13 +138,22 @@ export function AnimatedPledgeTicker({
     <div className="overflow-hidden whitespace-nowrap" aria-label={ariaLabel}>
       <div
         ref={trackRef}
-        className="pledge-ticker flex w-max gap-8 text-xs font-medium text-slate-300 sm:text-sm"
+        className="flex w-max text-xs font-medium text-slate-300 sm:text-sm"
       >
-        {initialPledges.map((pledge) => (
-          <span key={pledge.documentId} className="shrink-0">
-            {formatPledge(pledge, statusLabel)}
-          </span>
-        ))}
+        <div ref={cycleRef} className="flex w-max shrink-0 gap-8 pr-8">
+          {initialPledges.map((pledge) => (
+            <span key={pledge.documentId} className="shrink-0">
+              {formatPledge(pledge, statusLabel)}
+            </span>
+          ))}
+        </div>
+        <div className="flex w-max shrink-0 gap-8 pr-8" aria-hidden="true">
+          {initialPledges.map((pledge) => (
+            <span key={`${pledge.documentId}-duplicate`} className="shrink-0">
+              {formatPledge(pledge, statusLabel)}
+            </span>
+          ))}
+        </div>
       </div>
     </div>
   )

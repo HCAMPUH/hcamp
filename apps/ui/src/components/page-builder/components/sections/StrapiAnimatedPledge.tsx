@@ -25,7 +25,10 @@ export async function StrapiAnimatedPledge({
   const t = await getTranslations("pledgeTicker")
   const response = (await PublicStrapiClient.fetchAPI(
     `${PublicStrapiClient.getStrapiApiPathByUId("api::pledge.pledge")}/list`,
-    { page: 1, pageSize: 12 },
+    {
+      page: 1,
+      pageSize: Math.min(Math.max(component.recordsToShow ?? 30, 1), 100),
+    },
     { cache: "no-store" }
   )) as { data: PledgeListItem[] }
   const pledges = response.data ?? []

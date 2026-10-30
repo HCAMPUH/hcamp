@@ -125,6 +125,15 @@ export interface SectionsAnimatedPledge extends Struct.ComponentSchema {
     backgroundColor: Schema.Attribute.String &
       Schema.Attribute.CustomField<"plugin::color-picker.color">
     description: Schema.Attribute.Text
+    recordsToShow: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 100
+          min: 1
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<30>
     title: Schema.Attribute.String & Schema.Attribute.Required
     titleLink: Schema.Attribute.Component<"utilities.link", false>
   }
