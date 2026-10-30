@@ -73,7 +73,7 @@
     "@repo/typescript-config": "workspace:*",
     "commitizen": "4.3.2",
     "cz-conventional-changelog": "3.3.0",
-    "eslint": "9.39.4",
+    "eslint": "9.39.5",
     "lefthook": "2.1.9",
     "lint-staged": "15.5.2",
     "prettier": "3.8.4",
