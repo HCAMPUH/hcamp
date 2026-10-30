@@ -1,6 +1,23 @@
 import { getEnvVar } from "@/lib/env-vars"
 
-const LOCAL_STRAPI_MEDIA_URL = "http://127.0.0.1:1337"
+const LOCAL_STRAPI_MEDIA_URL = "http://localhost:1337"
+
+const localStrapiOrigin = (strapiUrl: string | undefined): string => {
+  if (!strapiUrl) {
+    return LOCAL_STRAPI_MEDIA_URL
+  }
+
+  try {
+    const url = new URL(strapiUrl)
+    if (["localhost", "127.0.0.1", "::1"].includes(url.hostname)) {
+      return `${url.protocol}//localhost${url.port ? `:${url.port}` : ""}`
+    }
+  } catch {
+    // Fall back to the browser-safe local origin for malformed configuration.
+  }
+
+  return strapiUrl.replace(/\/$/, "")
+}
 
 /**
  * Formats a Strapi media URL for use in the UI.
@@ -23,7 +40,7 @@ export const formatStrapiMediaUrl = (
     // Server components can use the private Strapi origin. This keeps STRAPI_URL
     // out of the browser while still producing absolute media URLs in SSR/RSC.
     if (typeof window === "undefined") {
-      return `${getEnvVar("STRAPI_URL")}${imageUrl}`
+      return `${localStrapiOrigin(getEnvVar("STRAPI_URL"))}${imageUrl}`
     }
 
     // Client components cannot read STRAPI_URL. When the UI itself is running
