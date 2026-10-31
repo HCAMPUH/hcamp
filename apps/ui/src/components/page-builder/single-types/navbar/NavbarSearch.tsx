@@ -217,7 +217,7 @@ export default function NavbarSearch() {
           size="icon"
           aria-label={t("search")}
           title={t("search")}
-          className="rounded-full"
+          className="text-primary rounded-full"
         >
           <Search />
         </Button>
