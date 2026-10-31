@@ -124,6 +124,24 @@
   }
 }
 
+@keyframes navbarMarquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes navbarMarqueeReverse {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(50%, 0, 0);
+  }
+}
+
 .pledge-button[data-submitted="true"] {
   animation: pledgeButtonCelebrate 850ms cubic-bezier(0.22, 1, 0.36, 1);
 }

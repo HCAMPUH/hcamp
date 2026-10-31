@@ -559,6 +559,12 @@ export interface ApiNavbarNavbar extends Struct.SingleTypeSchema {
           localized: true
         }
       }>
+    navbarLogoRow: Schema.Attribute.Component<"layout.navbar-logo-row", false> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
     primaryButtons: Schema.Attribute.Component<"utilities.link", true> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {

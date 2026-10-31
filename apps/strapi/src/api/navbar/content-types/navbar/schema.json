@@ -45,6 +45,16 @@
       },
       "component": "utilities.link",
       "repeatable": true
+    },
+    "navbarLogoRow": {
+      "type": "component",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "layout.navbar-logo-row",
+      "repeatable": false
     }
   }
 }

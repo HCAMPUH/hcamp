@@ -63,6 +63,28 @@ export interface LayoutNavbarItem extends Struct.ComponentSchema {
   }
 }
 
+export interface LayoutNavbarLogoRow extends Struct.ComponentSchema {
+  collectionName: "components_layout_navbar_logo_rows"
+  info: {
+    description: "Optional animated image row displayed beneath the navbar."
+    displayName: "NavbarLogoRow"
+    icon: "images"
+  }
+  attributes: {
+    logos: Schema.Attribute.Component<"utilities.basic-image", true>
+    missionTitle: Schema.Attribute.String
+    speed: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 25
+          min: 1
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<5>
+  }
+}
+
 export interface SectionsAbout extends Struct.ComponentSchema {
   collectionName: "components_sections_abouts"
   info: {
@@ -869,6 +891,7 @@ declare module "@strapi/strapi" {
       "forms.newsletter-form": FormsNewsletterForm
       "forms.pledge": FormsPledge
       "layout.navbar-item": LayoutNavbarItem
+      "layout.navbar-logo-row": LayoutNavbarLogoRow
       "sections.about": SectionsAbout
       "sections.accordion": SectionsAccordion
       "sections.animated-logo-row": SectionsAnimatedLogoRow

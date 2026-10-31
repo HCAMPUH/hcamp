@@ -170,6 +170,7 @@ export async function fetchNavbar(locale: Locale) {
           logoImage: "smart",
           primaryButtons: "smart",
           navbarItems: "smart",
+          navbarLogoRow: "smart",
         },
       },
       {
