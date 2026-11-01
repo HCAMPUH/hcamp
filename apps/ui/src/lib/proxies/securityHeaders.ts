@@ -79,11 +79,6 @@ function buildCsp({
       "https://hawaii.us14.list-manage.com",
       "https://player.vimeo.com",
       "https://www.googletagmanager.com",
-      "https://*.skynettechnologies.com",
-      "https://*.skynettechnologies.us",
-      "https://*.googleapis.com",
-      "https://*.gstatic.com",
-      "https://vlibras.gov.br",
       ...(isDevelopment ? ["'unsafe-eval'"] : []),
       // Example — Google Tag Manager / Analytics / Ads (uncomment if used):
       // "https://www.googletagmanager.com",
@@ -96,11 +91,6 @@ function buildCsp({
       "style-src 'self' 'unsafe-inline'",
       "https://cdn-images.mailchimp.com",
       "https://hawaii.us14.list-manage.com",
-      "https://*.skynettechnologies.com",
-      "https://*.skynettechnologies.us",
-      "https://*.googleapis.com",
-      "https://*.gstatic.com",
-      "https://vlibras.gov.br",
     ].join(" "),
     // imgproxy, blob storage and Strapi media are all served over HTTPS.
     [
@@ -109,21 +99,10 @@ function buildCsp({
         ? ["http://127.0.0.1:1337", "http://localhost:1337"]
         : []),
     ].join(" "),
-    [
-      "font-src 'self' data:",
-      "https://*.skynettechnologies.com",
-      "https://*.skynettechnologies.us",
-      "https://*.googleapis.com",
-      "https://*.gstatic.com",
-    ].join(" "),
+    "font-src 'self' data:",
     [
       "connect-src 'self'",
       ...meilisearchOrigins,
-      "https://*.skynettechnologies.com",
-      "https://*.skynettechnologies.us",
-      "https://*.googleapis.com",
-      "https://*.gstatic.com",
-      "https://vlibras.gov.br",
       "https://www.google-analytics.com",
       "https://*.google-analytics.com",
       "https://*.analytics.google.com",
@@ -145,7 +124,6 @@ function buildCsp({
       "https://player.vimeo.com",
       "https://www.youtube.com",
       "https://www.youtube-nocookie.com",
-      "https://vlibras.gov.br",
     ].join(" "),
     "worker-src 'self' blob:",
     [

@@ -7,6 +7,7 @@ import { Container } from "@/components/elementary/Container"
 import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"
 import StrapiImageWithLink from "@/components/page-builder/components/utilities/StrapiImageWithLink"
 import StrapiLink from "@/components/page-builder/components/utilities/StrapiLink"
+import { NavbarAccessibilityButton } from "@/components/page-builder/single-types/navbar/NavbarAccessibilityButton"
 import NavbarLogoRow from "@/components/page-builder/single-types/navbar/NavbarLogoRow"
 import {
   NavbarMobileNavigation,
@@ -60,6 +61,7 @@ export function NavbarInner({
             {/* RIGHT SIDE */}
             <div className="hidden h-full items-center gap-2 pl-4 lg:flex">
               <NavbarSearch />
+              <NavbarAccessibilityButton />
               {/*   <NavbarAuthSection sessionSSR={session} />
                 <LocaleSwitcher locale={locale} /> */}
               {/* <div className="flex h-8 w-px flex-1 bg-black/70" /> */}
@@ -69,6 +71,7 @@ export function NavbarInner({
             </div>
             <div className="flex items-center gap-1 lg:hidden">
               <NavbarSearch />
+              <NavbarAccessibilityButton />
               <NavbarMobileToggle />
             </div>
           </Container>

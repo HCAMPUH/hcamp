@@ -10,7 +10,6 @@ import StrapiPreviewListener from "@/components/elementary/StrapiPreviewListener
 import { TailwindIndicator } from "@/components/elementary/TailwindIndicator"
 import StrapiFooter from "@/components/page-builder/single-types/footer/StrapiFooter"
 import StrapiNavbar from "@/components/page-builder/single-types/navbar/StrapiNavbar"
-import { AccessibilityWidgetScript } from "@/components/providers/AccessibilityWidget"
 import { ClientProviders } from "@/components/providers/ClientProviders"
 import { ServerProviders } from "@/components/providers/ServerProviders"
 import TrackingScripts from "@/components/providers/TrackingScripts"
@@ -103,7 +102,6 @@ export default async function RootLayout({
           fontSourceSerif.variable
         )}
       >
-        <AccessibilityWidgetScript />
         <TrackingScripts />
         <ServerProviders>
           <StrapiPreviewListener />

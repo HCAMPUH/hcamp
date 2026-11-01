@@ -1,5 +1,6 @@
 "use client"
 
+import { useAccessKit } from "@access-kit/react"
 import { useEffect, useRef } from "react"
 
 type PledgeListItem = {
@@ -22,6 +23,7 @@ export function AnimatedPledgeTicker({
   ariaLabel,
   speed,
 }: Props) {
+  const { settings } = useAccessKit()
   const trackRef = useRef<HTMLDivElement>(null)
   const cycleRef = useRef<HTMLDivElement>(null)
   const offsetRef = useRef(0)
@@ -37,7 +39,7 @@ export function AnimatedPledgeTicker({
     if (!track || !cycle) return
 
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
-    pausedRef.current = mediaQuery.matches
+    pausedRef.current = settings.reducedMotion || mediaQuery.matches
     const shouldAnimate = () => !pausedRef.current && visibleRef.current
     const stopAnimation = () => {
       if (frameRef.current !== null) {
@@ -90,7 +92,7 @@ export function AnimatedPledgeTicker({
       }
     }
     const handleMotionChange = () => {
-      pausedRef.current = mediaQuery.matches
+      pausedRef.current = settings.reducedMotion || mediaQuery.matches
       if (pausedRef.current) stopAnimation()
       else startAnimation()
     }
@@ -99,7 +101,7 @@ export function AnimatedPledgeTicker({
       stopAnimation()
     }
     const handlePointerLeave = () => {
-      pausedRef.current = mediaQuery.matches
+      pausedRef.current = settings.reducedMotion || mediaQuery.matches
       startAnimation()
     }
     const intersectionObserver = new IntersectionObserver(
@@ -130,7 +132,7 @@ export function AnimatedPledgeTicker({
       intersectionObserver.disconnect()
       resizeObserver.disconnect()
     }
-  }, [speed])
+  }, [settings.reducedMotion, speed])
 
   if (!initialPledges.length) return null
 
