@@ -36,14 +36,14 @@ export function NavbarLogoRow({
                 logos.map((logo) => (
                   <li
                     key={`navbar-logo-${sequenceIndex}-${repetitionIndex}-${logo.id}`}
-                    className="h-12 w-auto shrink-0 list-none"
+                    className="h-[90px] w-auto shrink-0 list-none"
                     aria-hidden={sequenceIndex > 0}
                   >
                     <StrapiBasicImage
                       component={logo}
                       loading="eager"
-                      className="h-12 w-auto object-contain"
-                      height={48}
+                      className="h-[90px] w-auto object-contain"
+                      height={90}
                       preload
                     />
                   </li>
