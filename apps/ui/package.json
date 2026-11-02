@@ -20,7 +20,6 @@
     "not op_mini all"
   ],
   "dependencies": {
-    "@access-kit/react": "^0.2.0",
     "@hookform/error-message": "2.0.1",
     "@hookform/resolvers": "5.4.0",
     "@meilisearch/instant-meilisearch": "^0.31.4",

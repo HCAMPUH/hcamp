@@ -55,6 +55,7 @@ export const env = createEnv({
     BASIC_AUTH_PASSWORD: z.string().optional(),
 
     IMGPROXY_URL: z.string().url().optional(),
+    WELCOMING_WEB_WIDGET_ID: z.string().optional(),
   },
 
   /*
@@ -127,6 +128,7 @@ export const env = createEnv({
     BASIC_AUTH_PASSWORD: process.env.BASIC_AUTH_PASSWORD,
 
     IMGPROXY_URL: process.env.IMGPROXY_URL,
+    WELCOMING_WEB_WIDGET_ID: process.env.WELCOMING_WEB_WIDGET_ID,
 
     // client
     // @dominik-juriga - find out if these are specific per environment

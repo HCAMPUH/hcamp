@@ -4,10 +4,6 @@
 
 @plugin "tailwindcss-animate";
 
-#accesskit-widget-root > button[aria-label="Open accessibility menu"] {
-  display: none !important;
-}
-
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still

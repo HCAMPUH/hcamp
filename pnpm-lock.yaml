@@ -423,9 +423,6 @@ importers:
 
   apps/ui:
     dependencies:
-      '@access-kit/react':
-        specifier: ^0.2.0
-        version: 0.2.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@hookform/error-message':
         specifier: 2.0.1
         version: 2.0.1(react-dom@19.2.8(react@19.2.8))(react-hook-form@7.79.0(react@19.2.8))(react@19.2.8)
@@ -871,12 +868,6 @@ packages:
       react-dom: ^18.0.0
       react-router-dom: ^6.0.0
       styled-components: ^6.0.0
-
-  '@access-kit/react@0.2.0':
-    resolution: {integrity: sha512-7jbu4KMP6q51yNFqZPcbZtO2X/VOYyGeDHhXzLcmESlMEPfjCq8zWy0j/5yoM+7oz1sPmdcVFrjFHAH+sv864w==}
-    peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
 
   '@ai-sdk/gateway@3.0.189':
     resolution: {integrity: sha512-roPKojHenQm7U77kNNE0w586jP2vnjxaNx/+KFSQkJRLLAxrg7yUwZQfyOEizoTxdaltu+ZIlLRTw09X3XbGvQ==}
@@ -9530,10 +9521,6 @@ packages:
   available-typed-arrays@1.0.7:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
-
-  axe-core@4.11.2:
-    resolution: {integrity: sha512-byD6KPdvo72y/wj2T/4zGEvvlis+PsZsn/yPS3pEO+sFpcrqRpX/TJCxvVaEsNeMrfQbCr7w163YqoD9IYwHXw==}
-    engines: {node: '>=4'}
 
   axe-core@4.11.4:
     resolution: {integrity: sha512-KunSNx+TVpkAw/6ULfhnx+HWRecjqZGTOyquAoWHYLRSdK1tB5Ihce1ZW+UY3fj33bYAFWPu7W/GRSmmrCGuxA==}
@@ -18624,12 +18611,6 @@ snapshots:
       sanitize-html: 2.13.0
       styled-components: 6.5.3(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       yup: 0.32.9
-
-  '@access-kit/react@0.2.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
-    dependencies:
-      axe-core: 4.11.2
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
 
   '@ai-sdk/gateway@3.0.189(zod@4.4.3)':
     dependencies:
@@ -32834,8 +32815,6 @@ snapshots:
   available-typed-arrays@1.0.7:
     dependencies:
       possible-typed-array-names: 1.1.0
-
-  axe-core@4.11.2: {}
 
   axe-core@4.11.4: {}
 

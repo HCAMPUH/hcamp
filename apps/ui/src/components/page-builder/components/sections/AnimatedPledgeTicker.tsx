@@ -1,6 +1,5 @@
 "use client"
 
-import { useAccessKit } from "@access-kit/react"
 import { useEffect, useRef } from "react"
 
 type PledgeListItem = {
@@ -23,13 +22,14 @@ export function AnimatedPledgeTicker({
   ariaLabel,
   speed,
 }: Props) {
-  const { settings } = useAccessKit()
   const trackRef = useRef<HTMLDivElement>(null)
   const cycleRef = useRef<HTMLDivElement>(null)
   const offsetRef = useRef(0)
   const cycleWidthRef = useRef(0)
   const lastFrameRef = useRef<number | null>(null)
-  const pausedRef = useRef(false)
+  const mediaPausedRef = useRef(false)
+  const widgetPausedRef = useRef(false)
+  const pointerPausedRef = useRef(false)
   const visibleRef = useRef(true)
   const frameRef = useRef<number | null>(null)
 
@@ -39,8 +39,15 @@ export function AnimatedPledgeTicker({
     if (!track || !cycle) return
 
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
-    pausedRef.current = settings.reducedMotion || mediaQuery.matches
-    const shouldAnimate = () => !pausedRef.current && visibleRef.current
+    mediaPausedRef.current = mediaQuery.matches
+    widgetPausedRef.current = Boolean(
+      document.documentElement.dataset.c8PauseAnimations
+    )
+    const shouldAnimate = () =>
+      !mediaPausedRef.current &&
+      !widgetPausedRef.current &&
+      !pointerPausedRef.current &&
+      visibleRef.current
     const stopAnimation = () => {
       if (frameRef.current !== null) {
         window.cancelAnimationFrame(frameRef.current)
@@ -92,17 +99,25 @@ export function AnimatedPledgeTicker({
       }
     }
     const handleMotionChange = () => {
-      pausedRef.current = settings.reducedMotion || mediaQuery.matches
-      if (pausedRef.current) stopAnimation()
+      mediaPausedRef.current = mediaQuery.matches
+      if (mediaPausedRef.current) stopAnimation()
       else startAnimation()
     }
     const handlePointerEnter = () => {
-      pausedRef.current = true
+      pointerPausedRef.current = true
       stopAnimation()
     }
     const handlePointerLeave = () => {
-      pausedRef.current = settings.reducedMotion || mediaQuery.matches
+      pointerPausedRef.current = false
       startAnimation()
+    }
+    const handleWidgetMotionChange = () => {
+      widgetPausedRef.current = Boolean(
+        document.documentElement.dataset.c8PauseAnimations
+      )
+
+      if (widgetPausedRef.current) stopAnimation()
+      else startAnimation()
     }
     const intersectionObserver = new IntersectionObserver(
       ([entry]) => {
@@ -116,6 +131,11 @@ export function AnimatedPledgeTicker({
     )
 
     mediaQuery.addEventListener("change", handleMotionChange)
+    const widgetMotionObserver = new MutationObserver(handleWidgetMotionChange)
+    widgetMotionObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-c8-pause-animations"],
+    })
     track.addEventListener("mouseenter", handlePointerEnter)
     track.addEventListener("mouseleave", handlePointerLeave)
     intersectionObserver.observe(track)
@@ -127,12 +147,13 @@ export function AnimatedPledgeTicker({
     return () => {
       stopAnimation()
       mediaQuery.removeEventListener("change", handleMotionChange)
+      widgetMotionObserver.disconnect()
       track.removeEventListener("mouseenter", handlePointerEnter)
       track.removeEventListener("mouseleave", handlePointerLeave)
       intersectionObserver.disconnect()
       resizeObserver.disconnect()
     }
-  }, [settings.reducedMotion, speed])
+  }, [speed])
 
   if (!initialPledges.length) return null
 

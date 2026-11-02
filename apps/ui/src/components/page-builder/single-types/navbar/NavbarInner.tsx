@@ -59,20 +59,20 @@ export function NavbarInner({
             </div>
 
             {/* RIGHT SIDE */}
-            <div className="hidden h-full items-center gap-2 pl-4 lg:flex">
-              <NavbarSearch />
+            <div className="flex h-full items-center gap-1 pl-4 lg:gap-2">
               <NavbarAccessibilityButton />
-              {/*   <NavbarAuthSection sessionSSR={session} />
-                <LocaleSwitcher locale={locale} /> */}
-              {/* <div className="flex h-8 w-px flex-1 bg-black/70" /> */}
-              {navbarData?.primaryButtons?.map((button) => (
-                <StrapiLink key={button.id} component={button} />
-              ))}
-            </div>
-            <div className="flex items-center gap-1 lg:hidden">
               <NavbarSearch />
-              <NavbarAccessibilityButton />
-              <NavbarMobileToggle />
+              <div className="hidden items-center gap-2 lg:flex">
+                {/*   <NavbarAuthSection sessionSSR={session} />
+                  <LocaleSwitcher locale={locale} /> */}
+                {/* <div className="flex h-8 w-px flex-1 bg-black/70" /> */}
+                {navbarData?.primaryButtons?.map((button) => (
+                  <StrapiLink key={button.id} component={button} />
+                ))}
+              </div>
+              <div className="lg:hidden">
+                <NavbarMobileToggle />
+              </div>
             </div>
           </Container>
         </div>

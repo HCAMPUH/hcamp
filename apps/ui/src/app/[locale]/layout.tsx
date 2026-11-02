@@ -10,11 +10,13 @@ import StrapiPreviewListener from "@/components/elementary/StrapiPreviewListener
 import { TailwindIndicator } from "@/components/elementary/TailwindIndicator"
 import StrapiFooter from "@/components/page-builder/single-types/footer/StrapiFooter"
 import StrapiNavbar from "@/components/page-builder/single-types/navbar/StrapiNavbar"
+import AccessibilityWidget from "@/components/providers/AccessibilityWidget"
 import { ClientProviders } from "@/components/providers/ClientProviders"
 import { ServerProviders } from "@/components/providers/ServerProviders"
 import TrackingScripts from "@/components/providers/TrackingScripts"
 import { Toaster } from "@/components/ui/sonner"
 import { debugStaticParams } from "@/lib/build"
+import { getEnvVar } from "@/lib/env-vars"
 import { fontInter, fontSourceSerif } from "@/lib/fonts"
 import { isValidLocale, routing } from "@/lib/navigation"
 import { cn } from "@/lib/styles"
@@ -103,6 +105,7 @@ export default async function RootLayout({
         )}
       >
         <TrackingScripts />
+        <AccessibilityWidget widgetId={getEnvVar("WELCOMING_WEB_WIDGET_ID")} />
         <ServerProviders>
           <StrapiPreviewListener />
           <ClientProviders>

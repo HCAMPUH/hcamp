@@ -1,6 +1,5 @@
 "use client"
 
-import { AccessibilityWidget, AccessKitProvider } from "@access-kit/react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ThemeProvider } from "next-themes"
 import type React from "react"
@@ -29,24 +28,7 @@ export function ClientProviders({
       enableSystem
       // forcedTheme="light"
     >
-      <AccessKitProvider>
-        <QueryClientProvider client={queryClient}>
-          {children}
-          <AccessibilityWidget
-            initialPosition="center-right"
-            style={{
-              primary: "var(--color-primary)",
-              tabBackground: "var(--color-primary)",
-              tabIcon: "var(--color-primary-foreground)",
-              panelBackground: "var(--color-background)",
-              panelText: "var(--color-foreground)",
-              border: "var(--color-border)",
-              mutedText: "var(--color-muted-foreground)",
-              icon: "var(--color-muted-foreground)",
-            }}
-          />
-        </QueryClientProvider>
-      </AccessKitProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </ThemeProvider>
   )
 }

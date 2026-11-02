@@ -4,37 +4,36 @@ import { Accessibility } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
-function openAccessibilityMenu() {
-  const widgetRoot = document.getElementById("accesskit-widget-root")
-  const widgetButton = widgetRoot?.querySelector<HTMLButtonElement>(
-    ':scope > button[aria-label="Open accessibility menu"]'
-  )
-
-  if (!widgetButton) {
-    console.error("AccessKit widget button is not mounted")
-
-    return
+declare global {
+  interface Window {
+    AccessibilityWidgetAPI?: {
+      openWidget: () => void
+    }
   }
-
-  widgetButton.dispatchEvent(
-    new KeyboardEvent("keydown", {
-      bubbles: true,
-      cancelable: true,
-      key: "Enter",
-      code: "Enter",
-    })
-  )
 }
 
 export function NavbarAccessibilityButton() {
+  function openAccessibilityWidget() {
+    const api = window.AccessibilityWidgetAPI
+
+    if (!api) {
+      console.warn("Welcoming Web accessibility widget is not ready")
+
+      return
+    }
+
+    api.openWidget()
+  }
+
   return (
     <Button
+      id="accessibility-trigger"
       variant="ghost"
       size="icon"
       aria-label="Accessibility settings"
       title="Accessibility settings"
       className="text-primary rounded-full"
-      onClick={openAccessibilityMenu}
+      onClick={openAccessibilityWidget}
     >
       <Accessibility />
     </Button>
