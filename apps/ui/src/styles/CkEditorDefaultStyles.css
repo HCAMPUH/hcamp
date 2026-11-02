@@ -447,7 +447,7 @@
 
 .ck-content .ck-video-placeholder__play {
   align-items: center;
-  background: rgb(123 17 19 / 90%);
+  background: color-mix(in srgb, var(--color-brand-red) 90%, transparent);
   border-radius: 999px;
   display: flex;
   height: 4.5rem;
@@ -482,7 +482,7 @@
 
 .ck-content .ck-video-placeholder:hover .ck-video-placeholder__play,
 .ck-content .ck-video-placeholder:focus-visible .ck-video-placeholder__play {
-  background: #d4af37;
+  background: var(--color-brand-orange);
   transform: translate(-50%, -50%) scale(1.08);
 }
 
