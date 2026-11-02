@@ -1,4 +1,6 @@
 const YOUTUBE_THUMBNAIL_HOST = "i.ytimg.com"
+const THUMBNAIL_CACHE_CONTROL =
+  "public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800"
 
 export const runtime = "nodejs"
 
@@ -19,8 +21,18 @@ export async function GET(request: Request) {
       signal: AbortSignal.timeout(5000),
     })
 
-    return Response.redirect(response.ok ? thumbnailUrl : fallbackUrl, 302)
+    return redirectToThumbnail(response.ok ? thumbnailUrl : fallbackUrl)
   } catch {
-    return Response.redirect(fallbackUrl, 302)
+    return redirectToThumbnail(fallbackUrl)
   }
+}
+
+function redirectToThumbnail(url: string) {
+  return new Response(null, {
+    headers: {
+      "Cache-Control": THUMBNAIL_CACHE_CONTROL,
+      Location: url,
+    },
+    status: 302,
+  })
 }

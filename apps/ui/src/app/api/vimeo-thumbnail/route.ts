@@ -1,6 +1,8 @@
 const VIMEO_OEMBED_URL = "https://vimeo.com/api/oembed.json"
 const VIMEO_CDN_HOST = "i.vimeocdn.com"
 const FALLBACK_THUMBNAIL_URL = "/images/placeholder.png"
+const THUMBNAIL_CACHE_CONTROL =
+  "public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800"
 
 export const runtime = "nodejs"
 
@@ -25,7 +27,7 @@ export async function GET(request: Request) {
     })
 
     if (!response.ok) {
-      return Response.redirect(FALLBACK_THUMBNAIL_URL, 302)
+      return redirectToThumbnail(FALLBACK_THUMBNAIL_URL)
     }
 
     const data: unknown = await response.json()
@@ -33,14 +35,24 @@ export async function GET(request: Request) {
 
     for (const thumbnailUrl of thumbnailUrls) {
       if (await isAvailable(thumbnailUrl)) {
-        return Response.redirect(thumbnailUrl, 302)
+        return redirectToThumbnail(thumbnailUrl)
       }
     }
 
-    return Response.redirect(FALLBACK_THUMBNAIL_URL, 302)
+    return redirectToThumbnail(FALLBACK_THUMBNAIL_URL)
   } catch {
-    return Response.redirect(FALLBACK_THUMBNAIL_URL, 302)
+    return redirectToThumbnail(FALLBACK_THUMBNAIL_URL)
   }
+}
+
+function redirectToThumbnail(url: string) {
+  return new Response(null, {
+    headers: {
+      "Cache-Control": THUMBNAIL_CACHE_CONTROL,
+      Location: url,
+    },
+    status: 302,
+  })
 }
 
 function getVimeoThumbnailUrls(data: unknown): string[] {
