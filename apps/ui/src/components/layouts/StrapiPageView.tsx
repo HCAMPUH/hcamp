@@ -27,6 +27,7 @@ export default function StrapiPageView({ params, searchParams }: Props) {
   setRequestLocale(locale)
 
   const fullPath = ROOT_PAGE_PATH + (params.rest ?? []).join("/")
+  const isRootPage = fullPath === ROOT_PAGE_PATH
   const response = use(fetchPage(fullPath, locale))
 
   const data = response?.data
@@ -41,13 +42,15 @@ export default function StrapiPageView({ params, searchParams }: Props) {
       <StrapiStructuredData structuredData={data?.seo?.structuredData} />
 
       <main className={cn("flex w-full flex-col overflow-hidden")}>
-        <Container className="mb-10 md:mb-20">
-          <Breadcrumbs
-            breadcrumbs={response?.meta?.breadcrumbs}
-            className="mt-6 mb-6"
-            locale={locale}
-          />
-        </Container>
+        {!isRootPage && (
+          <Container className="mb-10 md:mb-20">
+            <Breadcrumbs
+              breadcrumbs={response?.meta?.breadcrumbs}
+              className="mt-6 mb-6"
+              locale={locale}
+            />
+          </Container>
+        )}
 
         {content
           .filter((comp) => comp != null)

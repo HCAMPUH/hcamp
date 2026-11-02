@@ -53,6 +53,11 @@
   --color-brand-kelly-green: #009a44;
   --color-brand-gold-soft: #f1ebd7;
   --color-brand-gold-muted: #b5952f;
+  /* University of Hawaiʻi at Mānoa tertiary colors */
+  --color-brand-red: #aa0000;
+  --color-brand-orange: #ae5e00;
+  --color-brand-blue: #242551;
+  --color-brand-purple: #542977;
   --color-red-50: oklch(0.971 0.013 17.38);
   --color-red-100: oklch(0.936 0.032 17.717);
   --color-red-200: oklch(0.885 0.062 18.334);

@@ -7,7 +7,12 @@ const data = {
   id: 1,
   __component: "sections.animated-logo-row",
   title: "<h3>Our partners</h3>",
-  logos: [mockImage, mockImage, mockImage, mockImage],
+  logos: [
+    { ...mockImage, id: 1 },
+    { ...mockImage, id: 2 },
+    { ...mockImage, id: 3 },
+    { ...mockImage, id: 4 },
+  ],
 } as unknown as Data.Component<"sections.animated-logo-row">
 
 export default function MockedStrapiAnimatedLogoRow() {

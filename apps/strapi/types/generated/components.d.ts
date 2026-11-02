@@ -323,6 +323,38 @@ export interface SectionsFeaturesList extends Struct.ComponentSchema {
   }
 }
 
+export interface SectionsHcampHero extends Struct.ComponentSchema {
+  collectionName: "components_sections_hcamp_heroes"
+  info: {
+    description: "HCAMP educational hero with statistics and video call to action"
+    displayName: "HCAMP-Hero"
+    icon: "play"
+  }
+  attributes: {
+    badge: Schema.Attribute.String
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    figures: Schema.Attribute.Component<"shared.figure", true>
+    links: Schema.Attribute.Component<"utilities.link", true>
+    title: Schema.Attribute.RichText &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    videoLabel: Schema.Attribute.String
+    videoTitle: Schema.Attribute.String
+    videoUrl: Schema.Attribute.String
+  }
+}
+
 export interface SectionsHeadingWithCtaButton extends Struct.ComponentSchema {
   collectionName: "components_sections_heading_with_cta_buttons"
   info: {
@@ -903,6 +935,7 @@ declare module "@strapi/strapi" {
       "sections.events-and-research": SectionsEventsAndResearch
       "sections.faq": SectionsFaq
       "sections.features-list": SectionsFeaturesList
+      "sections.hcamp-hero": SectionsHcampHero
       "sections.heading-with-cta-button": SectionsHeadingWithCtaButton
       "sections.hero": SectionsHero
       "sections.image-with-cta-button": SectionsImageWithCtaButton

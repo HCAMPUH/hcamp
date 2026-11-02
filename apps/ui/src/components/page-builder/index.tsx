@@ -15,6 +15,7 @@ import StrapiEventsAndResearch from "@/components/page-builder/components/sectio
 import StrapiFaq from "@/components/page-builder/components/sections/StrapiFaq"
 import { StrapiFeaturesList } from "@/components/page-builder/components/sections/StrapiFeaturesList"
 import { StrapiStatistics } from "@/components/page-builder/components/sections/StrapiFigures"
+import StrapiHcampHero from "@/components/page-builder/components/sections/StrapiHcampHero"
 import StrapiHeadingWithCTAButton from "@/components/page-builder/components/sections/StrapiHeadingWithCTAButton"
 import StrapiHero from "@/components/page-builder/components/sections/StrapiHero"
 import StrapiImageWithCTAButton from "@/components/page-builder/components/sections/StrapiImageWithCTAButton"
@@ -49,6 +50,7 @@ export const PageContentComponents: Partial<
   "sections.faq": StrapiFaq,
   "sections.carousel": StrapiCarousel,
   "sections.heading-with-cta-button": StrapiHeadingWithCTAButton,
+  "sections.hcamp-hero": StrapiHcampHero,
   "sections.hero": StrapiHero,
   "sections.image-with-cta-button": StrapiImageWithCTAButton,
   "sections.statistics": StrapiStatistics,

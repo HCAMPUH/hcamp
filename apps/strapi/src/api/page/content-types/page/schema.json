@@ -62,6 +62,7 @@
       },
       "components": [
         "sections.image-with-cta-button",
+        "sections.hcamp-hero",
         "sections.hero",
         "sections.heading-with-cta-button",
         "sections.faq",

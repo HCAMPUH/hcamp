@@ -23,6 +23,7 @@ import MockedStrapiEventsAndResearch from "@/app/[locale]/dev/showcase/component
 import MockedStrapiFaq from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiFaq"
 import MockedStrapiFeaturesList from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiFeaturesList"
 import MockedStrapiFigures from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiFigures"
+import MockedStrapiHcampHero from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiHcampHero"
 import MockedStrapiHeadingWithCTAButton from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiHeadingWithCTAButton"
 import MockedStrapiHero from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiHero"
 import MockedStrapiImageWithCTAButton from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiImageWithCTAButton"
@@ -146,6 +147,14 @@ export const showcaseItems = [
   },
 
   // Components (Strapi mocks)
+  {
+    id: "hcamp-hero",
+    label: "HCAMP Hero",
+    kind: "component",
+    component: MockedStrapiHcampHero,
+    description:
+      "HCAMP educational hero with highlighted heading, statistics, CTAs, and video panel",
+  },
   {
     id: "hero",
     label: "Hero",
