@@ -27,23 +27,23 @@ export function StrapiHcampHero({
 
   return (
     <section className="bg-muted/30 overflow-hidden border-b">
-      <Container className="grid items-center gap-10 py-10 md:py-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:py-16">
-        <div className="flex flex-col items-start">
+      <Container className="grid min-w-0 items-center gap-10 py-10 md:py-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:py-16">
+        <div className="flex w-full min-w-0 flex-col items-start">
           {badge && (
-            <div className="border-brand-red/20 bg-brand-red/10 text-brand-red mb-6 flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold">
+            <div className="border-brand-red/20 bg-brand-red/10 text-brand-red mb-6 flex max-w-full items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold">
               <BrainCircuit className="size-4 shrink-0" aria-hidden="true" />
-              <span>{badge}</span>
+              <span className="min-w-0 wrap-break-word">{badge}</span>
             </div>
           )}
 
           <CkEditorRenderer
             htmlContent={title}
-            className="max-w-3xl [&_h1]:text-5xl [&_h1]:leading-[1.05] [&_h1]:font-normal md:[&_h1]:text-6xl"
+            className="max-w-3xl min-w-0 [&_h1]:text-5xl [&_h1]:leading-[1.05] [&_h1]:font-normal md:[&_h1]:text-6xl"
           />
           {description && (
             <CkEditorRenderer
               htmlContent={description}
-              className="text-muted-foreground mt-4 max-w-3xl"
+              className="text-muted-foreground mt-4 max-w-3xl min-w-0"
             />
           )}
 
@@ -56,9 +56,13 @@ export function StrapiHcampHero({
           )}
 
           {links && links.length > 0 && (
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex max-w-full min-w-0 flex-wrap gap-3">
               {links.map((link) => (
-                <StrapiLink key={link.id} component={link} />
+                <StrapiLink
+                  key={link.id}
+                  component={link}
+                  className="h-auto min-h-9 max-w-full py-2 text-left break-words whitespace-normal sm:h-9 sm:py-0 sm:whitespace-nowrap"
+                />
               ))}
             </div>
           )}
