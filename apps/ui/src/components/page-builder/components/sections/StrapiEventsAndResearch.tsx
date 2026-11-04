@@ -127,6 +127,9 @@ function EventHighlightContent({
 }: {
   component: Data.Component<"sections.events-and-research">
 }) {
+  const eventHighlightHeading =
+    component.eventHighlightTitle ?? component.eventHighlightPost?.title
+
   return (
     <>
       {component.eventHighlightLabel ? (
@@ -138,14 +141,16 @@ function EventHighlightContent({
           {component.eventHighlightLabel}
         </Typography>
       ) : null}
-      <Typography
-        tag="h3"
-        variant="heading4"
-        fontWeight="semiBold"
-        className="text-background dark:text-foreground mt-4 min-w-0 break-words"
-      >
-        {component.eventHighlightTitle ?? component.eventHighlightPost?.title}
-      </Typography>
+      {eventHighlightHeading ? (
+        <Typography
+          tag="h3"
+          variant="heading4"
+          fontWeight="semiBold"
+          className="text-background dark:text-foreground mt-4 min-w-0 break-words"
+        >
+          {eventHighlightHeading}
+        </Typography>
+      ) : null}
       {component.eventHighlightDescription ||
       component.eventHighlightPost?.excerpt ? (
         <Typography
@@ -174,14 +179,16 @@ function SectionIntro({
       <span className="inline-flex rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-[0.12em] text-red-800 uppercase">
         {eyebrow}
       </span>
-      <Typography
-        tag="h2"
-        variant="heading2"
-        fontWeight="extraBold"
-        className="mt-3 !text-3xl leading-tight"
-      >
-        {title}
-      </Typography>
+      {title ? (
+        <Typography
+          tag="h2"
+          variant="heading2"
+          fontWeight="extraBold"
+          className="mt-3 !text-3xl leading-tight"
+        >
+          {title}
+        </Typography>
+      ) : null}
       <CkEditorRenderer
         htmlContent={description}
         className="text-muted-foreground mt-2 max-w-2xl text-sm"

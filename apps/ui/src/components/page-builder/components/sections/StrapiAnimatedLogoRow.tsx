@@ -46,13 +46,12 @@ export function StrapiAnimatedLogoRow({
                 style={{
                   animationDuration: `${(row.logos?.length ?? 1) * 2}s`,
                 }}
-                aria-hidden={ulAriaHidden}
+                {...(ulAriaHidden ? { "aria-hidden": true } : {})}
               >
-                {row.logos?.map((logo, logoIndex) => (
+                {row.logos?.map((logo) => (
                   <li
                     key={`slideshow-logo-${logo.id}`}
                     className="w-auto shrink-0 list-none"
-                    aria-hidden={logoIndex > imagesInViewport || ulAriaHidden}
                   >
                     <StrapiBasicImage
                       component={logo}

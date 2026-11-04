@@ -23,7 +23,7 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
   const currentYear = now.getFullYear()
 
   return (
-    <div className="bg-background w-full border-t shadow-sm backdrop-blur transition-colors duration-300">
+    <footer className="bg-background w-full border-t shadow-sm backdrop-blur transition-colors duration-300">
       <Container className="pt-8 pb-4">
         <div className="flex flex-col justify-between gap-10 lg:flex-row">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
@@ -56,7 +56,9 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
                 className="flex flex-col items-center md:items-start"
                 key={section.id}
               >
-                <h3 className="pb-2 text-lg font-bold">{section.title}</h3>
+                {section.title ? (
+                  <h2 className="pb-2 text-lg font-bold">{section.title}</h2>
+                ) : null}
 
                 {section.links?.map((link) => (
                   <StrapiLink
@@ -91,7 +93,7 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
           </div>
         </div>
       </Container>
-    </div>
+    </footer>
   )
 }
 

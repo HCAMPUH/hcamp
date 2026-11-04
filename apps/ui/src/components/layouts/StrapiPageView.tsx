@@ -42,6 +42,7 @@ export default function StrapiPageView({ params, searchParams }: Props) {
       <StrapiStructuredData structuredData={data?.seo?.structuredData} />
 
       <main className={cn("flex w-full flex-col overflow-hidden")}>
+        <h1 className="sr-only">{data.title}</h1>
         {!isRootPage && (
           <Container className="mb-10 md:mb-20">
             <Breadcrumbs

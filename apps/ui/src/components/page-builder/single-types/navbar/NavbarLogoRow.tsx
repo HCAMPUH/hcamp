@@ -30,14 +30,13 @@ export function NavbarLogoRow({
             <ul
               key={`navbar-logo-sequence-${sequenceIndex}`}
               className="flex shrink-0 items-center"
-              aria-hidden={sequenceIndex > 0}
+              {...(sequenceIndex > 0 ? { "aria-hidden": true } : {})}
             >
               {Array.from({ length: repeatCount }, (_, repetitionIndex) =>
                 logos.map((logo) => (
                   <li
                     key={`navbar-logo-${sequenceIndex}-${repetitionIndex}-${logo.id}`}
                     className="h-[90px] w-auto shrink-0 list-none"
-                    aria-hidden={sequenceIndex > 0}
                   >
                     <StrapiBasicImage
                       component={logo}

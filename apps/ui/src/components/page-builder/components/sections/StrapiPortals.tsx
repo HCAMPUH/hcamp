@@ -46,42 +46,56 @@ export function StrapiPortals({
     <section id="hcamp-portals">
       <Container className="py-8">
         <div className="mx-auto mb-12 max-w-3xl text-center">
-          <span className="inline-flex rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-[0.12em] text-red-800 uppercase dark:border-red-800 dark:bg-red-950/40 dark:text-red-200">
-            {component.eyebrow}
-          </span>
-          <Typography
-            tag="h2"
-            variant="heading2"
-            fontWeight="extraBold"
-            className="mt-3 !text-3xl leading-tight"
-          >
-            {component.title}
-          </Typography>
-          <Typography
-            variant="medium"
-            className="text-muted-foreground mt-2 text-sm"
-          >
-            {component.description}
-          </Typography>
+          {component.eyebrow ? (
+            <span className="inline-flex rounded-full border border-red-300 bg-red-50 px-3 py-1 text-xs font-semibold tracking-[0.12em] text-red-900 uppercase dark:border-red-700 dark:bg-red-950/40 dark:text-red-100">
+              {component.eyebrow}
+            </span>
+          ) : null}
+          {component.title ? (
+            <Typography
+              tag="h2"
+              variant="heading2"
+              fontWeight="extraBold"
+              className="mt-3 !text-3xl leading-tight"
+            >
+              {component.title}
+            </Typography>
+          ) : null}
+          {component.description ? (
+            <Typography
+              variant="medium"
+              className="text-muted-foreground mt-2 text-sm"
+            >
+              {component.description}
+            </Typography>
+          ) : null}
         </div>
 
-        <div className="border-border bg-muted mx-auto mb-10 flex max-w-5xl flex-wrap justify-center gap-2 rounded-2xl border p-1.5 shadow-inner">
+        <div
+          className="border-border bg-muted mx-auto mb-10 flex max-w-5xl flex-wrap justify-center gap-2 rounded-2xl border p-1.5 shadow-inner"
+          role="tablist"
+          aria-label={component.title ?? "Portal roles"}
+        >
           <div className="contents">
             {roles.map((role, index) => {
               const Icon = icons[role.icon ?? "users"] ?? Users
               const isActive = index === activeIndex
+              const tabId = `portal-tab-${role.id ?? index}`
+              const panelId = `portal-panel-${role.id ?? index}`
 
               return (
                 <button
                   key={role.id ?? role.label}
+                  id={tabId}
                   type="button"
                   aria-selected={isActive}
+                  aria-controls={panelId}
                   role="tab"
                   onClick={() => setActiveIndex(index)}
                   className={cn(
-                    "text-muted-foreground flex items-center gap-2 rounded-xl px-5 py-3 text-xs font-bold transition-colors sm:text-sm",
+                    "text-muted-foreground flex min-h-11 items-center gap-2 rounded-xl px-5 py-3 text-xs font-bold transition-colors sm:text-sm",
                     isActive &&
-                      "bg-background text-red-900 shadow-sm dark:text-red-200"
+                      "bg-background text-red-950 shadow-sm dark:text-red-100"
                   )}
                 >
                   <Icon className="size-4" aria-hidden="true" />
@@ -92,12 +106,17 @@ export function StrapiPortals({
           </div>
         </div>
 
-        <div className="border-border bg-muted/30 rounded-2xl border p-6 sm:p-10">
+        <div
+          id={`portal-panel-${activeRole.id ?? activeIndex}`}
+          role="tabpanel"
+          aria-labelledby={`portal-tab-${activeRole.id ?? activeIndex}`}
+          className="border-border bg-muted/30 rounded-2xl border p-6 sm:p-10"
+        >
           <div className="grid items-start gap-8 lg:grid-cols-12">
             <div className="space-y-6 lg:col-span-7">
               <div>
                 {activeRole.category ? (
-                  <div className="bg-brand-gold-soft text-brand-gold-muted dark:bg-brand-gold-muted/20 mb-2 inline-flex rounded-full px-3 py-1 text-xs font-extrabold uppercase dark:text-yellow-200">
+                  <div className="bg-brand-gold-soft dark:bg-brand-gold-muted/20 mb-2 inline-flex rounded-full px-3 py-1 text-xs font-extrabold text-amber-900 uppercase dark:text-yellow-100">
                     {activeRole.category}
                   </div>
                 ) : null}
@@ -152,7 +171,7 @@ export function StrapiPortals({
                   className="border-border bg-background text-foreground hover:bg-muted h-auto rounded-xl border px-5 py-2.5 text-xs font-bold transition-colors"
                 >
                   <Download
-                    className="size-4 text-red-900"
+                    className="size-4 text-red-950"
                     aria-hidden="true"
                   />
                   {activeRole.secondaryAction?.label}
@@ -176,7 +195,7 @@ export function StrapiPortals({
                     </Typography>
                   ) : null}
                   {activeRole.coursesLabel ? (
-                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-extrabold text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300">
+                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-extrabold text-emerald-900 dark:bg-emerald-950/50 dark:text-emerald-100">
                       {activeRole.coursesLabel}
                     </span>
                   ) : null}
@@ -198,7 +217,7 @@ export function StrapiPortals({
                     >
                       <div className="min-w-0">
                         {course.audience ? (
-                          <span className="rounded bg-red-50 px-2 py-0.5 text-[10px] font-bold text-red-900 dark:bg-red-950/40 dark:text-red-200">
+                          <span className="rounded bg-red-50 px-2 py-0.5 text-[10px] font-bold text-red-950 dark:bg-red-950/40 dark:text-red-100">
                             {course.audience}
                           </span>
                         ) : null}
