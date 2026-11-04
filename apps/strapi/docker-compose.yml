@@ -1,10 +1,8 @@
-# This docker-compose file contains only Postgres database for local run. 
-# Strapi should be run either in a separate container (Dockerfile) or in the host machine.
-
 name: strapi-next-starter
+
 services:
   db:
-    platform: linux/amd64 #for platform error on Apple M1 chips
+    platform: linux/amd64 # For platform compatibility on Apple Silicon (M1/M2/M3/M4)
     restart: unless-stopped
     env_file: .env
     image: postgres:16.0-alpine
@@ -13,22 +11,21 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_NAME}
     volumes:
-      - data:/var/lib/postgresql/data/ #using a volume
-      #- ./data:/var/lib/postgresql/data/ # if you want to use a bind folder
+      - data:/var/lib/postgresql/data
+      # - ./data:/var/lib/postgresql/data # Bind mount option
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432" # Safe for local host access (Strapi on host)
     networks:
       - db_network
-  
+
   # Optional: image processing proxy for local development.
   # Start with: pnpm run:imgproxy (or docker compose up -d imgproxy)
   # Then set IMGPROXY_URL=http://localhost:8080 in apps/ui/.env.local
-  # Without this, images are served unoptimized directly from Strapi (fine for dev).
   imgproxy:
     image: darthsim/imgproxy:v3.24.1
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "127.0.0.1:8080:8080" # Bound to localhost to prevent local network exposure
     environment:
       IMGPROXY_BIND: ":8080"
     profiles:
