@@ -36,3 +36,7 @@ return (
 `variant` can be `"page"` or `"blog"`.
 
 Custom CKEditor plugins and heading styles live in `apps/strapi/src/admin/ckeditor`. Typography variant guidance lives in [Typography](/docs/design-system/typography).
+
+## FlipBook embeds
+
+The `Insert PDF FlipBook` toolbar button opens Strapi's media library so editors can select a PDF directly. The selected PDF is inserted into the editor as a FlipBook figure containing its media-library URL. Frontend rendering is intentionally left to the application renderer.
