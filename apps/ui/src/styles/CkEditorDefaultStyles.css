@@ -610,6 +610,10 @@
   border-radius: 0.75rem;
 }
 
+.ck-content figure.table.table-rounded {
+  overflow: hidden;
+}
+
 .ck-content figure.table.table-rounded > table
   > :first-child
   > tr:first-child
