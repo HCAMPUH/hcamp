@@ -150,9 +150,9 @@
 
   "contactForm": {
     "name": "First name and last name",
-    "namePlaceholder": "Keanu Reeves",
+    "namePlaceholder": "Kai Doe",
     "email": "Email",
-    "emailPlaceholder": "keanu.reeves@gmail.com",
+    "emailPlaceholder": "kai@doe.com",
     "message": "Message",
     "gdpr": "I agree to the processing of personal data",
     "submit": "Send",

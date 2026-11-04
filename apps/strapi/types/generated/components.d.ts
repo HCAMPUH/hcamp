@@ -18,7 +18,13 @@ export interface FormsContactForm extends Struct.ComponentSchema {
     displayName: "ContactForm"
   }
   attributes: {
-    description: Schema.Attribute.Text
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "simpleCkEditor"
+        }
+      >
     gdpr: Schema.Attribute.Component<"utilities.link", false>
     title: Schema.Attribute.String
   }

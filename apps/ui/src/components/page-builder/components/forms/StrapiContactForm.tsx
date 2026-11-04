@@ -2,6 +2,7 @@ import "server-only"
 
 import type { Data } from "@repo/strapi-types"
 
+import CkEditorRenderer from "@/components/elementary/ck-editor"
 import { Container } from "@/components/elementary/Container"
 import { ContactForm } from "@/components/elementary/forms/ContactForm"
 import { Typography } from "@/components/typography"
@@ -24,7 +25,10 @@ export function StrapiContactForm({
               <Typography tag="h3">{component.title}</Typography>
             )}
             {component.description && (
-              <Typography>{component.description}</Typography>
+              <CkEditorRenderer
+                htmlContent={component.description}
+                className="ck-editor-rich-text-page"
+              />
             )}
           </div>
         </div>
