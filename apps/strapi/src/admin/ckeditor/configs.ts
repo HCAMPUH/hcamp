@@ -39,6 +39,50 @@ const styles = [
   .ck-content figure.table.table-rounded > table
     > :first-child
     > tr:first-child
+    > :first-child,
+  .ck-content table.table.table-rounded
+    > :first-child
+    > tr:first-child
+    > :first-child {
+    border-top-left-radius: 0.75rem;
+  }
+
+  .ck-content figure.table.table-rounded > table
+    > :first-child
+    > tr:first-child
+    > :last-child,
+  .ck-content table.table.table-rounded
+    > :first-child
+    > tr:first-child
+    > :last-child {
+    border-top-right-radius: 0.75rem;
+  }
+
+  .ck-content figure.table.table-rounded > table
+    > :last-child
+    > tr:last-child
+    > :first-child,
+  .ck-content table.table.table-rounded
+    > :last-child
+    > tr:last-child
+    > :first-child {
+    border-bottom-left-radius: 0.75rem;
+  }
+
+  .ck-content figure.table.table-rounded > table
+    > :last-child
+    > tr:last-child
+    > :last-child,
+  .ck-content table.table.table-rounded
+    > :last-child
+    > tr:last-child
+    > :last-child {
+    border-bottom-right-radius: 0.75rem;
+  }
+
+  .ck-content figure.table.table-rounded > table
+    > :first-child
+    > tr:first-child
     > :is(th, td),
   .ck-content table.table.table-rounded
     > :first-child
