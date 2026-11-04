@@ -14,7 +14,7 @@ export const generateBreadcrumbs = async (
   document: Document,
   type: DocumentType
 ) => {
-  if (!document?.fullPath) {
+  if (!document?.fullPath || !document.breadcrumbTitle?.trim()) {
     return []
   }
 
