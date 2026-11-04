@@ -7,6 +7,7 @@ import { IconIndent, TableLayout } from "ckeditor5"
 
 import { getHeadingOptions, getStyleDefinitions } from "./headings"
 import { StyleChangePlugin } from "./plugins"
+import { RoundedTablePropertiesPlugin } from "./table-rounded-corners"
 
 // This config should contain all tokens from the Design System. Please, see packages/design-system README for more info!
 const colorConfig =
@@ -21,6 +22,58 @@ const styles = [
     --ck-editor-max-width: 1366px;
     --ck-editor-min-height: 800px;
     --ck-editor-max-height: 1000px;
+  }
+
+  .ck-content figure.table.table-rounded,
+  .ck-content figure.table.table-rounded > table,
+  .ck-content table.table.table-rounded {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 0.75rem;
+  }
+
+  .ck-content figure.table.table-rounded > table
+    > :first-child
+    > tr:first-child
+    > :is(th, td),
+  .ck-content table.table.table-rounded
+    > :first-child
+    > tr:first-child
+    > :is(th, td) {
+    border-top: 0;
+  }
+
+  .ck-content figure.table.table-rounded > table
+    > :last-child
+    > tr:last-child
+    > :is(th, td),
+  .ck-content table.table.table-rounded
+    > :last-child
+    > tr:last-child
+    > :is(th, td) {
+    border-bottom: 0;
+  }
+
+  .ck-content figure.table.table-rounded > table
+    > :is(thead, tbody, tfoot)
+    > tr
+    > :first-child,
+  .ck-content table.table.table-rounded
+    > :is(thead, tbody, tfoot)
+    > tr
+    > :first-child {
+    border-left: 0;
+  }
+
+  .ck-content figure.table.table-rounded > table
+    > :is(thead, tbody, tfoot)
+    > tr
+    > :last-child,
+  .ck-content table.table.table-rounded
+    > :is(thead, tbody, tfoot)
+    > tr
+    > :last-child {
+    border-right: 0;
   }
   `,
 ].join("\n")
@@ -45,7 +98,7 @@ const balloonToolbar = [
 
 const editorConfigDefaults = {
   ...defaultHtmlPreset.editorConfig,
-  extraPlugins: [StyleChangePlugin, TableLayout],
+  extraPlugins: [StyleChangePlugin, TableLayout, RoundedTablePropertiesPlugin],
   style: {
     definitions: getStyleDefinitions(),
   },

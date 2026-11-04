@@ -602,6 +602,58 @@
   border-spacing: 0;
 }
 
+.ck-content figure.table.table-rounded,
+.ck-content figure.table.table-rounded > table,
+.ck-content table.table.table-rounded {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 0.75rem;
+}
+
+.ck-content figure.table.table-rounded > table
+  > :first-child
+  > tr:first-child
+  > :is(th, td),
+.ck-content table.table.table-rounded
+  > :first-child
+  > tr:first-child
+  > :is(th, td) {
+  border-top: 0;
+}
+
+.ck-content figure.table.table-rounded > table
+  > :last-child
+  > tr:last-child
+  > :is(th, td),
+.ck-content table.table.table-rounded
+  > :last-child
+  > tr:last-child
+  > :is(th, td) {
+  border-bottom: 0;
+}
+
+.ck-content figure.table.table-rounded > table
+  > :is(thead, tbody, tfoot)
+  > tr
+  > :first-child,
+.ck-content table.table.table-rounded
+  > :is(thead, tbody, tfoot)
+  > tr
+  > :first-child {
+  border-left: 0;
+}
+
+.ck-content figure.table.table-rounded > table
+  > :is(thead, tbody, tfoot)
+  > tr
+  > :last-child,
+.ck-content table.table.table-rounded
+  > :is(thead, tbody, tfoot)
+  > tr
+  > :last-child {
+  border-right: 0;
+}
+
 .ck-content figure.table:not(.layout-table) > table > tbody > tr > th,
 .ck-content figure.table:not(.layout-table) > table > thead > tr > th,
 .ck-content table.table:not(.layout-table) > tbody > tr > th,
