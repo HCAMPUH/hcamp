@@ -175,6 +175,7 @@ function runCommand(command, args, options = {}) {
       cwd: appDir,
       env: process.env,
       stdio: "inherit",
+      shell: process.platform === "win32" && /\.(cmd|bat)$/i.test(command),
     })
 
     child.on("error", reject)
