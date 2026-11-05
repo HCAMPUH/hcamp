@@ -194,7 +194,7 @@ function ResourceCard({ resource }: { resource: AboutResource }) {
           </div>
         ) : null}
         {resource.description ? (
-          <p className="text-xs leading-relaxed text-slate-400">
+          <p className="text-xs leading-relaxed text-white">
             {resource.description}
           </p>
         ) : null}
