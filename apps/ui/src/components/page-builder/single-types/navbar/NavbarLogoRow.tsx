@@ -14,8 +14,9 @@ export function NavbarLogoRow({
   readonly navbarLogoRow?: NavbarLogoRowData
 }) {
   const logos = navbarLogoRow?.logos
+  const missionTitle = navbarLogoRow?.missionTitle
 
-  if (!logos?.length && !navbarLogoRow?.missionTitle) return null
+  if (!logos?.length && !missionTitle) return null
 
   const repeatCount = logos?.length
     ? Math.max(4, Math.ceil(64 / logos.length))
@@ -23,7 +24,10 @@ export function NavbarLogoRow({
   const speed = Math.min(Math.max(navbarLogoRow?.speed ?? 5, 1), 25)
 
   return (
-    <div className="relative z-0 w-full overflow-hidden border-b shadow-sm">
+    <section
+      aria-label={missionTitle ?? "Partner organizations"}
+      className="relative z-0 w-full overflow-hidden border-b shadow-sm"
+    >
       {logos?.length ? (
         <NavbarLogoRowAnimation duration={`${logos.length * (175 / speed)}s`}>
           {Array.from({ length: 2 }, (_, sequenceIndex) => (
@@ -52,12 +56,12 @@ export function NavbarLogoRow({
           ))}
         </NavbarLogoRowAnimation>
       ) : null}
-      {navbarLogoRow?.missionTitle ? (
+      {missionTitle ? (
         <p className="bg-background/60 text-primary px-6 py-2 text-center text-sm font-medium backdrop-blur-md">
-          {navbarLogoRow.missionTitle}
+          {missionTitle}
         </p>
       ) : null}
-    </div>
+    </section>
   )
 }
 

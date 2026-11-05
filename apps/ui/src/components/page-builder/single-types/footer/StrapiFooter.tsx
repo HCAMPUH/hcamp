@@ -56,7 +56,7 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
                 className="flex flex-col items-center md:items-start"
                 key={section.id}
               >
-                {section.title ? (
+                {section.title?.trim() ? (
                   <h2 className="pb-2 text-lg font-bold">{section.title}</h2>
                 ) : null}
 

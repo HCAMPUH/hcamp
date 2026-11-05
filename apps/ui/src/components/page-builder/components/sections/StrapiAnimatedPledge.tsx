@@ -59,7 +59,7 @@ export async function StrapiAnimatedPledge({
               )}
             </span>
             {component.description ? (
-              <span className="hidden text-xs text-slate-400 sm:inline">
+              <span className="hidden text-xs text-slate-100 sm:inline">
                 {component.description}
               </span>
             ) : null}

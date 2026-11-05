@@ -2,6 +2,7 @@ import { type Locale, useLocale } from "next-intl"
 
 import {
   processLinksInHtmlContent,
+  normalizeRichTextHeadings,
   removeEmptyImagesFromContent,
   transformLayoutTables,
   transformOembedElements,
@@ -33,6 +34,7 @@ function CkEditorRenderer({
     const transformers = [
       (h: string) => processLinksInHtmlContent(h, locale),
       removeEmptyImagesFromContent,
+      normalizeRichTextHeadings,
       transformOembedElements,
       transformLayoutTables,
     ]

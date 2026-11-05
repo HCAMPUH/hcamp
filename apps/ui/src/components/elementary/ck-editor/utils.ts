@@ -13,6 +13,14 @@ export const removeEmptyImagesFromContent = (content?: string | null): string =>
     ""
   ) || ""
 
+/**
+ * Keep author-selected rich-text headings within the page heading hierarchy.
+ * The page builder supplies the surrounding section level, so deep CKEditor
+ * headings are flattened instead of creating h5/h6 skips in published pages.
+ */
+export const normalizeRichTextHeadings = (content?: string | null): string =>
+  content?.replaceAll(/<h[56](?=[\s>])/gi, "<h4") || ""
+
 const youtubeHosts = new Set([
   "www.youtube.com",
   "youtube.com",
