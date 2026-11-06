@@ -2,9 +2,9 @@ import "server-only"
 
 import type { Data } from "@repo/strapi-types"
 
-import AppLink from "@/components/elementary/AppLink"
 import { Container } from "@/components/elementary/Container"
 import { NewsletterForm } from "@/components/elementary/forms/NewsletterForm"
+import StrapiLink from "@/components/page-builder/components/utilities/StrapiLink"
 import Typography from "@/components/typography"
 import type { PageBuilderComponentProps } from "@/types/general"
 
@@ -41,14 +41,14 @@ export function StrapiNewsletterForm({
 
             <div className="border-border border-t p-7 sm:p-10 lg:border-t-0 lg:border-l">
               <NewsletterForm />
-              {component.gdpr?.href ? (
-                <AppLink
-                  openInNewTab={Boolean(component.gdpr.newTab)}
-                  className="text-muted-foreground hover:text-foreground mt-5 inline-block text-xs underline underline-offset-2"
-                  href={component.gdpr.href}
-                >
-                  {component.gdpr.label}
-                </AppLink>
+              {component.gdpr &&
+              (component.gdpr.href ||
+                component.gdpr.page?.fullPath ||
+                component.gdpr.post?.slug) ? (
+                <StrapiLink
+                  component={component.gdpr}
+                  className="text-muted-foreground hover:text-foreground mt-5 inline-flex text-xs underline underline-offset-2"
+                />
               ) : null}
             </div>
           </div>
