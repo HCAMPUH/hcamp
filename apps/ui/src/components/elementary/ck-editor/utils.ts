@@ -30,19 +30,12 @@ const vimeoHosts = new Set(["vimeo.com", "www.vimeo.com", "player.vimeo.com"])
  * thumbnails are resolved by the server route when the image is requested,
  * avoiding a provider API call during rendering.
  */
-/* eslint-disable unicorn/prefer-string-replace-all */
-export const transformOembedElements = (
-  content?: string | null,
-  videoAlt?: string | null
-): string =>
+/* eslint-disable unicorn/no-unsafe-string-replacement, unicorn/prefer-string-replace-all */
+export const transformOembedElements = (content?: string | null): string =>
   content
-    ?.replace(/<oembed\b[^>]*>[\s\S]*?<\/oembed>/gi, (match) =>
-      replaceOembedElement(match, videoAlt)
-    )
-    .replace(/<oembed\b[^>]*\/>/gi, (match) =>
-      replaceOembedElement(match, videoAlt)
-    ) || ""
-/* eslint-enable unicorn/prefer-string-replace-all */
+    ?.replace(/<oembed\b[^>]*>[\s\S]*?<\/oembed>/gi, replaceOembedElement)
+    .replace(/<oembed\b[^>]*\/>/gi, replaceOembedElement) || ""
+/* eslint-enable unicorn/no-unsafe-string-replacement, unicorn/prefer-string-replace-all */
 
 /**
  * Converts CKEditor layout tables into responsive Bootstrap-style rows and
@@ -123,7 +116,7 @@ export const transformLayoutTables = (content?: string | null): string => {
   return root.toString()
 }
 
-function replaceOembedElement(match: string, videoAlt?: string | null): string {
+function replaceOembedElement(match: string): string {
   const url = match.match(/\burl\s*=\s*(["'])(.*?)\1/i)?.[2]
   const video = url ? getVideoDetails(url) : null
 
@@ -131,12 +124,7 @@ function replaceOembedElement(match: string, videoAlt?: string | null): string {
     return match
   }
 
-  const alt = videoAlt?.trim() ?? ""
-  const image = alt
-    ? `<img src="${escapeAttribute(video.thumbnailUrl)}" alt="${escapeAttribute(alt)}" />`
-    : `<img src="${escapeAttribute(video.thumbnailUrl)}" alt="" aria-hidden="true" />`
-
-  return `<button type="button" class="ck-video-placeholder" data-video-embed="${escapeAttribute(video.embedUrl)}" aria-label="Play ${video.provider} video">${image}<span class="ck-video-placeholder__play" aria-hidden="true"><span></span></span></button>`
+  return `<button type="button" class="ck-video-placeholder" data-video-embed="${escapeAttribute(video.embedUrl)}" aria-label="Play ${video.provider} video"><img src="${escapeAttribute(video.thumbnailUrl)}" alt="" /><span class="ck-video-placeholder__play" aria-hidden="true"><span></span></span></button>`
 }
 
 function getVideoDetails(value: string): null | {

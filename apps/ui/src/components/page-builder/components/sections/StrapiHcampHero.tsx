@@ -115,7 +115,6 @@ function HcampHeroVideo({
     <div className="border-brand-blue bg-brand-blue relative aspect-video w-full overflow-hidden rounded-2xl border-8 shadow-xl">
       <CkEditorRenderer
         htmlContent={`<figure class="media"><oembed url="${escapeHtmlAttribute(videoUrl)}"></oembed></figure>`}
-        videoAlt={title}
         className="absolute inset-0 h-full w-full [&_.ck-content]:absolute [&_.ck-content]:inset-0 [&_.ck-content]:h-full [&_.ck-content]:w-full [&_.ck-video-placeholder]:!absolute [&_.ck-video-placeholder]:!inset-0 [&_.ck-video-placeholder]:!h-full [&_.ck-video-placeholder]:!w-full [&_.ck-video-placeholder]:rounded-none [&_.media]:!absolute [&_.media]:!inset-0 [&_.media]:!m-0 [&_.media]:!aspect-auto [&_.media]:!h-full [&_.media]:!w-full [&_.media]:!min-w-0"
       />
       {(label || title) && (

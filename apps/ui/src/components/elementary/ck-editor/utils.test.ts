@@ -20,20 +20,7 @@ describe("transformOembedElements", () => {
       'data-video-embed="https://www.youtube-nocookie.com/embed/abc123"'
     )
     expect(result).toContain('src="/api/youtube-thumbnail?video=abc123"')
-    expect(result).toContain('alt="" aria-hidden="true"')
     expect(result).not.toContain("<oembed")
-  })
-
-  it("uses the database-backed video title for the thumbnail alt text", () => {
-    const result = transformOembedElements(
-      '<oembed url="https://vimeo.com/123456"></oembed>',
-      "Understanding What Happens During a Concussion"
-    )
-
-    expect(result).toContain(
-      'alt="Understanding What Happens During a Concussion"'
-    )
-    expect(result).not.toContain('alt="" aria-hidden="true"')
   })
 
   it("supports Vimeo and leaves unsupported providers unchanged", () => {

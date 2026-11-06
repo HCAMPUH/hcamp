@@ -3,8 +3,8 @@ import { type Locale, useLocale } from "next-intl"
 import {
   processLinksInHtmlContent,
   removeEmptyImagesFromContent,
-  transformOembedElements,
   transformLayoutTables,
+  transformOembedElements,
 } from "@/components/elementary/ck-editor/utils"
 import { VideoLightbox } from "@/components/elementary/ck-editor/VideoLightbox"
 import { cn } from "@/lib/styles"
@@ -16,13 +16,11 @@ function CkEditorRenderer({
   className,
   locale: passedLocale,
   variant = "page",
-  videoAlt,
 }: {
   htmlContent?: string | null
   className?: string
   locale?: Locale
   variant?: "page" | "blog"
-  videoAlt?: string | null
 }) {
   // The locale hook must run before the content guard to preserve hook order.
   // eslint-disable-next-line unicorn/no-declarations-before-early-exit
@@ -31,15 +29,11 @@ function CkEditorRenderer({
   if (!htmlContent) return null
 
   const locale = passedLocale ?? currentLocale
-  const processHtmlContent = (
-    html: string,
-    locale: Locale,
-    videoAlt?: string | null
-  ) => {
+  const processHtmlContent = (html: string, locale: Locale) => {
     const transformers = [
       (h: string) => processLinksInHtmlContent(h, locale),
       removeEmptyImagesFromContent,
-      (h: string) => transformOembedElements(h, videoAlt),
+      transformOembedElements,
       transformLayoutTables,
     ]
 
@@ -55,7 +49,7 @@ function CkEditorRenderer({
           className
         )}
         dangerouslySetInnerHTML={{
-          __html: processHtmlContent(htmlContent, locale, videoAlt),
+          __html: processHtmlContent(htmlContent, locale),
         }}
       />
     </VideoLightbox>
