@@ -57,7 +57,7 @@ export function StrapiBasicImage({
     return null
   }
 
-  const alt = component?.alt ?? ""
+  const alt = component?.alt ?? media?.alternativeText ?? ""
 
   const requestedWidth = propWidth ?? component?.width
   const requestedHeight = propHeight ?? component?.height

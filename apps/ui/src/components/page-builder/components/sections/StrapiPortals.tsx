@@ -93,7 +93,7 @@ export function StrapiPortals({
                   role="tab"
                   onClick={() => setActiveIndex(index)}
                   className={cn(
-                    "text-muted-foreground flex min-h-11 items-center gap-2 rounded-xl px-5 py-3 text-xs font-bold transition-colors sm:text-sm",
+                    "text-foreground flex min-h-11 items-center gap-2 rounded-xl px-5 py-3 text-xs font-bold transition-colors sm:text-sm",
                     isActive &&
                       "bg-background text-red-950 shadow-sm dark:text-red-100"
                   )}

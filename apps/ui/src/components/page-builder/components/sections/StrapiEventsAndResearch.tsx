@@ -136,7 +136,7 @@ function EventHighlightContent({
         <Typography
           variant="small"
           fontWeight="semiBold"
-          className="text-amber-400"
+          className="text-amber-800 dark:text-amber-300"
         >
           {component.eventHighlightLabel}
         </Typography>
@@ -146,17 +146,14 @@ function EventHighlightContent({
           tag="h3"
           variant="heading4"
           fontWeight="semiBold"
-          className="text-background dark:text-foreground mt-4 min-w-0 break-words"
+          className="text-foreground mt-4 min-w-0 break-words"
         >
           {eventHighlightHeading}
         </Typography>
       ) : null}
       {component.eventHighlightDescription ||
       component.eventHighlightPost?.excerpt ? (
-        <Typography
-          variant="small"
-          className="text-background/70 dark:text-muted-foreground mt-3"
-        >
+        <Typography variant="small" className="text-muted-foreground mt-3">
           {component.eventHighlightDescription ??
             component.eventHighlightPost?.excerpt}
         </Typography>
@@ -231,7 +228,7 @@ function EventCard({ event }: { event: Event }) {
           className="text-primary-foreground flex size-16 shrink-0 flex-col items-center justify-center rounded-xl"
           style={{ backgroundColor: accentColor }}
         >
-          <span className="text-[0.65rem] font-bold tracking-[0.16em] uppercase opacity-75">
+          <span className="text-[0.65rem] font-bold tracking-[0.16em] uppercase">
             {parsedDate.toLocaleDateString("en-US", {
               month: "short",
               timeZone: "UTC",

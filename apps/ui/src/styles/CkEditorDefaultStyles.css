@@ -16,6 +16,19 @@
   color: var(--ck-color-mention-text);
 }
 
+/* Keep CMS-authored brand colors readable on the page background. */
+.ck-content span[style*="--color-brand-manoa-green"] {
+  color: var(--color-brand-manoa-green) !important;
+}
+
+.ck-content span[style*="--color-brand-red"] {
+  color: var(--color-brand-red) !important;
+}
+
+.ck-content span[style*="hsl(216, 100%, 40%)"] {
+  color: var(--color-brand-blue) !important;
+}
+
 .ck-content code {
   background-color: hsla(0, 0%, 78%, 0.3);
   border-radius: 2px;

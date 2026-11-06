@@ -54,7 +54,7 @@ export function StrapiAbout({
   return (
     <section
       id="hcamp-about"
-      className="bg-background relative overflow-hidden py-20 text-white"
+      className="bg-brand-manoa-green relative overflow-hidden py-20 text-white"
       style={
         component.backgroundColor
           ? { backgroundColor: component.backgroundColor }
@@ -71,7 +71,7 @@ export function StrapiAbout({
         >
           <div>
             {component.eyebrow ? (
-              <p className="inline-flex rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-xs font-bold tracking-widest text-amber-400 uppercase">
+              <p className="inline-flex rounded-full border border-amber-300/50 bg-amber-300/10 px-3 py-1 text-xs font-bold tracking-widest text-amber-300 uppercase">
                 {component.eyebrow}
               </p>
             ) : null}
@@ -189,7 +189,7 @@ function ResourceCard({ resource }: { resource: AboutResource }) {
     <>
       <div className="min-w-0">
         {resource.title ? (
-          <div className="mb-1 text-sm leading-tight font-bold text-amber-400">
+          <div className="mb-1 text-sm leading-tight font-bold text-amber-300">
             {resource.title}
           </div>
         ) : null}
