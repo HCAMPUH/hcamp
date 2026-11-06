@@ -102,7 +102,7 @@ export function StrapiAbout({
         {hasInstitutionContent ? (
           <div className="space-y-6 rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-md lg:col-span-5">
             {component.institutionEyebrow ? (
-              <p className="text-center text-xs font-bold tracking-widest text-slate-400 uppercase">
+              <p className="text-center text-xs font-bold tracking-widest text-slate-100 uppercase">
                 {component.institutionEyebrow}
               </p>
             ) : null}
