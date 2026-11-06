@@ -153,12 +153,23 @@
     "namePlaceholder": "Kai Doe",
     "email": "Email",
     "emailPlaceholder": "kai@doe.com",
+    "newsletter": "Subscribe to the newsletter",
     "message": "Message",
     "gdpr": "I agree to the processing of personal data",
     "submit": "Send",
     "success": "The form has been sent successfully.",
     "error": "The form could not be sent. Please try again later.",
     "gdprLink": "Read more about the processing of personal data"
+  },
+
+  "newsletterForm": {
+    "name": "Name",
+    "namePlaceholder": "Kai Doe",
+    "email": "Email",
+    "emailPlaceholder": "kai@doe.com",
+    "submit": "Subscribe",
+    "success": "You are now subscribed to the newsletter.",
+    "error": "The subscription could not be completed. Please try again later."
   },
 
   "pledgeForm": {

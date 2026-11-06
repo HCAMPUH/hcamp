@@ -5,7 +5,7 @@ import type { Data } from "@repo/strapi-types"
 import AppLink from "@/components/elementary/AppLink"
 import { Container } from "@/components/elementary/Container"
 import { NewsletterForm } from "@/components/elementary/forms/NewsletterForm"
-import { removeThisWhenYouNeedMe } from "@/lib/general-helpers"
+import Typography from "@/components/typography"
 import type { PageBuilderComponentProps } from "@/types/general"
 
 export function StrapiNewsletterForm({
@@ -13,33 +13,48 @@ export function StrapiNewsletterForm({
 }: PageBuilderComponentProps & {
   component: Data.Component<"forms.newsletter-form">
 }) {
-  removeThisWhenYouNeedMe("StrapiNewsletterForm")
-
   return (
-    <div className="bg-blue-light pb-10">
-      <Container className="flex flex-col justify-between gap-y-10 lg:flex-row">
-        <div className="flex w-full max-w-127.5 flex-1 flex-col gap-10">
-          <h1 className="text-3xl font-bold">{component.title}</h1>
-          <p>{component.description}</p>
-        </div>
-        <div className="flex w-full max-w-140 flex-1 items-end align-bottom">
-          <div className="w-fll mt-1 flex w-full flex-col gap-1">
-            <NewsletterForm />
-            <div className="mt-2 flex items-center">
-              {component.gdpr?.href && (
+    <section id="hcamp-newsletter">
+      <Container className="py-8">
+        <div className="border-border bg-muted/30 text-foreground overflow-hidden rounded-2xl border">
+          <div className="grid lg:grid-cols-[1.05fr_1.4fr]">
+            <div className="flex min-h-72 flex-col justify-center p-7 sm:p-10 lg:min-h-96">
+              <div className="max-w-md">
+                <Typography
+                  tag="h2"
+                  variant="heading2"
+                  fontWeight="extraBold"
+                  className="!text-3xl leading-tight sm:!text-4xl"
+                >
+                  {component.title}
+                </Typography>
+                {component.description ? (
+                  <Typography
+                    variant="medium"
+                    className="text-muted-foreground mt-3 text-sm"
+                  >
+                    {component.description}
+                  </Typography>
+                ) : null}
+              </div>
+            </div>
+
+            <div className="border-border border-t p-7 sm:p-10 lg:border-t-0 lg:border-l">
+              <NewsletterForm />
+              {component.gdpr?.href ? (
                 <AppLink
                   openInNewTab={Boolean(component.gdpr.newTab)}
-                  className="text-blue-700 underline"
+                  className="text-muted-foreground hover:text-foreground mt-5 inline-block text-xs underline underline-offset-2"
                   href={component.gdpr.href}
                 >
                   {component.gdpr.label}
                 </AppLink>
-              )}
+              ) : null}
             </div>
           </div>
         </div>
       </Container>
-    </div>
+    </section>
   )
 }
 

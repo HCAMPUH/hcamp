@@ -61,6 +61,20 @@
           "sortable": true
         }
       },
+      "newsletter": {
+        "edit": {
+          "label": "newsletter",
+          "description": "",
+          "placeholder": "",
+          "visible": true,
+          "editable": true
+        },
+        "list": {
+          "label": "newsletter",
+          "searchable": true,
+          "sortable": true
+        }
+      },
       "content": {
         "edit": {
           "label": "content",
@@ -147,7 +161,8 @@
         "id",
         "name",
         "email",
-        "message"
+        "message",
+        "newsletter"
       ],
       "edit": [
         [
@@ -163,6 +178,10 @@
         [
           {
             "name": "message",
+            "size": 6
+          },
+          {
+            "name": "newsletter",
             "size": 6
           }
         ],

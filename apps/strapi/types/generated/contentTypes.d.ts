@@ -823,6 +823,7 @@ export interface ApiSubscriberSubscriber extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private
     message: Schema.Attribute.Text
     name: Schema.Attribute.String
+    newsletter: Schema.Attribute.Boolean
     publishedAt: Schema.Attribute.DateTime
     updatedAt: Schema.Attribute.DateTime
     updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
