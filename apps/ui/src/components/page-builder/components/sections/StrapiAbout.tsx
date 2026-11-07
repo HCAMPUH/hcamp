@@ -71,7 +71,7 @@ export function StrapiAbout({
         >
           <div>
             {component.eyebrow ? (
-              <p className="inline-flex rounded-full border border-amber-300/50 bg-amber-300/10 px-3 py-1 text-xs font-bold tracking-widest text-amber-300 uppercase">
+              <p className="inline-flex rounded-full border border-amber-100/70 bg-amber-100/15 px-3 py-1 text-xs font-bold tracking-widest text-amber-100 uppercase">
                 {component.eyebrow}
               </p>
             ) : null}
@@ -81,7 +81,7 @@ export function StrapiAbout({
               </h2>
             ) : null}
             {component.description ? (
-              <p className="text-base leading-relaxed text-slate-300">
+              <p className="text-base leading-relaxed text-white">
                 {component.description}
               </p>
             ) : null}
@@ -110,7 +110,7 @@ export function StrapiAbout({
               <InstitutionLogoMedia component={component.institutionLogo} />
             ) : null}
             {component.institutionDescription ? (
-              <p className="text-xs leading-relaxed text-slate-300">
+              <p className="text-xs leading-relaxed text-white">
                 {component.institutionDescription}
               </p>
             ) : null}
@@ -140,14 +140,14 @@ export function StrapiAbout({
                       <StrapiLink
                         key={partner.id ?? partner.name}
                         component={partner.link}
-                        className="h-auto min-h-8 rounded-lg bg-white/10 p-2 text-center text-[11px] font-semibold text-slate-300 no-underline hover:bg-white/20 hover:no-underline focus-visible:ring-2 focus-visible:ring-amber-400"
+                        className="h-auto min-h-8 rounded-lg bg-white/10 p-2 text-center text-[11px] font-semibold text-white no-underline hover:bg-white/20 hover:no-underline focus-visible:ring-2 focus-visible:ring-amber-400"
                       >
                         {partner.name}
                       </StrapiLink>
                     ) : (
                       <span
                         key={partner.id ?? partner.name}
-                        className="flex min-h-8 items-center justify-center rounded-lg bg-white/10 p-2 text-center text-[11px] font-semibold text-slate-300 hover:bg-white/20"
+                        className="flex min-h-8 items-center justify-center rounded-lg bg-white/10 p-2 text-center text-[11px] font-semibold text-white hover:bg-white/20"
                       >
                         {partner.name}
                       </span>
@@ -189,7 +189,7 @@ function ResourceCard({ resource }: { resource: AboutResource }) {
     <>
       <div className="min-w-0">
         {resource.title ? (
-          <div className="mb-1 text-sm leading-tight font-bold text-amber-300">
+          <div className="mb-1 text-sm leading-tight font-bold text-amber-100">
             {resource.title}
           </div>
         ) : null}

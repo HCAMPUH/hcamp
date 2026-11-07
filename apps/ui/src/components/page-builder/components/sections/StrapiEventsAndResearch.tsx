@@ -136,7 +136,7 @@ function EventHighlightContent({
         <Typography
           variant="small"
           fontWeight="semiBold"
-          className="text-amber-300"
+          className="text-amber-100"
         >
           {component.eventHighlightLabel}
         </Typography>
