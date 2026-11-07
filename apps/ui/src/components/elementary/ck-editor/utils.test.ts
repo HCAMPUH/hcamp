@@ -20,6 +20,8 @@ describe("transformOembedElements", () => {
       'data-video-embed="https://www.youtube-nocookie.com/embed/abc123"'
     )
     expect(result).toContain('src="/api/youtube-thumbnail?video=abc123"')
+    expect(result).toContain('alt="" aria-hidden="true" role="presentation"')
+    expect(result).not.toContain("title=")
     expect(result).not.toContain("<oembed")
   })
 
