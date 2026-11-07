@@ -117,6 +117,16 @@ h6 {
   @apply mb-0.5 text-sm;
 }
 
+.ck-editor-rich-text-page li,
+.ck-editor-rich-text-blog li {
+  @apply text-sm text-gray-600 dark:text-gray-400;
+}
+
+.ck-editor-rich-text-page li > p,
+.ck-editor-rich-text-blog li > p {
+  @apply mb-0 inline;
+}
+
 .ck-editor-rich-text-page .typo-p-large,
 .ck-editor__main .ck-content .typo-p-large,
 .typo-p-large,
