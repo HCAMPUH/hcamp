@@ -48,8 +48,6 @@ export function NavbarLogoRow({
                       className="h-[90px] w-auto object-contain"
                       height={90}
                       preload
-                      aria-hidden="true"
-                      role="presentation"
                     />
                   </li>
                 ))

@@ -57,7 +57,9 @@ export function StrapiBasicImage({
     return null
   }
 
-  const alt = component?.alt ?? media?.alternativeText ?? ""
+  const alt = component?.decorative
+    ? ""
+    : (component?.alt ?? media?.alternativeText ?? "")
 
   const requestedWidth = propWidth ?? component?.width
   const requestedHeight = propHeight ?? component?.height
@@ -83,8 +85,12 @@ export function StrapiBasicImage({
     className,
     src,
     alt,
-    ...(alt ? undefined : { "aria-hidden": true as const }),
-    ...(alt ? undefined : { role: "presentation" as const }),
+    ...(component?.decorative
+      ? {
+          "aria-hidden": true as const,
+          role: "presentation" as const,
+        }
+      : undefined),
     ...restImgProps,
     ...(useFill ? { fill: true as const } : { width, height }),
     // Keep visual sizing in Tailwind classes by default.

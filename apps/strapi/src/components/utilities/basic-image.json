@@ -14,6 +14,10 @@
     "alt": {
       "type": "string"
     },
+    "decorative": {
+      "type": "boolean",
+      "default": false
+    },
     "width": {
       "type": "integer"
     },
