@@ -83,6 +83,8 @@ export function StrapiBasicImage({
     className,
     src,
     alt,
+    ...(alt ? undefined : { "aria-hidden": true as const }),
+    ...(alt ? undefined : { role: "presentation" as const }),
     ...restImgProps,
     ...(useFill ? { fill: true as const } : { width, height }),
     // Keep visual sizing in Tailwind classes by default.

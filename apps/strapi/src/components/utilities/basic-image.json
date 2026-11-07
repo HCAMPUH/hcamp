@@ -12,9 +12,7 @@
       "allowedTypes": ["images", "videos"]
     },
     "alt": {
-      "type": "string",
-      "required": true,
-      "minLength": 1
+      "type": "string"
     },
     "width": {
       "type": "integer"
