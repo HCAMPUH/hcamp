@@ -46,7 +46,7 @@ export function StrapiEventsAndResearch({
               <AppLink
                 href={`/posts/${component.eventHighlightPost.slug}`}
                 variant="ghost"
-                className="text-background dark:border-border dark:text-foreground hover:text-background dark:hover:text-foreground mt-8 h-auto w-full flex-col items-stretch gap-0 rounded-2xl border p-6 text-left whitespace-normal no-underline hover:no-underline"
+                className="mt-8 h-auto w-full flex-col items-stretch gap-0 rounded-2xl border border-white/30 p-6 text-left whitespace-normal text-white no-underline hover:text-white hover:no-underline dark:border-white/30 dark:text-white"
                 style={{
                   backgroundColor: component.eventHighlightColor ?? undefined,
                 }}
@@ -55,7 +55,7 @@ export function StrapiEventsAndResearch({
               </AppLink>
             ) : (
               <div
-                className="bg-foreground text-background dark:border-border dark:text-foreground mt-8 rounded-2xl p-6 dark:border"
+                className="mt-8 rounded-2xl p-6 text-white dark:border dark:border-white/30 dark:text-white"
                 style={
                   component.eventHighlightColor
                     ? { backgroundColor: component.eventHighlightColor }
@@ -136,7 +136,7 @@ function EventHighlightContent({
         <Typography
           variant="small"
           fontWeight="semiBold"
-          className="text-amber-800 dark:text-amber-300"
+          className="text-amber-300"
         >
           {component.eventHighlightLabel}
         </Typography>
@@ -146,14 +146,14 @@ function EventHighlightContent({
           tag="h3"
           variant="heading4"
           fontWeight="semiBold"
-          className="text-foreground mt-4 min-w-0 break-words"
+          className="mt-4 min-w-0 break-words text-white"
         >
           {eventHighlightHeading}
         </Typography>
       ) : null}
       {component.eventHighlightDescription ||
       component.eventHighlightPost?.excerpt ? (
-        <Typography variant="small" className="text-muted-foreground mt-3">
+        <Typography variant="small" className="mt-3 text-white/90">
           {component.eventHighlightDescription ??
             component.eventHighlightPost?.excerpt}
         </Typography>
