@@ -321,7 +321,7 @@ function ResearchCard({ item }: { item: ResearchItem }) {
         item.link ? (
           <StrapiLink
             component={item.link}
-            className="mt-4 inline-flex p-0 font-semibold text-red-800 hover:bg-transparent hover:text-red-900"
+            className="mt-4 inline-flex p-0 font-semibold text-red-800 hover:bg-transparent hover:text-red-900 dark:text-red-300 dark:hover:text-red-200"
           >
             {item.link.label}
             <ExternalLink className="size-3.5" aria-hidden="true" />
@@ -330,7 +330,7 @@ function ResearchCard({ item }: { item: ResearchItem }) {
           <AppLink
             href={href}
             variant="link"
-            className="mt-4 h-auto p-0 font-semibold text-red-800 hover:text-red-900"
+            className="mt-4 h-auto p-0 font-semibold text-red-800 hover:text-red-900 dark:text-red-300 dark:hover:text-red-200"
           >
             Read more
             <ExternalLink className="size-3.5" aria-hidden="true" />

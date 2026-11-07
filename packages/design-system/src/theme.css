@@ -20,6 +20,8 @@
     --color-border: oklch(1 0 0 / 10%);
     --color-input: oklch(1 0 0 / 15%);
     --color-ring: oklch(0.556 0 0);
+    --color-link: #93c5fd;
+    --color-link-hover: #bfdbfe;
   }
 }
 
@@ -45,6 +47,8 @@
   --color-border: oklch(0.922 0 0);
   --color-input: oklch(0.922 0 0);
   --color-ring: #024731;
+  --color-link: #1d4ed8;
+  --color-link-hover: #1e3a8a;
 
   /* Tailwind v4 config */
   --font-sans: var(--font-inter), sans-serif;
