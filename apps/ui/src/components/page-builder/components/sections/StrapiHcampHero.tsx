@@ -30,7 +30,7 @@ export function StrapiHcampHero({
       <Container className="grid min-w-0 items-center gap-10 py-10 md:py-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:py-16">
         <div className="flex w-full min-w-0 flex-col items-start">
           {badge && (
-            <div className="text-brand-red bg-brand-red-soft mb-6 flex max-w-full items-center gap-2 rounded-full border border-red-300 px-4 py-2 text-sm font-semibold">
+            <div className="mb-6 flex max-w-full items-center gap-2 rounded-full border border-red-300 bg-red-50 px-4 py-2 text-xs font-semibold tracking-[0.12em] text-red-900 uppercase dark:border-red-700 dark:bg-red-950/40 dark:text-red-100">
               <BrainCircuit className="size-4 shrink-0" aria-hidden="true" />
               <span className="min-w-0 wrap-break-word">{badge}</span>
             </div>

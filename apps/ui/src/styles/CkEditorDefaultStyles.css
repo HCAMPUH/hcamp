@@ -29,6 +29,19 @@
   color: var(--color-brand-blue) !important;
 }
 
+/* Use light brand tones when rich text is rendered on a dark page background. */
+.dark .ck-content span[style*="--color-brand-manoa-green"] {
+  color: #63c29a !important;
+}
+
+.dark .ck-content span[style*="--color-brand-red"] {
+  color: #ff8f8f !important;
+}
+
+.dark .ck-content span[style*="hsl(216, 100%, 40%)"] {
+  color: #8db4ff !important;
+}
+
 .ck-content code {
   background-color: hsla(0, 0%, 78%, 0.3);
   border-radius: 2px;

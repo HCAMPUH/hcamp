@@ -45,12 +45,12 @@ export async function StrapiAnimatedPledge({
           }}
         >
           <div className="mb-2 flex items-center gap-4 border-b border-white/10 pb-2">
-            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-yellow-400/30 bg-yellow-400/20 px-3 py-1 text-xs font-bold text-yellow-300">
+            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-red-300 bg-red-50 px-3 py-1 text-xs font-semibold tracking-[0.12em] text-red-900 uppercase dark:border-red-700 dark:bg-red-950/40 dark:text-red-100">
               <Award className="size-3.5" aria-hidden="true" />
               {component.titleLink ? (
                 <StrapiLink
                   component={component.titleLink}
-                  className="inline-flex !h-auto !min-h-0 !gap-0 !rounded-none !px-0 !py-0 text-xs !leading-none text-yellow-300 no-underline hover:text-yellow-200"
+                  className="inline-flex !h-auto !min-h-0 !gap-0 !rounded-none !px-0 !py-0 text-xs !leading-none text-red-900 no-underline hover:text-red-900 dark:text-red-100 dark:hover:text-red-100"
                 >
                   {component.title}
                 </StrapiLink>
