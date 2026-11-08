@@ -13,6 +13,23 @@ export const removeEmptyImagesFromContent = (content?: string | null): string =>
     ""
   ) || ""
 
+/**
+ * Converts CKEditor PDF flipbook objects into mount points for the React viewer.
+ */
+export const transformFlipbookElements = (content?: string | null): string =>
+  content?.replaceAll(
+    /<figure\b([^>]*\bclass\s*=\s*(["'])[^"']*\bflipbook\b[^"']*\2[^>]*)>[\s\S]*?<\/figure>/gi,
+    (match, attributes: string) => {
+      const pdfUrl = attributes.match(
+        /\bdata-flipbook-pdf\s*=\s*(["'])(.*?)\1/i
+      )?.[2]
+
+      if (!pdfUrl || !isHttpUrl(pdfUrl)) return match
+
+      return `<figure${attributes}><div class="ck-flipbook-renderer" data-flipbook-pdf="${escapeAttribute(pdfUrl)}"></div></figure>`
+    }
+  ) || ""
+
 const youtubeHosts = new Set([
   "www.youtube.com",
   "youtube.com",
@@ -177,6 +194,16 @@ function getVideoDetails(value: string): null | {
 
 const escapeAttribute = (value: string) =>
   value.replaceAll("&", "&amp;").replaceAll('"', "&quot;")
+
+const isHttpUrl = (value: string) => {
+  try {
+    const url = new URL(value)
+
+    return url.protocol === "http:" || url.protocol === "https:"
+  } catch {
+    return false
+  }
+}
 
 /**
  * Function to process links in HTML content, adding locale prefix to internal links.

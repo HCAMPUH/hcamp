@@ -16,6 +16,391 @@
   color: var(--ck-color-mention-text);
 }
 
+/* Keep the viewer toolbar inside the flipbook instead of fixing it to the viewport. */
+.ck-pdf-flipbook-viewer .fixed.bottom-0 {
+  background: color-mix(
+    in srgb,
+    var(--color-background) 60%,
+    transparent
+  ) !important;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 -0.25rem 1rem rgb(0 0 0 / 0.08) !important;
+  isolation: isolate;
+  inset: auto 0 0 !important;
+  margin: 0 !important;
+  position: absolute !important;
+  z-index: 100 !important;
+  -webkit-backdrop-filter: blur(12px);
+  width: 100% !important;
+}
+
+.ck-pdf-flipbook-viewer .fixed.bottom-0 > div {
+  background: transparent !important;
+  position: relative;
+  z-index: 101;
+}
+
+/* Collapse the slider's separate row and use the empty space between the
+   navigation and zoom controls for its track and page dot. */
+.ck-pdf-flipbook-viewer .fixed.bottom-0 > .mb-1 {
+  bottom: 1rem;
+  left: 7.5rem;
+  margin: 0 !important;
+  position: absolute !important;
+  right: 11rem;
+  width: auto !important;
+  z-index: 102;
+}
+
+.ck-pdf-flipbook-viewer .fixed.bottom-0 > .mb-1 > .py-4 {
+  padding-bottom: 0 !important;
+  padding-top: 0 !important;
+  width: 100%;
+}
+
+.ck-pdf-flipbook-viewer .fixed.bottom-0 > .mb-1 .h-1 {
+  background-color: var(--color-secondary) !important;
+  height: 0.25rem;
+  overflow: visible;
+}
+
+.ck-pdf-flipbook-viewer .fixed.bottom-0 > .mb-1 .react-draggable > div {
+  background-color: var(--color-secondary) !important;
+  height: 0.5rem !important;
+  left: -0.125rem !important;
+  top: -0.125rem !important;
+  width: 0.5rem !important;
+}
+
+.ck-pdf-flipbook-viewer .fixed.bottom-0 > div:nth-child(2) {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0 0.5rem;
+}
+
+.ck-pdf-flipbook-viewer .fixed.bottom-0 > div:nth-child(2) > div:first-child {
+  display: none;
+}
+
+.ck-pdf-flipbook-viewer .fixed.bottom-0 > div:nth-child(2) > div:nth-child(2) {
+  display: none;
+}
+
+.ck-pdf-flipbook-viewer .fixed.bottom-0 > div:nth-child(2) > .flex-grow {
+  flex: 0 0 7rem;
+  justify-content: flex-start;
+}
+
+.ck-pdf-flipbook-viewer .fixed.bottom-0 > div:nth-child(2)
+  > div:last-child {
+  margin-left: auto;
+}
+
+@media (max-width: 640px) {
+  .ck-pdf-flipbook-viewer .fixed.bottom-0 > .mb-1 {
+    gap: 0.25rem;
+    padding: 0 0.25rem;
+  }
+
+  .ck-pdf-flipbook-viewer .fixed.bottom-0 > div:nth-child(2) > .flex-grow {
+    flex-basis: 5rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .ck-pdf-flipbook-viewer .fixed.bottom-0 > .mb-1 {
+    display: none !important;
+  }
+}
+
+.ck-content figure.flipbook {
+  display: block;
+  margin: 1.5rem auto;
+  width: 100%;
+}
+
+.ck-content figure.flipbook > .ck-flipbook-renderer {
+  display: block;
+  width: 100%;
+}
+
+.ck-content figure.flipbook .ck-pdf-flipbook-fullscreen:fullscreen {
+  aspect-ratio: auto;
+  background: transparent;
+  height: 100vh;
+  overflow: hidden;
+  width: 100vw;
+}
+
+.ck-content figure.flipbook .ck-pdf-flipbook-fullscreen:fullscreen
+  .ck-pdf-flipbook-viewer {
+  aspect-ratio: auto;
+  height: 100vh !important;
+  max-height: 100vh;
+  width: 100vw;
+}
+
+.ck-content figure.flipbook .ck-pdf-flipbook-thumbnail {
+  align-items: center;
+  aspect-ratio: 16 / 9;
+  background: transparent;
+  border: 0;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  height: auto;
+  justify-content: center;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
+
+/* Flipbooks inside tables must not use the standalone viewer's viewport height. */
+.ck-content :is(figure.table, table.table) figure.flipbook
+  .ck-pdf-flipbook-thumbnail {
+  aspect-ratio: 16 / 9;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none;
+}
+
+.ck-content :is(figure.table, table.table) figure.flipbook
+  .ck-pdf-flipbook-fullscreen,
+.ck-content :is(figure.table, table.table) figure.flipbook
+  .ck-pdf-flipbook-viewer {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
+
+.ck-content :is(figure.table, table.table) figure.flipbook
+  .ck-pdf-flipbook-thumbnail
+  .react-pdf__Document {
+  height: 100%;
+}
+
+.ck-content :is(td, th) figure.flipbook .ck-pdf-flipbook-thumbnail {
+  aspect-ratio: 16 / 9;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none;
+}
+
+.ck-content :is(td, th) figure.flipbook .ck-pdf-flipbook-fullscreen,
+.ck-content :is(td, th) figure.flipbook .ck-pdf-flipbook-viewer {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
+
+.ck-content :is(td, th) figure.flipbook .ck-pdf-flipbook-viewer {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  width: 100%;
+}
+
+.ck-content :is(td, th) figure.flipbook .ck-pdf-flipbook-viewer > div,
+.ck-content :is(td, th) figure.flipbook .ck-pdf-flipbook-viewer
+  > div
+  > .bg-gray-700,
+.ck-content :is(td, th) figure.flipbook .ck-pdf-flipbook-viewer .bg-transparent {
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
+  overflow: hidden;
+}
+
+.ck-pdf-flipbook-in-table:not(:fullscreen) {
+  height: var(--ck-flipbook-table-height) !important;
+  min-height: 0 !important;
+  max-height: var(--ck-flipbook-table-height) !important;
+}
+
+.ck-pdf-flipbook-in-table:not(:fullscreen)
+  .ck-pdf-flipbook-viewer {
+  aspect-ratio: 16 / 9;
+  height: var(--ck-flipbook-table-height) !important;
+  min-height: 0 !important;
+  max-height: var(--ck-flipbook-table-height) !important;
+  overflow: hidden !important;
+  width: 100% !important;
+}
+
+.ck-pdf-flipbook-in-table:not(:fullscreen)
+  .ck-pdf-flipbook-viewer
+  > div,
+.ck-pdf-flipbook-in-table:not(:fullscreen)
+  .ck-pdf-flipbook-viewer
+  > div
+  > .bg-gray-700,
+.ck-pdf-flipbook-in-table:not(:fullscreen)
+  .ck-pdf-flipbook-viewer
+  .bg-transparent {
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
+  overflow: hidden !important;
+}
+
+.ck-pdf-flipbook-in-table:not(:fullscreen)
+  .ck-pdf-flipbook-viewer
+  > div
+  > div:not(.fixed),
+.ck-pdf-flipbook-in-table:not(:fullscreen)
+  .ck-pdf-flipbook-viewer
+  > div
+  > div:not(.fixed)
+  > div {
+  box-sizing: border-box;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
+  overflow: hidden;
+  width: 100% !important;
+}
+
+.ck-pdf-flipbook-in-table:not(:fullscreen)
+  .ck-pdf-flipbook-viewer
+  .stf__parent,
+.ck-pdf-flipbook-in-table:not(:fullscreen)
+  .ck-pdf-flipbook-viewer
+  .react-pageflip {
+  box-sizing: border-box !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  min-height: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.ck-pdf-flipbook-in-table:not(:fullscreen)
+  .ck-pdf-flipbook-viewer
+  .stf__wrapper,
+.ck-pdf-flipbook-in-table:not(:fullscreen)
+  .ck-pdf-flipbook-viewer
+  .stf__block {
+  box-sizing: border-box !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  min-height: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.ck-content figure.flipbook .ck-pdf-flipbook-viewer,
+.ck-content figure.flipbook .ck-pdf-flipbook-viewer > div,
+.ck-content figure.flipbook .ck-pdf-flipbook-viewer > div > .bg-gray-700,
+.ck-content figure.flipbook .ck-pdf-flipbook-viewer .bg-transparent {
+  background: transparent !important;
+}
+
+.ck-content figure.flipbook .ck-pdf-flipbook-thumbnail .react-pdf__Document {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 auto;
+  height: 100%;
+  justify-content: center;
+  max-height: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+
+.ck-content figure.flipbook .ck-pdf-flipbook-thumbnail .react-pdf__Page {
+  align-items: center;
+  display: flex;
+  height: 100% !important;
+  justify-content: center;
+  max-height: 100%;
+  max-width: 100%;
+  width: 100% !important;
+}
+
+.ck-content figure.flipbook .ck-pdf-flipbook-thumbnail canvas {
+  display: block;
+  height: auto !important;
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  width: auto !important;
+}
+
+.ck-content figure.flipbook .ck-pdf-flipbook-thumbnail::after {
+  background: transparent;
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: background-color 200ms ease;
+}
+
+.ck-content figure.flipbook .ck-pdf-flipbook-thumbnail:hover::after,
+.ck-content figure.flipbook .ck-pdf-flipbook-thumbnail:focus-visible::after {
+  background: transparent;
+}
+
+.ck-content figure.flipbook .ck-pdf-flipbook-thumbnail__read {
+  align-items: center;
+  background: color-mix(in srgb, var(--color-brand-red) 90%, transparent);
+  border: 0;
+  border-radius: 999px;
+  box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 0.28);
+  color: white;
+  display: flex;
+  font-size: 1.125rem;
+  font-weight: 700;
+  justify-content: center;
+  letter-spacing: 0.02em;
+  min-width: 7rem;
+  padding: 0.8rem 1.5rem;
+  position: absolute;
+  transition:
+    background-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms ease;
+  z-index: 1;
+}
+
+.ck-content figure.flipbook .ck-pdf-flipbook-thumbnail:hover
+  .ck-pdf-flipbook-thumbnail__read,
+.ck-content figure.flipbook .ck-pdf-flipbook-thumbnail:focus-visible
+  .ck-pdf-flipbook-thumbnail__read {
+  background: var(--color-brand-orange);
+  box-shadow: 0 0.75rem 2rem rgb(0 0 0 / 0.36);
+  transform: scale(1.08);
+}
+
+.ck-content figure.flipbook .ck-pdf-flipbook-viewer {
+  aspect-ratio: 16 / 9;
+  box-sizing: border-box;
+  display: block;
+  height: auto !important;
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.ck-content figure.flipbook .ck-pdf-flipbook-viewer > div {
+  height: 100% !important;
+}
+
+.ck-content figure.flipbook .ck-pdf-flipbook-viewer > div > .bg-gray-700 {
+  height: 100% !important;
+  min-height: 0;
+  position: relative;
+}
+
+.ck-content figure.flipbook .ck-pdf-flipbook-viewer .bg-transparent {
+  height: 100% !important;
+  min-height: 0;
+}
+
 /* Keep CMS-authored brand colors readable on the page background. */
 .ck-content span[style*="--color-brand-manoa-green"] {
   color: var(--color-brand-manoa-green) !important;
@@ -751,4 +1136,33 @@
 .ck-content .table td,
 .ck-content .table th {
   overflow-wrap: break-word;
+}
+
+/* Keep activated flipbooks inside table cells; these rules must follow the
+   standalone viewer dimensions above. */
+.ck-content :is(td, th) figure.flipbook .ck-pdf-flipbook-fullscreen {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
+
+.ck-content :is(td, th) figure.flipbook .ck-pdf-flipbook-viewer {
+  aspect-ratio: 16 / 9;
+  box-sizing: border-box;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: hidden;
+  width: 100%;
+}
+
+.ck-content :is(td, th) figure.flipbook .ck-pdf-flipbook-viewer > div,
+.ck-content :is(td, th) figure.flipbook .ck-pdf-flipbook-viewer
+  > div
+  > .bg-gray-700,
+.ck-content :is(td, th) figure.flipbook .ck-pdf-flipbook-viewer .bg-transparent {
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
+  overflow: hidden;
 }

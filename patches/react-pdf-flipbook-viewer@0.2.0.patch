@@ -1,0 +1,32 @@
+diff --git a/dist/components/flipbook-viewer/flipbook/flipbook-loader.js b/dist/components/flipbook-viewer/flipbook/flipbook-loader.js
+index a83efa098d7f9dc61f594a6f9e89edf93ce28b4e..b46c25bd36372362e57e00cf5e75f8d50415f655 100644
+--- a/dist/components/flipbook-viewer/flipbook/flipbook-loader.js
++++ b/dist/components/flipbook-viewer/flipbook/flipbook-loader.js
+@@ -30,7 +30,7 @@ const FlipbookLoader = forwardRef(({ pdfDetails, scale, viewerStates, setViewerS
+         }));
+     }, [viewerStates, viewRange, setViewRange, setViewerStates, pdfDetails.totalPages]);
+     return (React.createElement("div", { className: "relative" },
+-        React.createElement(HTMLFlipBook, { ref: ref, key: scale, startPage: viewerStates.currentPageIndex, width: pdfDetails.width * scale * 5, height: pdfDetails.height * scale * 5, size: "stretch", drawShadow: false, flippingTime: 700, usePortrait: false, showCover: true, showPageCorners: false, onFlip: onFlip, disableFlipByClick: width < 768 ? true : false, className: viewerStates.zoomScale > 1 ? 'pointer-events-none md:pointer-events-none' : '' }, Array.from({ length: pdfDetails.totalPages }, (_, index) => (React.createElement(MemoizedPdfPage, { key: index, height: pdfDetails.height * scale, zoomScale: debouncedZoom, page: index + 1, isPageInViewRange: isPageInViewRange(index), isPageInView: isPageInView(index) }))))));
++        React.createElement(HTMLFlipBook, { ref: ref, key: scale, startPage: viewerStates.currentPageIndex, width: pdfDetails.width * scale * 5, height: pdfDetails.height * scale * 5, size: "stretch", drawShadow: false, flippingTime: 700, usePortrait: false, showCover: true, showPageCorners: false, onFlip: onFlip, disableFlipByClick: width < 768 ? true : false, className: viewerStates.zoomScale > 1 ? 'pointer-events-none md:pointer-events-none' : '' }, Array.from({ length: pdfDetails.totalPages }, (_, index) => (React.createElement(MemoizedPdfPage, { key: index, height: pdfDetails.height * scale, zoomScale: debouncedZoom, page: index + 1, isPageInViewRange: isPageInViewRange(index), isPageInView: isPageInViewRange(index) }))))));
+ });
+ FlipbookLoader.displayName = 'FlipbookLoader';
+ export default FlipbookLoader;
+diff --git a/dist/components/flipbook-viewer/flipbook/pdf-page.js b/dist/components/flipbook-viewer/flipbook/pdf-page.js
+--- a/dist/components/flipbook-viewer/flipbook/pdf-page.js
++++ b/dist/components/flipbook-viewer/flipbook/pdf-page.js
+@@ -3,7 +3,7 @@
+-import { forwardRef, memo } from "react";
+-import { Page } from "react-pdf";
+-const PdfPage = forwardRef(({ page, height, zoomScale, isPageInView, isPageInViewRange }, ref) => {
+-    return (React.createElement("div", { ref: ref, className: cn(page % 2 === 0 ? 'bg-background' : 'bg-muted') }, isPageInViewRange && (React.createElement(Page, { devicePixelRatio: (isPageInView && zoomScale > 1.7) ? Math.min(zoomScale * window.devicePixelRatio, 5) : window.devicePixelRatio, height: height, pageNumber: page, loading: React.createElement(React.Fragment, null) }))));
+-});
+-PdfPage.displayName = "PdfPage";
+-export default memo(PdfPage);
++import { forwardRef, memo } from "react";
++import { Page } from "react-pdf";
++const PdfPage = forwardRef(({ page, height, zoomScale, isPageInView, isPageInViewRange }, ref) => {
++    return (React.createElement("div", { ref: ref, className: cn(page % 2 === 0 ? 'bg-background' : 'bg-muted') }, isPageInViewRange && (React.createElement(Page, { devicePixelRatio: (isPageInView && zoomScale > 1.7) ? Math.min(zoomScale * window.devicePixelRatio, 5) : window.devicePixelRatio, height: height, pageNumber: page, loading: React.createElement(React.Fragment, null), renderAnnotationLayer: false, renderTextLayer: false }))));
++});
++PdfPage.displayName = "PdfPage";
++export default memo(PdfPage);
+-        

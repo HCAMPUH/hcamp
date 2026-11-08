@@ -1,8 +1,10 @@
 import { type Locale, useLocale } from "next-intl"
 
+import { PdfFlipbookRenderer } from "@/components/elementary/ck-editor/PdfFlipbookRenderer"
 import {
   processLinksInHtmlContent,
   removeEmptyImagesFromContent,
+  transformFlipbookElements,
   transformLayoutTables,
   transformOembedElements,
 } from "@/components/elementary/ck-editor/utils"
@@ -34,6 +36,7 @@ function CkEditorRenderer({
       (h: string) => processLinksInHtmlContent(h, locale),
       removeEmptyImagesFromContent,
       transformOembedElements,
+      transformFlipbookElements,
       transformLayoutTables,
     ]
 
@@ -42,16 +45,18 @@ function CkEditorRenderer({
 
   return (
     <VideoLightbox>
-      <div
-        className={cn(
-          "ck-content",
-          `ck-editor-rich-text-${variant}`,
-          className
-        )}
-        dangerouslySetInnerHTML={{
-          __html: processHtmlContent(htmlContent, locale),
-        }}
-      />
+      <PdfFlipbookRenderer>
+        <div
+          className={cn(
+            "ck-content",
+            `ck-editor-rich-text-${variant}`,
+            className
+          )}
+          dangerouslySetInnerHTML={{
+            __html: processHtmlContent(htmlContent, locale),
+          }}
+        />
+      </PdfFlipbookRenderer>
     </VideoLightbox>
   )
 }

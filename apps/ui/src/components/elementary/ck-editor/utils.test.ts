@@ -6,8 +6,30 @@ vi.mock("@/lib/navigation", () => ({
 
 import {
   removeEmptyImagesFromContent,
+  transformFlipbookElements,
   transformOembedElements,
 } from "@/components/elementary/ck-editor/utils"
+
+describe("transformFlipbookElements", () => {
+  it("renders existing PDF flipbook objects as viewer mount points", () => {
+    const result = transformFlipbookElements(
+      '<figure class="flipbook" data-flipbook-pdf="https://example.com/report.pdf"><button>Open PDF FlipBook</button></figure>'
+    )
+
+    expect(result).toContain('class="ck-flipbook-renderer"')
+    expect(result).toContain(
+      'data-flipbook-pdf="https://example.com/report.pdf"'
+    )
+    expect(result).not.toContain("<button>")
+  })
+
+  it("leaves unsafe or unsupported PDF URLs unchanged", () => {
+    const unsafe =
+      '<figure class="flipbook" data-flipbook-pdf="javascript:alert(1)">PDF</figure>'
+
+    expect(transformFlipbookElements(unsafe)).toBe(unsafe)
+  })
+})
 
 describe("transformOembedElements", () => {
   it("renders YouTube embeds as thumbnail play buttons", () => {
