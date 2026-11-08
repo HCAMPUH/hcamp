@@ -33,10 +33,10 @@ function CkEditorRenderer({
   const locale = passedLocale ?? currentLocale
   const processHtmlContent = (html: string, locale: Locale) => {
     const transformers = [
+      transformFlipbookElements,
       (h: string) => processLinksInHtmlContent(h, locale),
       removeEmptyImagesFromContent,
       transformOembedElements,
-      transformFlipbookElements,
       transformLayoutTables,
     ]
 

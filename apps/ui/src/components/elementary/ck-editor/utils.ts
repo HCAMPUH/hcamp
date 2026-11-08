@@ -2,6 +2,7 @@ import type { Locale } from "next-intl"
 import { HTMLElement, parse } from "node-html-parser"
 
 import { routing } from "@/lib/navigation"
+import { formatStrapiMediaUrl } from "@/lib/strapi-helpers"
 
 /**
  * Function to remove empty images (images without src) from HTML content.
@@ -15,20 +16,42 @@ export const removeEmptyImagesFromContent = (content?: string | null): string =>
 
 /**
  * Converts CKEditor PDF flipbook objects into mount points for the React viewer.
+ * The second replacement keeps older media-library link output compatible.
  */
 export const transformFlipbookElements = (content?: string | null): string =>
-  content?.replaceAll(
-    /<figure\b([^>]*\bclass\s*=\s*(["'])[^"']*\bflipbook\b[^"']*\2[^>]*)>[\s\S]*?<\/figure>/gi,
-    (match, attributes: string) => {
-      const pdfUrl = attributes.match(
-        /\bdata-flipbook-pdf\s*=\s*(["'])(.*?)\1/i
-      )?.[2]
+  content
+    ?.replaceAll(
+      /<figure\b([^>]*\bclass\s*=\s*(["'])[^"']*\bflipbook\b[^"']*\2[^>]*)>[\s\S]*?<\/figure>/gi,
+      (match, attributes: string) => {
+        const pdfUrl = attributes.match(
+          /\bdata-flipbook-pdf\s*=\s*(["'])(.*?)\1/i
+        )?.[2]
 
-      if (!pdfUrl || !isHttpUrl(pdfUrl)) return match
+        const normalizedPdfUrl = normalizeFlipbookUrl(pdfUrl)
+        if (!normalizedPdfUrl) return match
 
-      return `<figure${attributes}><div class="ck-flipbook-renderer" data-flipbook-pdf="${escapeAttribute(pdfUrl)}"></div></figure>`
-    }
-  ) || ""
+        return `<figure${attributes}><div class="ck-flipbook-renderer" data-flipbook-pdf="${escapeAttribute(normalizedPdfUrl)}"></div></figure>`
+      }
+    )
+    .replaceAll(
+      /<a\b([^>]*\bhref\s*=\s*(["'])(.*?)\2[^>]*)>([\s\S]*?)<\/a>/gi,
+      (
+        match,
+        attributes: string,
+        _quote: string,
+        href: string,
+        label: string
+      ) => {
+        const isFlipbookLink =
+          /\bck-flipbook-placeholder\b/i.test(attributes) ||
+          /open\s+pdf\s+flipbook/i.test(label)
+
+        const normalizedPdfUrl = normalizeFlipbookUrl(href)
+        if (!isFlipbookLink || !normalizedPdfUrl) return match
+
+        return `<figure class="flipbook" data-flipbook-pdf="${escapeAttribute(normalizedPdfUrl)}"><div class="ck-flipbook-renderer" data-flipbook-pdf="${escapeAttribute(normalizedPdfUrl)}"></div></figure>`
+      }
+    ) || ""
 
 const youtubeHosts = new Set([
   "www.youtube.com",
@@ -202,6 +225,16 @@ const isHttpUrl = (value: string) => {
     return url.protocol === "http:" || url.protocol === "https:"
   } catch {
     return false
+  }
+}
+
+const normalizeFlipbookUrl = (value?: string) => {
+  if (!value) return
+
+  if (isHttpUrl(value)) return value
+
+  if (value.startsWith("/uploads/")) {
+    return formatStrapiMediaUrl(value)
   }
 }
 
