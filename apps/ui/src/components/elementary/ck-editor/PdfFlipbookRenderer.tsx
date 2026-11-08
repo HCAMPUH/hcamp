@@ -37,6 +37,15 @@ type PdfThumbnailProps = {
   readonly pdfUrl: string
 }
 
+const isAppleTouchDevice = () => {
+  if (typeof navigator === "undefined") return false
+
+  return (
+    /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+  )
+}
+
 const PdfThumbnail = dynamic<PdfThumbnailProps>(
   async () => {
     const { Document, Page, pdfjs } = await import("react-pdf")
@@ -106,7 +115,7 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
     const fullscreenElement = fullscreenRef.current
     if (!fullscreenElement) return
 
-    if (!fullscreenElement.requestFullscreen) {
+    if (!fullscreenElement.requestFullscreen || isAppleTouchDevice()) {
       setIsActivated(true)
       setIsInlineActivated(true)
 
@@ -129,6 +138,11 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
     setIsActivated(false)
     setIsInlineActivated(false)
     setIsClosing(true)
+
+    if (cleanupTimer.current !== undefined) {
+      window.clearTimeout(cleanupTimer.current)
+    }
+
     cleanupTimer.current = window.setTimeout(() => {
       setIsClosing(false)
     }, 500)
