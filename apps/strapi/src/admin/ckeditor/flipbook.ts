@@ -222,7 +222,7 @@ export class FlipBookPlugin extends Plugin {
     const scheduleSelectedPdf = () => {
       if (!selectingPdf || selectionTimer !== undefined) return
 
-      if (selectionAttempts >= 10) {
+      if (selectionAttempts >= 50) {
         selectionAttempts = 0
 
         return
@@ -257,7 +257,6 @@ export class FlipBookPlugin extends Plugin {
           ...editor.model.document.selection.getFirstPosition().path,
         ]
         mediaLibrary().toggle()
-        scheduleSelectedPdf()
       })
 
       return button
