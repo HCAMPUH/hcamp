@@ -181,15 +181,32 @@ export class FlipBookPlugin extends Plugin {
         dataBeforeSelection,
         "text/html"
       )
-      const previousLinks = new Set(
-        Array.from(
-          previousDocument.body.querySelectorAll(":scope a"),
-          (link) => link.href
+      const previousPdfLinks = Array.from(
+        previousDocument.body.querySelectorAll<HTMLAnchorElement>(
+          ":scope a[href]"
         )
-      )
-      const selectedPdf = Array.from(
-        currentDocument.body.querySelectorAll(":scope a[href]")
-      ).find((link) => !previousLinks.has(link.href))
+      ).filter((link) => isPdfUrl(link.href))
+      const currentPdfLinks = Array.from(
+        currentDocument.body.querySelectorAll<HTMLAnchorElement>(
+          ":scope a[href]"
+        )
+      ).filter((link) => isPdfUrl(link.href))
+      const previousPdfCounts = new Map<string, number>()
+
+      for (const link of previousPdfLinks) {
+        previousPdfCounts.set(
+          link.href,
+          (previousPdfCounts.get(link.href) ?? 0) + 1
+        )
+      }
+
+      const currentPdfCounts = new Map<string, number>()
+      const selectedPdf = currentPdfLinks.find((link) => {
+        const count = (currentPdfCounts.get(link.href) ?? 0) + 1
+        currentPdfCounts.set(link.href, count)
+
+        return count > (previousPdfCounts.get(link.href) ?? 0)
+      })
 
       if (!selectedPdf?.href) {
         scheduleSelectedPdf()
@@ -234,6 +251,8 @@ export class FlipBookPlugin extends Plugin {
         processSelectedPdf()
       }, 100)
     }
+
+    const isPdfUrl = (value: string) => /\.pdf(?:[?#]|$)/i.test(value)
 
     editor.model.document.on("change:data", () => {
       if (!selectingPdf) return
