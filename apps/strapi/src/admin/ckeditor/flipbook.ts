@@ -161,12 +161,19 @@ export class FlipBookPlugin extends Plugin {
     let dataBeforeSelection = ""
     let selectionPath: number[] | undefined
     let processingSelection = false
+    let selectionTimer: number | undefined
+    let selectionAttempts = 0
 
     const processSelectedPdf = () => {
       if (!selectingPdf || processingSelection) return
 
       const currentData = editor.getData()
-      if (currentData === dataBeforeSelection) return
+
+      if (currentData === dataBeforeSelection) {
+        scheduleSelectedPdf()
+
+        return
+      }
 
       const parser = new DOMParser()
       const currentDocument = parser.parseFromString(currentData, "text/html")
@@ -184,7 +191,11 @@ export class FlipBookPlugin extends Plugin {
         currentDocument.body.querySelectorAll(":scope a[href]")
       ).find((link) => !previousLinks.has(link.href))
 
-      if (!selectedPdf?.href) return
+      if (!selectedPdf?.href) {
+        scheduleSelectedPdf()
+
+        return
+      }
 
       processingSelection = true
       selectingPdf = false
@@ -208,9 +219,25 @@ export class FlipBookPlugin extends Plugin {
       processingSelection = false
     }
 
+    const scheduleSelectedPdf = () => {
+      if (!selectingPdf || selectionTimer !== undefined) return
+
+      if (selectionAttempts >= 10) {
+        selectionAttempts = 0
+
+        return
+      }
+
+      selectionAttempts += 1
+      selectionTimer = window.setTimeout(() => {
+        selectionTimer = undefined
+        processSelectedPdf()
+      }, 100)
+    }
+
     editor.model.document.on("change:data", () => {
       if (!selectingPdf) return
-      window.setTimeout(processSelectedPdf, 0)
+      scheduleSelectedPdf()
     })
 
     editor.ui.componentFactory.add("insertFlipBook", (locale) => {
@@ -224,11 +251,13 @@ export class FlipBookPlugin extends Plugin {
 
       button.on("execute", () => {
         selectingPdf = true
+        selectionAttempts = 0
         dataBeforeSelection = editor.getData()
         selectionPath = [
           ...editor.model.document.selection.getFirstPosition().path,
         ]
         mediaLibrary().toggle()
+        scheduleSelectedPdf()
       })
 
       return button
