@@ -118,7 +118,7 @@ function HcampHeroVideo({
         className="absolute inset-0 h-full w-full [&_.ck-content]:absolute [&_.ck-content]:inset-0 [&_.ck-content]:h-full [&_.ck-content]:w-full [&_.ck-video-placeholder]:!absolute [&_.ck-video-placeholder]:!inset-0 [&_.ck-video-placeholder]:!h-full [&_.ck-video-placeholder]:!w-full [&_.ck-video-placeholder]:rounded-none [&_.media]:!absolute [&_.media]:!inset-0 [&_.media]:!m-0 [&_.media]:!aspect-auto [&_.media]:!h-full [&_.media]:!w-full [&_.media]:!min-w-0"
       />
       {(label || title) && (
-        <div className="text-primary-foreground bg-foreground/95 pointer-events-none absolute inset-x-0 bottom-0 px-4 pt-16 pb-4">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/75 to-transparent px-4 pt-16 pb-4 text-white">
           {label && (
             <Typography
               tag="p"
