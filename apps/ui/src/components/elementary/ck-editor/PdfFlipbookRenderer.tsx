@@ -61,6 +61,7 @@ const PdfThumbnail = dynamic<PdfThumbnailProps>(
 
 function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
   const [isActivated, setIsActivated] = useState(false)
+  const [isInlineActivated, setIsInlineActivated] = useState(false)
   const [isClosing, setIsClosing] = useState(false)
   const fullscreenRef = useRef<HTMLDivElement>(null)
   const wasFullscreen = useRef(false)
@@ -103,20 +104,46 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
     if (isClosing) return
 
     const fullscreenElement = fullscreenRef.current
-    if (!fullscreenElement?.requestFullscreen) return
+    if (!fullscreenElement) return
+
+    if (!fullscreenElement.requestFullscreen) {
+      setIsActivated(true)
+      setIsInlineActivated(true)
+
+      return
+    }
 
     try {
       await fullscreenElement.requestFullscreen()
       if (document.fullscreenElement === fullscreenElement) {
         setIsActivated(true)
+        setIsInlineActivated(false)
       }
     } catch {
       setIsActivated(false)
+      setIsInlineActivated(false)
     }
   }
 
+  const closeInlineViewer = () => {
+    setIsActivated(false)
+    setIsInlineActivated(false)
+    setIsClosing(true)
+    cleanupTimer.current = window.setTimeout(() => {
+      setIsClosing(false)
+    }, 500)
+  }
+
   return (
-    <div ref={fullscreenRef} className="ck-pdf-flipbook-fullscreen">
+    <div
+      ref={fullscreenRef}
+      className={[
+        "ck-pdf-flipbook-fullscreen",
+        isInlineActivated && "ck-pdf-flipbook-fullscreen--inline",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
       <button
         type="button"
         className="ck-pdf-flipbook-thumbnail"
@@ -131,12 +158,24 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
         </span>
       </button>
       {isActivated ? (
-        <FlipbookViewer
-          pdfUrl={pdfUrl}
-          shareUrl={pdfUrl}
-          disableShare
-          className="ck-pdf-flipbook-viewer rounded-lg"
-        />
+        <>
+          <FlipbookViewer
+            pdfUrl={pdfUrl}
+            shareUrl={pdfUrl}
+            disableShare
+            className="ck-pdf-flipbook-viewer rounded-lg"
+          />
+          {isInlineActivated ? (
+            <button
+              type="button"
+              className="ck-pdf-flipbook-inline-close"
+              onClick={closeInlineViewer}
+              aria-label="Close PDF flipbook"
+            >
+              Close
+            </button>
+          ) : null}
+        </>
       ) : null}
     </div>
   )
