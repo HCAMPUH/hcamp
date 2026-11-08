@@ -46,7 +46,7 @@ export function StrapiEventsAndResearch({
               <AppLink
                 href={`/posts/${component.eventHighlightPost.slug}`}
                 variant="ghost"
-                className="mt-8 h-auto w-full flex-col items-stretch gap-0 rounded-2xl border border-white/30 p-6 text-left whitespace-normal text-white no-underline hover:text-white hover:no-underline dark:border-white/30 dark:text-white"
+                className="mt-8 h-auto w-full flex-col items-stretch gap-0 rounded-2xl border border-white/30 p-6 text-left whitespace-normal !text-white no-underline hover:!text-white hover:no-underline dark:border-white/30 dark:!text-white"
                 style={{
                   backgroundColor: component.eventHighlightColor ?? undefined,
                 }}

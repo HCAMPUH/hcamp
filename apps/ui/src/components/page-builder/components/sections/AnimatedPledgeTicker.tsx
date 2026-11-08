@@ -158,7 +158,11 @@ export function AnimatedPledgeTicker({
   if (!initialPledges.length) return null
 
   return (
-    <div className="overflow-hidden whitespace-nowrap" aria-label={ariaLabel}>
+    <div
+      className="overflow-hidden whitespace-nowrap"
+      role="marquee"
+      aria-label={ariaLabel}
+    >
       <div
         ref={trackRef}
         className="flex w-max text-xs font-medium text-white sm:text-sm"

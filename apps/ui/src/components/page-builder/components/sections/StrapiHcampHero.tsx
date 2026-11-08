@@ -112,18 +112,18 @@ function HcampHeroVideo({
   readonly videoUrl: string
 }) {
   return (
-    <div className="border-brand-blue bg-brand-blue relative aspect-video w-full overflow-hidden rounded-2xl border-8 shadow-xl">
+    <div className="border-brand-blue bg-brand-blue relative isolate aspect-video w-full overflow-hidden rounded-2xl border-8 shadow-xl">
       <CkEditorRenderer
         htmlContent={`<figure class="media"><oembed url="${escapeHtmlAttribute(videoUrl)}"></oembed></figure>`}
         className="absolute inset-0 h-full w-full [&_.ck-content]:absolute [&_.ck-content]:inset-0 [&_.ck-content]:h-full [&_.ck-content]:w-full [&_.ck-video-placeholder]:!absolute [&_.ck-video-placeholder]:!inset-0 [&_.ck-video-placeholder]:!h-full [&_.ck-video-placeholder]:!w-full [&_.ck-video-placeholder]:rounded-none [&_.media]:!absolute [&_.media]:!inset-0 [&_.media]:!m-0 [&_.media]:!aspect-auto [&_.media]:!h-full [&_.media]:!w-full [&_.media]:!min-w-0"
       />
       {(label || title) && (
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/95 via-black/75 to-transparent px-4 pt-16 pb-4 text-white">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/95 via-black/75 to-transparent px-4 pt-16 pb-4 text-white">
           {label && (
             <Typography
               tag="p"
               variant="small"
-              className="bg-brand-red text-primary-foreground inline-flex rounded-sm px-2 py-1 font-semibold tracking-wide uppercase"
+              className="bg-brand-red inline-flex rounded-sm px-2 py-1 font-semibold tracking-wide text-white uppercase"
             >
               {label}
             </Typography>
@@ -132,7 +132,7 @@ function HcampHeroVideo({
             <Typography
               tag="p"
               variant="large"
-              className="text-primary-foreground mt-1 font-semibold"
+              className="mt-1 font-semibold text-white"
             >
               {title}
             </Typography>
