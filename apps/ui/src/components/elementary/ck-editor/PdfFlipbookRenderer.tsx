@@ -75,10 +75,19 @@ const PdfThumbnail = dynamic<PdfThumbnailProps>(
   { ssr: false }
 )
 
-class FlipbookErrorBoundary extends Component<{
+type FlipbookErrorBoundaryProps = {
   readonly children: ReactNode
   readonly onError: () => void
-}> {
+}
+
+type FlipbookErrorBoundaryState = {
+  hasError: boolean
+}
+
+class FlipbookErrorBoundary extends Component<
+  FlipbookErrorBoundaryProps,
+  FlipbookErrorBoundaryState
+> {
   constructor(props: {
     readonly children: ReactNode
     readonly onError: () => void
