@@ -77,6 +77,7 @@ const PdfThumbnail = dynamic<PdfThumbnailProps>(
 
 type FlipbookErrorBoundaryProps = {
   readonly children: ReactNode
+  readonly fallback: ReactNode
   readonly onError: (error: Error) => void
 }
 
@@ -90,6 +91,7 @@ class FlipbookErrorBoundary extends Component<
 > {
   constructor(props: {
     readonly children: ReactNode
+    readonly fallback: ReactNode
     readonly onError: (error: Error) => void
   }) {
     super(props)
@@ -106,7 +108,7 @@ class FlipbookErrorBoundary extends Component<
   }
 
   render() {
-    if (this.state.hasError) return null
+    if (this.state.hasError) return this.props.fallback
 
     return this.props.children
   }
@@ -204,6 +206,32 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
     setViewerError(error)
   }
 
+  const retryViewer = () => {
+    setViewerError(null)
+    setIsActivated(false)
+    setIsInlineActivated(false)
+    window.setTimeout(() => {
+      setIsActivated(true)
+      setIsInlineActivated(isAppleTouchDevice())
+    }, 0)
+  }
+
+  const viewerErrorFallback = (
+    <div
+      className="ck-pdf-flipbook-viewer flex flex-col items-center justify-center gap-4 rounded-lg p-6 text-center"
+      role="alert"
+    >
+      <p>Unable to display this flipbook on this device.</p>
+      <button
+        type="button"
+        className="ck-pdf-flipbook-inline-close"
+        onClick={retryViewer}
+      >
+        Retry
+      </button>
+    </div>
+  )
+
   return (
     <div
       ref={fullscreenRef}
@@ -228,37 +256,22 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
         </span>
       </button>
       {isActivated ? (
-        <FlipbookErrorBoundary onError={handleViewerError}>
-          {viewerError ? (
-            <div
-              className="ck-pdf-flipbook-viewer flex flex-col items-center justify-center gap-4 rounded-lg p-6 text-center"
-              role="alert"
-            >
-              <p>Unable to display this flipbook on this device.</p>
-              <button
-                type="button"
-                className="ck-pdf-flipbook-inline-close"
-                onClick={() => {
-                  setViewerError(null)
-                  setIsActivated(false)
-                  setIsInlineActivated(false)
-                  window.setTimeout(() => {
-                    setIsActivated(true)
-                    setIsInlineActivated(isAppleTouchDevice())
-                  }, 0)
-                }}
-              >
-                Retry
-              </button>
-            </div>
-          ) : (
-            <FlipbookViewer
-              pdfUrl={pdfUrl}
-              shareUrl={pdfUrl}
-              disableShare
-              className="ck-pdf-flipbook-viewer rounded-lg"
-            />
-          )}
+        <>
+          <FlipbookErrorBoundary
+            fallback={viewerErrorFallback}
+            onError={handleViewerError}
+          >
+            {viewerError ? (
+              viewerErrorFallback
+            ) : (
+              <FlipbookViewer
+                pdfUrl={pdfUrl}
+                shareUrl={pdfUrl}
+                disableShare
+                className="ck-pdf-flipbook-viewer rounded-lg"
+              />
+            )}
+          </FlipbookErrorBoundary>
           {isInlineActivated ? (
             <button
               type="button"
@@ -269,7 +282,7 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
               Close
             </button>
           ) : null}
-        </FlipbookErrorBoundary>
+        </>
       ) : null}
     </div>
   )
