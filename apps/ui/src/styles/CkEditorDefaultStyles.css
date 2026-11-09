@@ -417,6 +417,22 @@
   width: 100%;
 }
 
+.ck-pdf-flipbook-fullscreen--inline
+  .ck-pdf-flipbook-viewer
+  .react-transform-component {
+  height: 100% !important;
+  max-height: 100%;
+  touch-action: none;
+  width: 100% !important;
+}
+
+.ck-pdf-flipbook-fullscreen--inline
+  .ck-pdf-flipbook-viewer
+  .react-transform-element {
+  height: 100% !important;
+  width: 100% !important;
+}
+
 .ck-pdf-flipbook-inline-close {
   background: color-mix(in srgb, var(--color-brand-red) 90%, transparent);
   border: 0;

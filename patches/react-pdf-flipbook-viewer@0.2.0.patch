@@ -25,7 +25,7 @@
 -                    React.createElement(Flipbook, { viewerStates: viewerStates, setViewerStates: setViewerStates, ref: flipbookRef, screenfull: screenfull, pdfDetails: pdfDetails }),
 -                    React.createElement(Toolbar, { viewerStates: viewerStates, setViewerStates: setViewerStates, containerRef: containerRef, flipbookRef: flipbookRef, screenfull: screenfull, pdfDetails: pdfDetails, shareUrl: shareUrl, disableShare: disableShare }))))));
 +                    React.createElement(Flipbook, { viewerStates: viewerStates, setViewerStates: setViewerStates, ref: flipbookRef, screenfull: safeScreenfull, pdfDetails: pdfDetails }),
-+                    React.createElement(Toolbar, { viewerStates: viewerStates, setViewerStates: setViewerStates, containerRef: containerRef, flipbookRef: flipbookRef, screenfull: safeScreenfull, pdfDetails: pdfDetails, shareUrl: shareUrl, disableShare: disableShare }))))));
++                    !isAppleTouchDevice() && React.createElement(Toolbar, { viewerStates: viewerStates, setViewerStates: setViewerStates, containerRef: containerRef, flipbookRef: flipbookRef, screenfull: safeScreenfull, pdfDetails: pdfDetails, shareUrl: shareUrl, disableShare: disableShare }))))));
  };
  export default FlipbookViewer;
 --- a/dist/components/flipbook-viewer/flipbook/flipbook.js	2026-11-07 20:45:30
