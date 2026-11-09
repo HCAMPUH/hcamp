@@ -1,7 +1,14 @@
 "use client"
 
 import dynamic from "next/dynamic"
-import { useEffect, useRef, useState } from "react"
+import {
+  Component,
+  type ErrorInfo,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 import { createRoot, type Root } from "react-dom/client"
 
 let pdfWorker: Worker | undefined
@@ -68,6 +75,19 @@ const PdfThumbnail = dynamic<PdfThumbnailProps>(
   { ssr: false }
 )
 
+class FlipbookErrorBoundary extends Component<{
+  readonly children: ReactNode
+  readonly onError: () => void
+}> {
+  componentDidCatch(_error: Error, _errorInfo: ErrorInfo) {
+    this.props.onError()
+  }
+
+  render() {
+    return this.props.children
+  }
+}
+
 function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
   const [isActivated, setIsActivated] = useState(false)
   const [isInlineActivated, setIsInlineActivated] = useState(false)
@@ -109,6 +129,20 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
     }
   }, [])
 
+  const resetViewer = () => {
+    setIsActivated(false)
+    setIsInlineActivated(false)
+    setIsClosing(true)
+
+    if (cleanupTimer.current !== undefined) {
+      window.clearTimeout(cleanupTimer.current)
+    }
+
+    cleanupTimer.current = window.setTimeout(() => {
+      setIsClosing(false)
+    }, 500)
+  }
+
   const activateFlipbook = async () => {
     if (isClosing) return
 
@@ -135,17 +169,11 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
   }
 
   const closeInlineViewer = () => {
-    setIsActivated(false)
-    setIsInlineActivated(false)
-    setIsClosing(true)
+    resetViewer()
+  }
 
-    if (cleanupTimer.current !== undefined) {
-      window.clearTimeout(cleanupTimer.current)
-    }
-
-    cleanupTimer.current = window.setTimeout(() => {
-      setIsClosing(false)
-    }, 500)
+  const handleViewerError = () => {
+    resetViewer()
   }
 
   return (
@@ -172,7 +200,7 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
         </span>
       </button>
       {isActivated ? (
-        <>
+        <FlipbookErrorBoundary onError={handleViewerError}>
           <FlipbookViewer
             pdfUrl={pdfUrl}
             shareUrl={pdfUrl}
@@ -189,7 +217,7 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
               Close
             </button>
           ) : null}
-        </>
+        </FlipbookErrorBoundary>
       ) : null}
     </div>
   )
