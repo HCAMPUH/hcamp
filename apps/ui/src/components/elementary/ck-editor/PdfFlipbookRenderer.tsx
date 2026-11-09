@@ -182,6 +182,28 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
     }
   }, [])
 
+  useEffect(() => {
+    if (!isInlineActivated || !isAppleTouchDevice()) return
+
+    const orientation = screen.orientation
+    const lockLandscape = async () => {
+      if (!orientation?.lock) return
+
+      try {
+        await orientation.lock("landscape")
+      } catch {
+        // iOS Safari may expose the API without permitting locks outside
+        // its native fullscreen mode. The inline viewer remains landscape.
+      }
+    }
+
+    void lockLandscape()
+
+    return () => {
+      if (orientation?.unlock) orientation.unlock()
+    }
+  }, [isInlineActivated])
+
   const resetViewer = () => {
     setViewerError(null)
     setViewerDiagnostics(null)
@@ -263,7 +285,7 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
       ) : null}
       <button
         type="button"
-        className="ck-pdf-flipbook-inline-close"
+        className="ck-pdf-flipbook-retry"
         onClick={retryViewer}
       >
         Retry
@@ -295,34 +317,22 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
         </span>
       </button>
       {isActivated ? (
-        <>
-          <FlipbookErrorBoundary
-            fallback={viewerErrorFallback}
-            onError={handleViewerError}
-          >
-            {viewerError ? (
-              viewerErrorFallback
-            ) : (
-              <FlipbookViewer
-                pdfUrl={pdfUrl}
-                shareUrl={pdfUrl}
-                disableShare
-                onExit={closeInlineViewer}
-                className="ck-pdf-flipbook-viewer rounded-lg"
-              />
-            )}
-          </FlipbookErrorBoundary>
-          {isInlineActivated ? (
-            <button
-              type="button"
-              className="ck-pdf-flipbook-inline-close"
-              onClick={closeInlineViewer}
-              aria-label="Close PDF flipbook"
-            >
-              Close
-            </button>
-          ) : null}
-        </>
+        <FlipbookErrorBoundary
+          fallback={viewerErrorFallback}
+          onError={handleViewerError}
+        >
+          {viewerError ? (
+            viewerErrorFallback
+          ) : (
+            <FlipbookViewer
+              pdfUrl={pdfUrl}
+              shareUrl={pdfUrl}
+              disableShare
+              onExit={closeInlineViewer}
+              className="ck-pdf-flipbook-viewer rounded-lg"
+            />
+          )}
+        </FlipbookErrorBoundary>
       ) : null}
     </div>
   )

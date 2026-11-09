@@ -163,6 +163,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  page-flip: workspace:*
   '@types/react': 19.2.18
   '@types/react-dom': 19.2.4
   '@codemirror/state': 6.7.1
@@ -814,6 +815,8 @@ importers:
         specifier: 6.0.3
         version: 6.0.3
 
+  packages/page-flip: {}
+
   packages/react-pdf-flipbook-viewer:
     dependencies:
       class-variance-authority:
@@ -825,6 +828,9 @@ importers:
       lucide-react:
         specifier: ^0.417.0
         version: 0.417.0(react@19.3.1)
+      page-flip:
+        specifier: workspace:*
+        version: link:../page-flip
       react:
         specifier: ^19.0.0
         version: 19.3.1
@@ -15139,9 +15145,6 @@ packages:
 
   package-manager-detector@1.8.0:
     resolution: {integrity: sha512-yQA4H19AmPEoMUeavPMDIe1higySl/gH/yaQrkT/s07Qp+7pp2hYz30N3z2l5BkjVkF9Ow6o0wjJamm2y7Sn0A==}
-
-  page-flip@2.0.7:
-    resolution: {integrity: sha512-96lQFUUz7r/LZzEUZJ3yBIMEKU9+m8HMFDzTvTdD6P7Ag/wXINjp9n0W7b4wanwnDbQETo4uNUoL3zMqpFxwGA==}
 
   pako@1.0.11:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
@@ -40019,8 +40022,6 @@ snapshots:
 
   package-manager-detector@1.8.0: {}
 
-  page-flip@2.0.7: {}
-
   pako@1.0.11: {}
 
   param-case@3.0.4:
@@ -41485,7 +41486,7 @@ snapshots:
 
   react-pageflip@2.0.3:
     dependencies:
-      page-flip: 2.0.7
+      page-flip: link:packages/page-flip
 
   react-pdf@9.2.1(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
     dependencies:

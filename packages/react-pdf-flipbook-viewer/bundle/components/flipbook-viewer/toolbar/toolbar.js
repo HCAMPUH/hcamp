@@ -65,18 +65,17 @@ const Toolbar = ({ flipbookRef, containerRef, screenfull, pdfDetails, viewerStat
                     " of ",
                     pdfDetails?.totalPages))),
             React.createElement("div", { className: "md:hidden flex-shrink-0 min-w-[100px]" }),
-            React.createElement("div", { className: "flex-grow flex items-center justify-center gap-1 sm:gap-2" },
-                React.createElement(Button, { onClick: () => {
+            React.createElement("div", { className: "flex-grow flex items-center justify-center gap-1 sm:gap-2" }, !mobileOnly && React.createElement(Button, { onClick: () => {
                         if (flipbookRef.current?.pageFlip) {
                             screenWidth < 768 ? flipbookRef.current.pageFlip().turnToPrevPage() : flipbookRef.current.pageFlip().flipPrev();
                         }
                     }, disabled: !canFlipPrev, variant: 'secondary', size: 'icon', className: 'size-8 min-w-8', "aria-label": "Previous page" },
                     React.createElement(ChevronLeft, { className: "size-4 min-w-4" })),
-                React.createElement("div", { className: "md:hidden" }, pdfDetails?.totalPages > 0 && (React.createElement("p", { className: 'text-xs font-medium text-muted-foreground whitespace-nowrap' },
+                !mobileOnly && React.createElement("div", { className: "md:hidden" }, pdfDetails?.totalPages > 0 && (React.createElement("p", { className: 'text-xs font-medium text-muted-foreground whitespace-nowrap' },
                     pagesInFlipViewDisplay,
                     "/",
                     pdfDetails?.totalPages))),
-                React.createElement(Button, { onClick: () => {
+                !mobileOnly && React.createElement(Button, { onClick: () => {
                         if (flipbookRef.current?.pageFlip) {
                             screenWidth < 768 ? flipbookRef.current.pageFlip().turnToNextPage() : flipbookRef.current.pageFlip().flipNext();
                         }
