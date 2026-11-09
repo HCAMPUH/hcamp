@@ -1,10 +1,10 @@
 {
   "name": "react-pdf-flipbook-viewer",
   "version": "0.2.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "bundle/index.js",
+  "types": "bundle/index.d.ts",
   "files": [
-    "dist"
+    "bundle"
   ],
   "dependencies": {
     "class-variance-authority": "^0.7.0",

@@ -12,6 +12,7 @@ export default [
       "**/dist/**",
       "**/generated/**",
       "**/build/**",
+      "**/packages/react-pdf-flipbook-viewer/bundle/**",
       "**/docs/**",
       "**/storybook-static/**",
       "**/coverage/**",
