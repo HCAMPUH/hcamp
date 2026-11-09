@@ -1,5 +1,5 @@
---- a/dist/components/flipbook-viewer/flipbook-viewer.js	2026-11-07 20:45:30
-+++ b/dist/components/flipbook-viewer/flipbook-viewer.js	2026-11-08 14:59:59
+--- a/dist/components/flipbook-viewer/flipbook-viewer.js	2026-11-08 16:00:00
++++ b/dist/components/flipbook-viewer/flipbook-viewer.js	2026-11-08 16:00:01
 @@ -11,6 +11,9 @@
  import 'react-pdf/dist/Page/AnnotationLayer.css';
  import 'react-pdf/dist/Page/TextLayer.css';
