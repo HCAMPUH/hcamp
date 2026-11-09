@@ -63,6 +63,9 @@ minimumReleaseAgeExclude:
   - pnpm@12.15.0
 
 overrides:
+  # Keep aligned with patches/react-pdf-flipbook-viewer@0.2.0.patch.
+  # Do not raise without reviewing and updating the patch first.
+  react-pdf-flipbook-viewer: 0.2.0
   "@types/react": 19.2.18
   "@types/react-dom": 19.2.4
   "@codemirror/state": 6.7.1
