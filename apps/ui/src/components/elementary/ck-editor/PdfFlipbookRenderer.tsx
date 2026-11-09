@@ -307,6 +307,7 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
                 pdfUrl={pdfUrl}
                 shareUrl={pdfUrl}
                 disableShare
+                onExit={closeInlineViewer}
                 className="ck-pdf-flipbook-viewer rounded-lg"
               />
             )}

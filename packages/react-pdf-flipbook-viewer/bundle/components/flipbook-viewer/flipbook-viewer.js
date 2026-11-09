@@ -10,7 +10,7 @@ import { pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import React from "react";
-const FlipbookViewer = ({ pdfUrl, shareUrl, className, disableShare = false }) => {
+const FlipbookViewer = ({ pdfUrl, shareUrl, className, disableShare = false, onExit }) => {
     const containerRef = useRef(null);
     const flipbookRef = useRef(null);
     const [pdfLoading, setPdfLoading] = useState(true);
@@ -45,9 +45,9 @@ const FlipbookViewer = ({ pdfUrl, shareUrl, className, disableShare = false }) =
                 console.error('Failed to load PDF:', error.message);
                 setPdfLoading(false); // Stop loading on error
             }, loading: React.createElement(React.Fragment, null) }, (pdfDetails && !pdfLoading) &&
-            React.createElement(TransformWrapper, { doubleClick: { disabled: true }, pinch: { step: 2 }, disablePadding: viewerStates?.zoomScale <= 1, initialScale: 1, minScale: 1, maxScale: 5, onTransformed: ({ state }) => setViewerStates(prev => ({ ...prev, zoomScale: state.scale })) },
+            React.createElement(TransformWrapper, { doubleClick: { disabled: true }, pinch: { step: 2 }, panning: { disabled: isAppleTouchDevice() }, disablePadding: viewerStates?.zoomScale <= 1, initialScale: 1, minScale: 1, maxScale: 5, onTransformed: ({ state }) => setViewerStates(prev => ({ ...prev, zoomScale: state.scale })) },
                 React.createElement("div", { className: "w-full h-full relative bg-gray-700 flex flex-col" },
                     React.createElement(Flipbook, { viewerStates: viewerStates, setViewerStates: setViewerStates, ref: flipbookRef, screenfull: safeScreenfull, pdfDetails: pdfDetails }),
-                    !isAppleTouchDevice() && React.createElement(Toolbar, { viewerStates: viewerStates, setViewerStates: setViewerStates, containerRef: containerRef, flipbookRef: flipbookRef, screenfull: safeScreenfull, pdfDetails: pdfDetails, shareUrl: shareUrl, disableShare: disableShare }))))));
+                    React.createElement(Toolbar, { viewerStates: viewerStates, setViewerStates: setViewerStates, containerRef: containerRef, flipbookRef: flipbookRef, screenfull: safeScreenfull, pdfDetails: pdfDetails, shareUrl: shareUrl, disableShare: disableShare, onExit: onExit, mobileOnly: isAppleTouchDevice() }))))));
 };
 export default FlipbookViewer;

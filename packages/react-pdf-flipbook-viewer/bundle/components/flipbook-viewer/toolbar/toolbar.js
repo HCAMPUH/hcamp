@@ -6,7 +6,7 @@ import SliderNav from './slider-nav/slider-nav'; // Assuming this component is c
 import useScreenSize from './../../../hooks/use-screensize';
 import Share from '../../share'; // Uses SimpleDropdown with z-index: 50
 import React from 'react';
-const Toolbar = ({ flipbookRef, containerRef, screenfull, pdfDetails, viewerStates, shareUrl, disableShare, setViewerStates }) => {
+const Toolbar = ({ flipbookRef, containerRef, screenfull, pdfDetails, viewerStates, shareUrl, disableShare, setViewerStates, onExit, mobileOnly }) => {
     const { width: screenWidth } = useScreenSize();
     // Determine current page display string
     const isTwoPageSpread = viewerStates.currentPageIndex > 0 && // Not the very first page (which is often a single cover)
@@ -84,9 +84,11 @@ const Toolbar = ({ flipbookRef, containerRef, screenfull, pdfDetails, viewerStat
                     React.createElement(ChevronRight, { className: "size-4 min-w-4" }))),
             React.createElement("div", { className: "flex items-center flex-shrink-0 justify-end gap-1 sm:gap-2 min-w-[100px]" },
                 " ",
-                React.createElement(Zoom, { zoomScale: viewerStates.zoomScale, screenWidth: screenWidth }),
-                !disableShare && (React.createElement(Share, { shareUrl: shareUrl })),
-                screenfull && screenfull.isEnabled && ( // Only show button if screenfull is available
+                !mobileOnly && React.createElement(Zoom, { zoomScale: viewerStates.zoomScale, screenWidth: screenWidth }),
+                !mobileOnly && !disableShare && (React.createElement(Share, { shareUrl: shareUrl })),
+                mobileOnly && onExit && React.createElement(Button, { onClick: onExit, variant: 'secondary', size: 'icon', className: 'size-8 min-w-8', "aria-label": "Exit fullscreen" },
+                    React.createElement(Minimize, { className: "size-4 min-w-4" })),
+                !mobileOnly && screenfull && screenfull.isEnabled && ( // Only show button if screenfull is available
                 React.createElement(Button, { onClick: fullScreen, variant: 'secondary', size: 'icon', className: 'size-8 min-w-8', "aria-label": screenfull.isFullscreen ? "Exit fullscreen" : "Enter fullscreen" }, screenfull.isFullscreen ?
                     React.createElement(Minimize, { className: "size-4 min-w-4" }) :
                     React.createElement(Maximize, { className: "size-4 min-w-4" })))))));
