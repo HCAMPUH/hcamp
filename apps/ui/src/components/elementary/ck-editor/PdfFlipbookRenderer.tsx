@@ -79,11 +79,26 @@ class FlipbookErrorBoundary extends Component<{
   readonly children: ReactNode
   readonly onError: () => void
 }> {
-  componentDidCatch(_error: Error, _errorInfo: ErrorInfo) {
+  constructor(props: {
+    readonly children: ReactNode
+    readonly onError: () => void
+  }) {
+    super(props)
+    this.state = { hasError: false }
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true }
+  }
+
+  componentDidCatch(error: Error, _errorInfo: ErrorInfo) {
+    console.error("PDF flipbook failed to render", error)
     this.props.onError()
   }
 
   render() {
+    if (this.state.hasError) return null
+
     return this.props.children
   }
 }
