@@ -87,7 +87,7 @@
     "react-hook-form": "7.79.0",
     "react-instantsearch": "^7.50.0",
     "react-pdf": "9.2.1",
-    "react-pdf-flipbook-viewer": "0.2.0",
+    "react-pdf-flipbook-viewer": "workspace:*",
     "react-use": "17.6.1",
     "server-only": "0.0.1",
     "sharp": "0.35.3",

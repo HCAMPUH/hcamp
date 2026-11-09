@@ -85,6 +85,29 @@ type FlipbookErrorBoundaryState = {
   hasError: boolean
 }
 
+const getFlipbookDiagnostics = (
+  error: Error,
+  element: HTMLDivElement | null
+) => {
+  const rect = element?.getBoundingClientRect()
+  const viewport = window.visualViewport
+
+  return {
+    message: error.message,
+    stack: error.stack,
+    container: {
+      width: rect?.width ?? 0,
+      height: rect?.height ?? 0,
+    },
+    viewport: {
+      width: viewport?.width ?? window.innerWidth,
+      height: viewport?.height ?? window.innerHeight,
+      devicePixelRatio: window.devicePixelRatio,
+    },
+    userAgent: navigator.userAgent,
+  }
+}
+
 class FlipbookErrorBoundary extends Component<
   FlipbookErrorBoundaryProps,
   FlipbookErrorBoundaryState
@@ -119,6 +142,9 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
   const [isInlineActivated, setIsInlineActivated] = useState(false)
   const [isClosing, setIsClosing] = useState(false)
   const [viewerError, setViewerError] = useState<Error | null>(null)
+  const [viewerDiagnostics, setViewerDiagnostics] = useState<ReturnType<
+    typeof getFlipbookDiagnostics
+  > | null>(null)
   const fullscreenRef = useRef<HTMLDivElement>(null)
   const wasFullscreen = useRef(false)
   const cleanupTimer = useRef<number | undefined>(undefined)
@@ -158,6 +184,7 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
 
   const resetViewer = () => {
     setViewerError(null)
+    setViewerDiagnostics(null)
     setIsActivated(false)
     setIsInlineActivated(false)
     setIsClosing(true)
@@ -203,11 +230,15 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
   }
 
   const handleViewerError = (error: Error) => {
+    const diagnostics = getFlipbookDiagnostics(error, fullscreenRef.current)
+    console.error("PDF flipbook diagnostics", diagnostics)
+    setViewerDiagnostics(diagnostics)
     setViewerError(error)
   }
 
   const retryViewer = () => {
     setViewerError(null)
+    setViewerDiagnostics(null)
     setIsActivated(false)
     setIsInlineActivated(false)
     window.setTimeout(() => {
@@ -222,6 +253,14 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
       role="alert"
     >
       <p>Unable to display this flipbook on this device.</p>
+      {viewerError ? (
+        <details className="max-w-full text-left text-xs">
+          <summary>Technical details</summary>
+          <pre className="mt-2 max-w-full overflow-auto whitespace-pre-wrap">
+            {JSON.stringify(viewerDiagnostics, null, 2)}
+          </pre>
+        </details>
+      ) : null}
       <button
         type="button"
         className="ck-pdf-flipbook-inline-close"
