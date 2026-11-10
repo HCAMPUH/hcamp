@@ -45,7 +45,7 @@ const FlipbookViewer = ({ pdfUrl, shareUrl, className, disableShare = false, onE
                 console.error('Failed to load PDF:', error.message);
                 setPdfLoading(false); // Stop loading on error
             }, loading: React.createElement(React.Fragment, null) }, (pdfDetails && !pdfLoading) &&
-            React.createElement(TransformWrapper, { doubleClick: { disabled: true }, pinch: { step: 2 }, panning: { disabled: isAppleTouchDevice() }, disablePadding: viewerStates?.zoomScale <= 1, initialScale: 1, minScale: 1, maxScale: 5, onTransformed: ({ state }) => setViewerStates(prev => ({ ...prev, zoomScale: state.scale })) },
+            React.createElement(TransformWrapper, { doubleClick: { disabled: true }, pinch: { step: 2 }, panning: { disabled: isAppleTouchDevice() && viewerStates?.zoomScale <= 1 }, disablePadding: viewerStates?.zoomScale <= 1, initialScale: 1, minScale: 1, maxScale: 5, onTransformed: ({ state }) => setViewerStates(prev => ({ ...prev, zoomScale: state.scale })) },
                 React.createElement("div", { className: "w-full h-full relative bg-gray-700 flex flex-col" },
                     React.createElement(Flipbook, { viewerStates: viewerStates, setViewerStates: setViewerStates, ref: flipbookRef, screenfull: safeScreenfull, pdfDetails: pdfDetails }),
                     React.createElement(Toolbar, { viewerStates: viewerStates, setViewerStates: setViewerStates, containerRef: containerRef, flipbookRef: flipbookRef, screenfull: safeScreenfull, pdfDetails: pdfDetails, shareUrl: shareUrl, disableShare: disableShare, onExit: onExit, mobileOnly: isAppleTouchDevice() }))))));
