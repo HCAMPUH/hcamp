@@ -453,7 +453,36 @@
   background: #000 !important;
   bottom: env(safe-area-inset-bottom);
   color: #fff;
+  box-sizing: border-box;
+  display: block;
+  height: auto;
+  left: 0;
+  min-height: 3.5rem;
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom)) !important;
+  position: fixed !important;
+  right: 0;
   z-index: 1001;
+}
+
+.ck-pdf-flipbook-fullscreen--inline .fixed.bottom-0 > div:nth-child(2) {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 2.5rem;
+  justify-content: flex-end;
+  min-height: 2.5rem;
+  width: 100%;
+}
+
+.ck-pdf-flipbook-fullscreen--inline
+  .fixed.bottom-0
+  > div:nth-child(2)
+  > div:last-child {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  min-width: 0;
 }
 
 .ck-pdf-flipbook-fullscreen--inline .fixed.bottom-0 > .mb-1,
@@ -516,6 +545,14 @@
     .react-transform-component {
     height: 100% !important;
     width: 100% !important;
+  }
+
+  .ck-pdf-flipbook-fullscreen--inline .fixed.bottom-0 {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100vw !important;
   }
 }
 
