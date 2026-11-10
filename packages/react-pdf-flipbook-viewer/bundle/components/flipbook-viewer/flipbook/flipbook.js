@@ -10,16 +10,16 @@ const Flipbook = forwardRef(({ viewerStates, setViewerStates, screenfull, pdfDet
     const [wrapperCss, setWrapperCss] = useState({});
     const [viewRange, setViewRange] = useState([0, 4]);
     const [isReady, setIsReady] = useState(false);
-    const isMobile = width < 768;
     const isRotatedLandscape = typeof window !== 'undefined' &&
         window.innerHeight > window.innerWidth &&
         (/iPhone|iPad|iPod/i.test(navigator.userAgent) ||
             (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1));
+    const layoutWidth = isRotatedLandscape ? Math.max(window.innerWidth, window.innerHeight) : width;
+    const layoutHeight = isRotatedLandscape ? Math.min(window.innerWidth, window.innerHeight) : height;
+    const isMobile = layoutWidth < 768;
     // Calculate scale when pageSize or dimensions change >>>>>>>>
     useEffect(() => {
         if (pdfDetails && width && height) {
-            const layoutWidth = isRotatedLandscape ? Math.max(window.innerWidth, window.innerHeight) : width;
-            const layoutHeight = isRotatedLandscape ? Math.min(window.innerWidth, window.innerHeight) : height;
             const calculatedScale = Math.min(layoutWidth / (isMobile && !isRotatedLandscape ? pdfDetails.width : 2 * pdfDetails.width), layoutHeight / pdfDetails.height);
             setScale(calculatedScale);
             setWrapperCss({
@@ -27,7 +27,7 @@ const Flipbook = forwardRef(({ viewerStates, setViewerStates, screenfull, pdfDet
                 height: `${pdfDetails.height * calculatedScale}px`,
             });
         }
-    }, [pdfDetails, width, height, isMobile, isRotatedLandscape]);
+    }, [pdfDetails, width, height, layoutWidth, layoutHeight, isMobile, isRotatedLandscape]);
     // Refresh flipbook size & page range on window resize >>>>>>>>
     const shrinkPageLoadingRange = useCallback(() => {
         setViewRange([Math.max(viewerStates.currentPageIndex - 2, 0), Math.min(viewerStates.currentPageIndex + 2, pdfDetails.totalPages)]);
@@ -64,7 +64,7 @@ const Flipbook = forwardRef(({ viewerStates, setViewerStates, screenfull, pdfDet
         const timer = window.setTimeout(() => setIsReady(true), 100);
         return () => window.clearTimeout(timer);
     }, [pdfDetails]);
-    return (React.createElement("div", { ref: ref, className: cn("relative h-[30.244rem] xs:h-[37.744rem] lg:h-[49.744rem] xl:h-[51.99rem] w-full bg-transparent flex justify-center items-center overflow-hidden", screenfull?.isFullscreen && 'h-[calc(100vh-5.163rem)] xs:h-[calc(100vh-5.163rem)] lg:h-[calc(100vh-5.163rem)] xl:h-[calc(100vh-4.66rem)]') },
+    return (React.createElement("div", { ref: ref, className: cn("relative h-[30.244rem] xs:h-[37.744rem] lg:h-[49.744rem] xl:h-[51.99rem] w-full bg-transparent flex justify-center items-center overflow-hidden", screenfull?.isFullscreen && 'h-[calc(100vh-5.163rem)] xs:h-[calc(100vh-5.163rem)] lg:h-[calc(100vh-5.163rem)] xl:h-[calc(100vh-4.66rem)]', isRotatedLandscape && 'ck-flipbook-rotated-landscape') },
         React.createElement(TransformComponent, { wrapperStyle: { width: "100%", height: "100%" }, contentStyle: { width: "100%", height: "100%" } },
             React.createElement("div", { className: 'overflow-hidden flex justify-center items-center h-full w-full' }, isReady && pdfDetails && width > 0 && height > 0 && scale && wrapperCss.width && (React.createElement("div", { style: wrapperCss },
                 React.createElement(FlipbookLoader, { ref: refOld, pdfDetails: pdfDetails, scale: scale, viewRange: viewRange, setViewRange: setViewRange, viewerStates: viewerStates, setViewerStates: setViewerStates })))))));

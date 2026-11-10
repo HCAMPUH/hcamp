@@ -587,6 +587,28 @@
   width: 100% !important;
 }
 
+.ck-pdf-flipbook-fullscreen--inline
+  .ck-flipbook-rotated-landscape
+  .react-pageflip,
+.ck-pdf-flipbook-fullscreen--inline
+  .ck-flipbook-rotated-landscape
+  .stf__parent {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.ck-pdf-flipbook-fullscreen--inline
+  .ck-flipbook-rotated-landscape
+  .stf__wrapper,
+.ck-pdf-flipbook-fullscreen--inline
+  .ck-flipbook-rotated-landscape
+  .stf__block {
+  height: 100% !important;
+  max-height: 100% !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
 .ck-pdf-flipbook-fullscreen--inline.ck-pdf-flipbook-fullscreen--portrait
   .fixed.bottom-0 {
   bottom: auto;
