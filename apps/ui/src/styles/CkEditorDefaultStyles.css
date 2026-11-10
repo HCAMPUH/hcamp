@@ -450,7 +450,7 @@
 }
 
 .ck-pdf-flipbook-fullscreen--inline .fixed.bottom-0 {
-  background: #000 !important;
+  background: transparent !important;
   bottom: env(safe-area-inset-bottom);
   color: #fff;
   box-sizing: border-box;
