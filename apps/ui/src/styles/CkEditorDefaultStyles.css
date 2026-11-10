@@ -548,11 +548,14 @@
   }
 
   .ck-pdf-flipbook-fullscreen--inline .fixed.bottom-0 {
-    bottom: 0;
-    left: 0;
-    right: 0;
-    transform: none;
-    width: 100vw !important;
+    bottom: auto;
+    height: 3.5rem;
+    left: 50%;
+    right: auto;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+    transform-origin: center;
+    width: 100dvh !important;
   }
 }
 
