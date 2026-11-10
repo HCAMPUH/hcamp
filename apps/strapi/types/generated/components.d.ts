@@ -692,6 +692,7 @@ export interface SharedPortalRole extends Struct.ComponentSchema {
     displayName: "Portal Role"
   }
   attributes: {
+    additionalActions: Schema.Attribute.Component<"utilities.link", true>
     category: Schema.Attribute.String
     courses: Schema.Attribute.Component<"shared.portal-course", true>
     coursesHeading: Schema.Attribute.String
