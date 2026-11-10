@@ -495,12 +495,27 @@
 
 @media (orientation: portrait) {
   .ck-pdf-flipbook-fullscreen--inline .ck-pdf-flipbook-viewer {
+    height: 100dvh !important;
+    width: 100vw;
+  }
+
+  .ck-pdf-flipbook-fullscreen--inline
+    .ck-pdf-flipbook-viewer
+    .react-transform-wrapper {
     height: 100vw !important;
     left: 50%;
+    position: absolute;
     top: 50%;
     transform: translate(-50%, -50%) rotate(90deg);
     transform-origin: center;
-    width: 100dvh;
+    width: 100dvh !important;
+  }
+
+  .ck-pdf-flipbook-fullscreen--inline
+    .ck-pdf-flipbook-viewer
+    .react-transform-component {
+    height: 100% !important;
+    width: 100% !important;
   }
 }
 
