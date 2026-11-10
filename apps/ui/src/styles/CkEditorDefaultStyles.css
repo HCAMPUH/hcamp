@@ -451,6 +451,8 @@
 
 .ck-pdf-flipbook-fullscreen--inline .fixed.bottom-0 {
   background: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
   bottom: env(safe-area-inset-bottom);
   color: #fff;
   box-sizing: border-box;
@@ -461,6 +463,7 @@
   padding-bottom: max(0.5rem, env(safe-area-inset-bottom)) !important;
   position: fixed !important;
   right: 0;
+  box-shadow: none !important;
   z-index: 1001;
 }
 
