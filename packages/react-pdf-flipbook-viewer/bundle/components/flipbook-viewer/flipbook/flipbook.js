@@ -11,17 +11,23 @@ const Flipbook = forwardRef(({ viewerStates, setViewerStates, screenfull, pdfDet
     const [viewRange, setViewRange] = useState([0, 4]);
     const [isReady, setIsReady] = useState(false);
     const isMobile = width < 768;
+    const isRotatedLandscape = typeof window !== 'undefined' &&
+        window.innerHeight > window.innerWidth &&
+        (/iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+            (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1));
     // Calculate scale when pageSize or dimensions change >>>>>>>>
     useEffect(() => {
         if (pdfDetails && width && height) {
-            const calculatedScale = Math.min(width / (isMobile ? pdfDetails.width : 2 * pdfDetails.width), height / pdfDetails.height);
+            const layoutWidth = isRotatedLandscape ? Math.max(window.innerWidth, window.innerHeight) : width;
+            const layoutHeight = isRotatedLandscape ? Math.min(window.innerWidth, window.innerHeight) : height;
+            const calculatedScale = Math.min(layoutWidth / (isMobile && !isRotatedLandscape ? pdfDetails.width : 2 * pdfDetails.width), layoutHeight / pdfDetails.height);
             setScale(calculatedScale);
             setWrapperCss({
-                width: `${pdfDetails.width * calculatedScale * (isMobile ? 1 : 2)}px`,
+                width: `${pdfDetails.width * calculatedScale * (isMobile && !isRotatedLandscape ? 1 : 2)}px`,
                 height: `${pdfDetails.height * calculatedScale}px`,
             });
         }
-    }, [pdfDetails, width, height, isMobile]);
+    }, [pdfDetails, width, height, isMobile, isRotatedLandscape]);
     // Refresh flipbook size & page range on window resize >>>>>>>>
     const shrinkPageLoadingRange = useCallback(() => {
         setViewRange([Math.max(viewerStates.currentPageIndex - 2, 0), Math.min(viewerStates.currentPageIndex + 2, pdfDetails.totalPages)]);

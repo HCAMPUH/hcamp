@@ -6,6 +6,10 @@ import React from 'react';
 const MemoizedPdfPage = memo(PdfPage);
 const FlipbookLoader = forwardRef(({ pdfDetails, scale, viewerStates, setViewerStates, viewRange, setViewRange }, ref) => {
     const { width } = useScreenSize();
+    const isRotatedLandscape = typeof window !== 'undefined' &&
+        window.innerHeight > window.innerWidth &&
+        (/iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+            (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1));
     // Check if page is in View range or in view window >>>>>>>>
     const isPageInViewRange = (index) => { return index >= viewRange[0] && index <= viewRange[1]; };
     const isPageInView = (index) => { return viewerStates.currentPageIndex === index || viewerStates.currentPageIndex + 1 === index; };
@@ -28,7 +32,7 @@ const FlipbookLoader = forwardRef(({ pdfDetails, scale, viewerStates, setViewerS
         }));
     }, [viewerStates, viewRange, setViewRange, setViewerStates, pdfDetails.totalPages]);
     return (React.createElement("div", { className: "relative" },
-        React.createElement(HTMLFlipBook, { ref: ref, key: scale, startPage: viewerStates.currentPageIndex, width: pdfDetails.width * scale, height: pdfDetails.height * scale, size: "stretch", drawShadow: false, flippingTime: 700, usePortrait: width < 768, showCover: true, showPageCorners: false, onFlip: onFlip, disableFlipByClick: width < 768 ? true : false, mobileScrollSupport: true, className: viewerStates.zoomScale > 1 ? 'pointer-events-none md:pointer-events-none' : '' }, Array.from({ length: pdfDetails.totalPages }, (_, index) => (React.createElement(MemoizedPdfPage, { key: index, height: pdfDetails.height * scale, page: index + 1, isPageInViewRange: isPageInViewRange(index), isPageInView: isPageInView(index) }))))));
+        React.createElement(HTMLFlipBook, { ref: ref, key: scale, startPage: viewerStates.currentPageIndex, width: pdfDetails.width * scale, height: pdfDetails.height * scale, size: "stretch", drawShadow: false, flippingTime: 700, usePortrait: width < 768 && !isRotatedLandscape, showCover: true, showPageCorners: false, onFlip: onFlip, disableFlipByClick: width < 768 && !isRotatedLandscape, mobileScrollSupport: true, className: viewerStates.zoomScale > 1 ? 'pointer-events-none md:pointer-events-none' : '' }, Array.from({ length: pdfDetails.totalPages }, (_, index) => (React.createElement(MemoizedPdfPage, { key: index, height: pdfDetails.height * scale, page: index + 1, isPageInViewRange: isPageInViewRange(index), isPageInView: isPageInView(index) }))))));
 });
 FlipbookLoader.displayName = 'FlipbookLoader';
 export default FlipbookLoader;
