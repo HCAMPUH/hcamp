@@ -45,7 +45,7 @@ export function AppTextArea({
           />
 
           <FormControl>
-            <div className="relative flex items-stretch overflow-hidden">
+            <div className="relative flex items-stretch overflow-hidden rounded-md">
               <Textarea
                 {...field}
                 value={field.value ?? ""}

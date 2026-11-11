@@ -51,7 +51,7 @@ export function AppField({
           />
 
           <FormControl>
-            <div className="relative flex items-stretch overflow-hidden">
+            <div className="relative flex items-stretch overflow-hidden rounded-md">
               <Input
                 {...field}
                 {...nativeProps}
