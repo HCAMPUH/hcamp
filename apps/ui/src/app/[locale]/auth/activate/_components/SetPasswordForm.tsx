@@ -21,6 +21,7 @@ import {
 import { useUserMutations } from "@/hooks/useUserMutations"
 import { PASSWORD_MIN_LENGTH } from "@/lib/constants"
 import { useRouter } from "@/lib/navigation"
+import { sanitizePasswordInput } from "@/lib/sanitize"
 
 type Props = {
   code?: string
@@ -57,11 +58,16 @@ function SuspensedSetPasswordForm({ code, accountActivation }: Props) {
       return toast.error(t("errors.incorrectCodeProvided"))
     }
 
+    const normalizedValues = {
+      password: sanitizePasswordInput(data.password),
+      passwordConfirmation: sanitizePasswordInput(data.passwordConfirmation),
+    }
+
     resetPasswordMutation.mutate(
       {
         code,
-        password: data.password,
-        passwordConfirmation: data.passwordConfirmation,
+        password: normalizedValues.password,
+        passwordConfirmation: normalizedValues.passwordConfirmation,
       },
       {
         onSuccess: () => {
@@ -118,6 +124,7 @@ const SetPasswordFormSchema = z
     password: z
       .string()
       .min(PASSWORD_MIN_LENGTH)
+      .max(256)
       .superRefine((pwd, ctx) => {
         if (!/\d/.test(pwd)) {
           ctx.addIssue({
@@ -126,7 +133,7 @@ const SetPasswordFormSchema = z
           })
         }
       }),
-    passwordConfirmation: z.string().min(PASSWORD_MIN_LENGTH),
+    passwordConfirmation: z.string().min(PASSWORD_MIN_LENGTH).max(256),
   })
   .superRefine((data, ctx) => {
     if (data.password !== data.passwordConfirmation) {

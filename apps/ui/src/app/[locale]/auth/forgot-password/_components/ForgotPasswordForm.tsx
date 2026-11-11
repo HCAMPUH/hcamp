@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/card"
 import { useUserMutations } from "@/hooks/useUserMutations"
 import { useRouter } from "@/lib/navigation"
+import { sanitizeTextInput } from "@/lib/sanitize"
 
 export function ForgotPasswordForm() {
   const t = useTranslations("auth.forgotPassword")
@@ -33,7 +34,11 @@ export function ForgotPasswordForm() {
   })
 
   const onSubmit = async (data: z.infer<FormSchemaType>) => {
-    forgotPasswordMutation.mutate(data, {
+    const normalizedValues = {
+      email: sanitizeTextInput(data.email, { maxLength: 254, trim: true }),
+    }
+
+    forgotPasswordMutation.mutate(normalizedValues, {
       onSuccess: () => {
         // This flow happens even if the email does not exist in the system
         toast.success(t("passwordChangeEmailSent"))
@@ -79,7 +84,7 @@ export function ForgotPasswordForm() {
 }
 
 const ForgotPasswordFormSchema = z.object({
-  email: z.string().min(1).email(),
+  email: z.string().trim().max(254).email(),
 })
 
 type FormSchemaType = typeof ForgotPasswordFormSchema

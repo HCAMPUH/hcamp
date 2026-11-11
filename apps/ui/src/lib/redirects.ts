@@ -80,6 +80,39 @@ function cacheRedirects(redirects: RedirectRecord[]) {
   return redirects
 }
 
+function isNetworkFetchFailure(error: unknown): boolean {
+  const stack: unknown[] = [error]
+
+  while (stack.length > 0) {
+    const current = stack.pop()
+
+    if (current instanceof TypeError) {
+      if (/fetch failed|failed to fetch/i.test(current.message)) {
+        return true
+      }
+
+      continue
+    }
+
+    if (current instanceof AggregateError) {
+      for (const nestedError of [...current.errors].reverse()) {
+        stack.push(nestedError)
+      }
+
+      continue
+    }
+
+    if (current && typeof current === "object" && "cause" in current) {
+      const cause = (current as { cause?: unknown }).cause
+      if (cause !== undefined) {
+        stack.push(cause)
+      }
+    }
+  }
+
+  return false
+}
+
 // Refresh failures should not break navigation. If Strapi is temporarily down,
 // keep serving the last known redirect list until a later refresh succeeds.
 //
@@ -93,7 +126,23 @@ function refreshRedirects() {
   redirectFetchPromise ??= fetchRedirects()
     .then(cacheRedirects)
     .catch((error: unknown) => {
-      logError(error, "[redirects] Failed to refresh redirect cache")
+      if (isNetworkFetchFailure(error)) {
+        logger.warn(
+          "[redirects] Strapi unavailable while refreshing redirect cache; keeping stale redirects",
+          {
+            error:
+              error instanceof Error
+                ? {
+                    name: error.name,
+                    message: error.message,
+                    stack: error.stack,
+                  }
+                : String(error),
+          }
+        )
+      } else {
+        logError(error, "[redirects] Failed to refresh redirect cache")
+      }
 
       return redirectCache?.redirects ?? []
     })

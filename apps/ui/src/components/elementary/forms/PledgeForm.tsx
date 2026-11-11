@@ -13,11 +13,12 @@ import { AppField } from "@/components/forms/AppField"
 import { AppForm } from "@/components/forms/AppForm"
 import { Button } from "@/components/ui/button"
 import { usePledgeForm } from "@/hooks/usePledgeForm"
+import { sanitizeNameInput } from "@/lib/sanitize"
 
 const PledgeFormSchema = z.object({
-  firstName: z.string().min(1),
-  lastName: z.string().min(1),
-  schoolOrganization: z.string().min(1),
+  firstName: z.string().trim().min(1).max(80),
+  lastName: z.string().trim().min(1).max(80),
+  schoolOrganization: z.string().trim().min(1).max(200),
 })
 
 type PledgeFormValues = z.infer<typeof PledgeFormSchema>
@@ -48,13 +49,19 @@ export function PledgeForm({
 
   const onSubmit = (values: PledgeFormValues) => {
     setIsSubmitted(false)
-    pledgeMutation.mutate(values, {
+    const normalizedValues = {
+      firstName: sanitizeNameInput(values.firstName, 80),
+      lastName: sanitizeNameInput(values.lastName, 80),
+      schoolOrganization: sanitizeNameInput(values.schoolOrganization, 200),
+    }
+
+    pledgeMutation.mutate(normalizedValues, {
       onSuccess: (response) => {
         const submittedPledge = (
           response as { data?: Partial<SubmittedPledge> }
         ).data
         const pledge: SubmittedPledge = {
-          ...values,
+          ...normalizedValues,
           ...submittedPledge,
           documentId: submittedPledge?.documentId ?? `local-${Date.now()}`,
         }

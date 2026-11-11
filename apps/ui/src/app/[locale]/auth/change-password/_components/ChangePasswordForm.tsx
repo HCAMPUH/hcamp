@@ -20,6 +20,7 @@ import {
 import { useUserMutations } from "@/hooks/useUserMutations"
 import { PASSWORD_MIN_LENGTH } from "@/lib/constants"
 import { useRouter } from "@/lib/navigation"
+import { sanitizePasswordInput } from "@/lib/sanitize"
 
 export function ChangePasswordForm() {
   const t = useTranslations("auth.changePassword")
@@ -38,7 +39,13 @@ export function ChangePasswordForm() {
   })
 
   const onSubmit = async (data: z.infer<FormSchemaType>) => {
-    changePasswordMutation.mutate(data, {
+    const normalizedValues = {
+      currentPassword: sanitizePasswordInput(data.currentPassword),
+      password: sanitizePasswordInput(data.password),
+      passwordConfirmation: sanitizePasswordInput(data.passwordConfirmation),
+    }
+
+    changePasswordMutation.mutate(normalizedValues, {
       onSuccess: () => {
         toast.success(t("successfullyChanged"))
         form.reset()
@@ -112,10 +119,11 @@ export function ChangePasswordForm() {
 
 const ChangePasswordFormSchema = z
   .object({
-    currentPassword: z.string().min(1),
+    currentPassword: z.string().min(1).max(256),
     password: z
       .string()
       .min(PASSWORD_MIN_LENGTH)
+      .max(256)
       .superRefine((pwd, ctx) => {
         if (!/\d/.test(pwd)) {
           ctx.addIssue({
@@ -124,7 +132,7 @@ const ChangePasswordFormSchema = z
           })
         }
       }),
-    passwordConfirmation: z.string().min(PASSWORD_MIN_LENGTH),
+    passwordConfirmation: z.string().min(PASSWORD_MIN_LENGTH).max(256),
   })
   .superRefine((data, ctx) => {
     if (data.password !== data.passwordConfirmation) {

@@ -13,6 +13,11 @@ import { AppForm } from "@/components/forms/AppForm"
 import { AppTextArea } from "@/components/forms/AppTextArea"
 import { Button } from "@/components/ui/button"
 import { useContactForm } from "@/hooks/useAppForm"
+import {
+  sanitizeEmailInput,
+  sanitizeMessageInput,
+  sanitizeNameInput,
+} from "@/lib/sanitize"
 
 export function ContactForm({
   gdpr,
@@ -30,7 +35,14 @@ export function ContactForm({
   })
 
   const onSubmit = (values: z.infer<FormSchemaType>) => {
-    contactFormMutation.mutate(values, {
+    const normalizedValues = {
+      name: sanitizeNameInput(values.name, 120),
+      email: sanitizeEmailInput(values.email),
+      message: sanitizeMessageInput(values.message, 2000),
+      newsletter: values.newsletter,
+    }
+
+    contactFormMutation.mutate(normalizedValues, {
       onSuccess: () => {
         toast.success(t("success"))
         form.reset()
@@ -108,9 +120,9 @@ export function ContactForm({
 }
 
 const ContactFormSchema = z.object({
-  name: z.string().min(1),
-  email: z.string().email().min(1),
-  message: z.string().min(10),
+  name: z.string().trim().min(1).max(120),
+  email: z.string().trim().max(254).email(),
+  message: z.string().trim().min(10).max(2000),
   newsletter: z.boolean(),
 })
 

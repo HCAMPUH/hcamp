@@ -11,6 +11,7 @@ import { AppField } from "@/components/forms/AppField"
 import { AppForm } from "@/components/forms/AppForm"
 import { Button } from "@/components/ui/button"
 import { useNewsletterForm } from "@/hooks/useAppForm"
+import { sanitizeEmailInput, sanitizeNameInput } from "@/lib/sanitize"
 
 export function NewsletterForm() {
   const t = useTranslations("newsletterForm")
@@ -23,7 +24,12 @@ export function NewsletterForm() {
   })
 
   function onSubmit(values: z.infer<FormSchemaType>) {
-    newsletterMutation.mutate(values, {
+    const normalizedValues = {
+      name: sanitizeNameInput(values.name, 120),
+      email: sanitizeEmailInput(values.email),
+    }
+
+    newsletterMutation.mutate(normalizedValues, {
       onSuccess: () => {
         toast.success(t("success"))
         form.reset()
@@ -77,8 +83,8 @@ export function NewsletterForm() {
 }
 
 const NewsletterFormSchema = z.object({
-  name: z.string().min(1),
-  email: z.string().email(),
+  name: z.string().trim().min(1).max(120),
+  email: z.string().trim().max(254).email(),
 })
 
 type FormSchemaType = typeof NewsletterFormSchema

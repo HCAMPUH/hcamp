@@ -12,6 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
+import { sanitizeTextInput } from "@/lib/sanitize"
 import { cn } from "@/lib/styles"
 
 type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, "className"> & {
@@ -49,7 +50,14 @@ export function AppTextArea({
               <Textarea
                 {...field}
                 value={field.value ?? ""}
-                onChange={field.onChange} // eslint-disable-line react/jsx-handler-names -- react-hook-form API
+                onChange={(event) => {
+                  field.onChange(
+                    sanitizeTextInput(event.target.value, {
+                      maxLength: nativeProps.maxLength,
+                      trim: true,
+                    })
+                  )
+                }}
                 className={cn(
                   "border-input w-full ease-in-out",
                   {

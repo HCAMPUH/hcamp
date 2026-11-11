@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { removeThisWhenYouNeedMe } from "@/lib/general-helpers"
+import { sanitizePasswordInput, sanitizeTextInput } from "@/lib/sanitize"
 import { cn } from "@/lib/styles"
 
 import { AppFormDescription } from "./AppFormDescription"
@@ -58,10 +59,18 @@ export function AppField({
                 value={field.value ?? ""}
                 onChange={(event) => {
                   const value = event.target.value
+                  const sanitizedValue =
+                    nativeProps.type === "password"
+                      ? sanitizePasswordInput(value)
+                      : sanitizeTextInput(value, {
+                          maxLength: nativeProps.maxLength,
+                          trim: true,
+                        })
+
                   if (nativeProps.type === "number") {
-                    field.onChange(Number(value))
+                    field.onChange(Number(sanitizedValue))
                   } else {
-                    field.onChange(value)
+                    field.onChange(sanitizedValue)
                   }
                 }}
                 className={cn(
