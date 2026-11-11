@@ -15,6 +15,7 @@ import {
   NavbarMobileToggle,
 } from "@/components/page-builder/single-types/navbar/NavbarMobileControls"
 import NavbarSearch from "@/components/page-builder/single-types/navbar/NavbarSearch"
+import { cn } from "@/lib/styles"
 import type { BetterAuthSessionWithStrapi } from "@/types/better-auth"
 
 import { DesktopNavigation } from "./DesktopNavigation"
@@ -28,6 +29,9 @@ export function NavbarInner({
   readonly navbarData?: Data.ContentType<"api::navbar.navbar">
   readonly session?: BetterAuthSessionWithStrapi | null
 }) {
+  const emergencyActionPlanHasDecorations =
+    navbarData?.emergencyActionPlanLink?.decorations != null
+
   return (
     <NavbarMobileProvider>
       <header className="bg-background/60 sticky top-0 z-50 h-16 w-full shadow-sm backdrop-blur-md transition-colors duration-300">
@@ -68,7 +72,11 @@ export function NavbarInner({
               navbarData?.emergencyActionPlanLink ? (
                 <StrapiLink
                   component={navbarData.emergencyActionPlanLink}
-                  className="bg-brand-red hover:bg-brand-red/90 h-12 w-[120px] shrink-0 justify-center overflow-hidden rounded-[16px] border border-white/80 bg-clip-padding px-2 py-1 text-center text-sm leading-tight font-normal break-words whitespace-normal text-white no-underline shadow-sm hover:text-white"
+                  className={cn(
+                    "h-12 w-[120px] shrink-0 justify-center overflow-hidden rounded-[16px] bg-clip-padding px-2 py-1 text-center text-sm leading-tight font-normal break-words whitespace-normal no-underline shadow-sm",
+                    !emergencyActionPlanHasDecorations &&
+                      "bg-brand-red hover:bg-brand-red/90 text-white hover:text-white"
+                  )}
                 />
               ) : null}
               <div className="hidden items-center gap-2 lg:flex">
