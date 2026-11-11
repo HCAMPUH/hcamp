@@ -16,6 +16,43 @@
     }
   },
   "attributes": {
+    "showAccessibilityButton": {
+      "type": "boolean",
+      "default": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "showSearchButton": {
+      "type": "boolean",
+      "default": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "showEmergencyActionPlanButton": {
+      "type": "boolean",
+      "default": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "emergencyActionPlanLink": {
+      "type": "component",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "utilities.link",
+      "repeatable": false
+    },
     "logoImage": {
       "type": "component",
       "pluginOptions": {

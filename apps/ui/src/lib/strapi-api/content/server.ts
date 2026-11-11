@@ -169,6 +169,7 @@ export async function fetchNavbar(locale: Locale) {
         populate: {
           logoImage: "smart",
           primaryButtons: "smart",
+          emergencyActionPlanLink: "smart",
           navbarItems: "smart",
           navbarLogoRow: "smart",
         },

@@ -60,8 +60,17 @@ export function NavbarInner({
 
             {/* RIGHT SIDE */}
             <div className="flex h-full items-center gap-1 pl-4 lg:gap-2">
-              <NavbarAccessibilityButton />
-              <NavbarSearch />
+              {navbarData?.showAccessibilityButton !== false ? (
+                <NavbarAccessibilityButton />
+              ) : null}
+              {navbarData?.showSearchButton !== false ? <NavbarSearch /> : null}
+              {navbarData?.showEmergencyActionPlanButton !== false &&
+              navbarData?.emergencyActionPlanLink ? (
+                <StrapiLink
+                  component={navbarData.emergencyActionPlanLink}
+                  className="bg-brand-red hover:bg-brand-red/90 h-12 w-[120px] shrink-0 justify-center overflow-hidden rounded-[16px] border border-white/80 bg-clip-padding px-2 py-1 text-center text-sm leading-tight font-normal break-words whitespace-normal text-white no-underline shadow-sm hover:text-white"
+                />
+              ) : null}
               <div className="hidden items-center gap-2 lg:flex">
                 {/*   <NavbarAuthSection sessionSSR={session} />
                   <LocaleSwitcher locale={locale} /> */}
