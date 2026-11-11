@@ -13,6 +13,62 @@ import Hierarchy from "./extensions/Hierarchy"
 
 const componentDeleteLabelPattern = /^(delete|smazat)(\s|$)/i
 
+const ckEditorTheme = {
+  common: `
+    .ck {
+      color-scheme: light;
+      --ck-color-base-background: #ffffff;
+      --ck-color-base-foreground: #ffffff;
+      --ck-color-base-border: #d1d5db;
+      --ck-color-base-text: #111827;
+      --ck-color-text: #111827;
+      --ck-color-toolbar-background: #ffffff;
+      --ck-color-toolbar-border: #d1d5db;
+      --ck-color-panel-background: #ffffff;
+      --ck-color-panel-border: #d1d5db;
+      --ck-color-button-default-background: #ffffff;
+      --ck-color-button-default-hover-background: #f3f4f6;
+      --ck-color-button-default-active-background: #e5e7eb;
+      --ck-color-button-default-text: #111827;
+      --ck-color-button-on-background: #e5e7eb;
+      --ck-color-button-on-text: #111827;
+      --ck-color-button-action-background: #024731;
+      --ck-color-button-action-text: #ffffff;
+      --ck-color-input-background: #ffffff;
+      --ck-color-input-border: #d1d5db;
+      --ck-color-input-text: #111827;
+      --ck-color-focus-border: #024731;
+      --ck-color-shadow: rgba(15, 23, 42, 0.12);
+      --ck-color-content-text: #111827;
+      --ck-color-content-bg: #ffffff;
+      --ck-color-widget-blurred-border: #d1d5db;
+      --ck-color-widget-hover-border: #024731;
+    }
+  `,
+  light: `
+    .ck,
+    .ck .ck-editor__main,
+    .ck .ck-content,
+    .ck .ck-toolbar,
+    .ck .ck-dropdown__panel,
+    .ck .ck-balloon-panel {
+      background: #ffffff;
+      color: #111827;
+    }
+  `,
+  dark: `
+    .ck,
+    .ck .ck-editor__main,
+    .ck .ck-content,
+    .ck .ck-toolbar,
+    .ck .ck-dropdown__panel,
+    .ck .ck-balloon-panel {
+      background: #ffffff;
+      color: #111827;
+    }
+  `,
+}
+
 function registerComponentDeleteConfirmation() {
   document.addEventListener(
     "click",
@@ -133,6 +189,9 @@ export default {
       id: "cdn-cache",
     })
 
-    setPluginConfig({ presets: [defaultCkEditorConfig, simpleCkEditorConfig] })
+    setPluginConfig({
+      presets: [defaultCkEditorConfig, simpleCkEditorConfig],
+      theme: ckEditorTheme,
+    })
   },
 }
