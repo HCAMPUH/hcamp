@@ -29,20 +29,23 @@ export default factories.createCoreController(
     async create(ctx) {
       const response = await super.create(ctx)
       const { name, email, message } = ctx.request.body.data
-      const safeName = escapeEmailText(name, true)
-      const safeEmail = escapeEmailText(email, true)
-      const safeMessage = escapeEmailText(message)
-      const replyTo = isSafeReplyTo(safeEmail) ? safeEmail : undefined
 
-      try {
-        await strapi.plugins.email.services.email.send({
-          to: strapi.config.get("plugin.email.settings.defaultFrom"),
-          ...(replyTo && { replyTo }),
-          subject: "New contact form message",
-          text: `Name: ${safeName}\nEmail: ${safeEmail}\n\n${safeMessage}`,
-        })
-      } catch (error) {
-        logError(error, "Failed to send contact form email")
+      if (message) {
+        const safeName = escapeEmailText(name, true)
+        const safeEmail = escapeEmailText(email, true)
+        const safeMessage = escapeEmailText(message)
+        const replyTo = isSafeReplyTo(safeEmail) ? safeEmail : undefined
+
+        try {
+          await strapi.plugins.email.services.email.send({
+            to: strapi.config.get("plugin.email.settings.defaultFrom"),
+            ...(replyTo && { replyTo }),
+            subject: "New contact form message",
+            text: `Name: ${safeName}\nEmail: ${safeEmail}\n\n${safeMessage}`,
+          })
+        } catch (error) {
+          logError(error, "Failed to send contact form email")
+        }
       }
 
       return response

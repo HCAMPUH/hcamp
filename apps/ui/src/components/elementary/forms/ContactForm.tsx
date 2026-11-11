@@ -7,6 +7,7 @@ import { toast } from "sonner"
 import * as z from "zod"
 
 import AppLink from "@/components/elementary/AppLink"
+import { AppCheckbox } from "@/components/forms/AppCheckbox"
 import { AppField } from "@/components/forms/AppField"
 import { AppForm } from "@/components/forms/AppForm"
 import { AppTextArea } from "@/components/forms/AppTextArea"
@@ -25,7 +26,7 @@ export function ContactForm({
     resolver: zodResolver(ContactFormSchema),
     mode: "onBlur",
     reValidateMode: "onSubmit",
-    defaultValues: { name: "", email: "", message: "" },
+    defaultValues: { name: "", email: "", message: "", newsletter: false },
   })
 
   const onSubmit = (values: z.infer<FormSchemaType>) => {
@@ -67,6 +68,11 @@ export function ContactForm({
           label={t("message")}
           aria-label="contact-message"
         />
+        <AppCheckbox
+          name="newsletter"
+          label={t("newsletter")}
+          containerClassName="mt-2"
+        />
       </AppForm>
       <div className="flex w-full flex-col gap-4">
         {gdpr?.href && (
@@ -105,6 +111,7 @@ const ContactFormSchema = z.object({
   name: z.string().min(1),
   email: z.string().email().min(1),
   message: z.string().min(10),
+  newsletter: z.boolean(),
 })
 
 type FormSchemaType = typeof ContactFormSchema

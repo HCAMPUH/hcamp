@@ -93,7 +93,7 @@ export function StrapiPortals({
                   role="tab"
                   onClick={() => setActiveIndex(index)}
                   className={cn(
-                    "text-muted-foreground flex min-h-11 items-center gap-2 rounded-xl px-5 py-3 text-xs font-bold transition-colors sm:text-sm",
+                    "text-foreground flex min-h-11 items-center gap-2 rounded-xl px-5 py-3 text-xs font-bold transition-colors sm:text-sm",
                     isActive &&
                       "bg-background text-red-950 shadow-sm dark:text-red-100"
                   )}
@@ -161,14 +161,14 @@ export function StrapiPortals({
                   ))}
                 </ul>
               ) : null}
-              <div className="flex flex-wrap gap-3 pt-2">
+              <div className="flex min-w-0 flex-wrap gap-3 pt-2">
                 <StrapiLink
                   component={activeRole.primaryAction}
-                  className="h-auto rounded-xl bg-red-900 px-5 py-2.5 text-xs font-bold text-white shadow transition-colors hover:bg-red-800 dark:bg-red-800 dark:hover:bg-red-700"
+                  className="h-auto max-w-full min-w-0 rounded-xl bg-red-900 px-5 py-2.5 text-left text-xs font-bold break-words whitespace-normal text-white shadow transition-colors hover:bg-red-800 dark:bg-red-800 dark:hover:bg-red-700"
                 />
                 <StrapiLink
                   component={activeRole.secondaryAction}
-                  className="border-border bg-background text-foreground hover:bg-muted h-auto rounded-xl border px-5 py-2.5 text-xs font-bold transition-colors"
+                  className="border-border bg-background text-foreground hover:bg-muted h-auto max-w-full min-w-0 rounded-xl border px-5 py-2.5 text-left text-xs font-bold break-words whitespace-normal transition-colors"
                 >
                   <Download
                     className="size-4 text-red-950"
@@ -176,6 +176,13 @@ export function StrapiPortals({
                   />
                   {activeRole.secondaryAction?.label}
                 </StrapiLink>
+                {(activeRole.additionalActions ?? []).map((action) => (
+                  <StrapiLink
+                    key={action.id ?? action.label}
+                    component={action}
+                    className="border-border bg-background text-foreground hover:bg-muted h-auto max-w-full min-w-0 rounded-xl border px-5 py-2.5 text-left text-xs font-bold break-words whitespace-normal transition-colors"
+                  />
+                ))}
               </div>
             </div>
 

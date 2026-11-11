@@ -158,10 +158,14 @@ export function AnimatedPledgeTicker({
   if (!initialPledges.length) return null
 
   return (
-    <div className="overflow-hidden whitespace-nowrap" aria-label={ariaLabel}>
+    <div
+      className="overflow-hidden whitespace-nowrap"
+      role="marquee"
+      aria-label={ariaLabel}
+    >
       <div
         ref={trackRef}
-        className="flex w-max text-xs font-medium text-slate-300 sm:text-sm"
+        className="flex w-max text-xs font-medium text-white sm:text-sm"
       >
         <div ref={cycleRef} className="flex w-max shrink-0 gap-8 pr-8">
           {initialPledges.map((pledge) => (

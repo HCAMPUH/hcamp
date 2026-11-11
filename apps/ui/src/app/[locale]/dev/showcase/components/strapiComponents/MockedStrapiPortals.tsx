@@ -43,6 +43,16 @@ const data = {
         href: "#",
         newTab: false,
       },
+      additionalActions: [
+        {
+          id: 20,
+          __component: "utilities.link",
+          type: "external",
+          label: "View Parent Resources",
+          href: "#",
+          newTab: false,
+        },
+      ],
       coursesLabel: "Free Enrollment",
       coursesHeading: "BrainSpace Online Courses",
       courses: [

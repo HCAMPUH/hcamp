@@ -50,6 +50,11 @@
       "component": "utilities.link",
       "repeatable": false
     },
+    "additionalActions": {
+      "type": "component",
+      "component": "utilities.link",
+      "repeatable": true
+    },
     "coursesLabel": {
       "type": "string"
     },

@@ -692,6 +692,7 @@ export interface SharedPortalRole extends Struct.ComponentSchema {
     displayName: "Portal Role"
   }
   attributes: {
+    additionalActions: Schema.Attribute.Component<"utilities.link", true>
     category: Schema.Attribute.String
     courses: Schema.Attribute.Component<"shared.portal-course", true>
     coursesHeading: Schema.Attribute.String
@@ -784,11 +785,8 @@ export interface UtilitiesBasicImage extends Struct.ComponentSchema {
     displayName: "BasicImage"
   }
   attributes: {
-    alt: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetMinMaxLength<{
-        minLength: 1
-      }>
+    alt: Schema.Attribute.String
+    decorative: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>
     fallbackSrc: Schema.Attribute.String
     height: Schema.Attribute.Integer
     media: Schema.Attribute.Media<"images" | "videos"> &

@@ -2,6 +2,7 @@ import type { Locale } from "next-intl"
 import { HTMLElement, parse } from "node-html-parser"
 
 import { routing } from "@/lib/navigation"
+import { formatStrapiMediaUrl } from "@/lib/strapi-helpers"
 
 /**
  * Function to remove empty images (images without src) from HTML content.
@@ -12,6 +13,45 @@ export const removeEmptyImagesFromContent = (content?: string | null): string =>
     /<img\b[^>]*\bsrc\s*=\s*(['"])(?:\s*|\?(?:[^'" >]*)?)\1[^>]*>/gi,
     ""
   ) || ""
+
+/**
+ * Converts CKEditor PDF flipbook objects into mount points for the React viewer.
+ * The second replacement keeps older media-library link output compatible.
+ */
+export const transformFlipbookElements = (content?: string | null): string =>
+  content
+    ?.replaceAll(
+      /<figure\b([^>]*\bclass\s*=\s*(["'])[^"']*\bflipbook\b[^"']*\2[^>]*)>[\s\S]*?<\/figure>/gi,
+      (match, attributes: string) => {
+        const pdfUrl = attributes.match(
+          /\bdata-flipbook-pdf\s*=\s*(["'])(.*?)\1/i
+        )?.[2]
+
+        const normalizedPdfUrl = normalizeFlipbookUrl(pdfUrl)
+        if (!normalizedPdfUrl) return match
+
+        return `<figure${attributes}><div class="ck-flipbook-renderer" data-flipbook-pdf="${escapeAttribute(normalizedPdfUrl)}"></div></figure>`
+      }
+    )
+    .replaceAll(
+      /<a\b([^>]*\bhref\s*=\s*(["'])(.*?)\2[^>]*)>([\s\S]*?)<\/a>/gi,
+      (
+        match,
+        attributes: string,
+        _quote: string,
+        href: string,
+        label: string
+      ) => {
+        const isFlipbookLink =
+          /\bck-flipbook-placeholder\b/i.test(attributes) ||
+          /open\s+pdf\s+flipbook/i.test(label)
+
+        const normalizedPdfUrl = normalizeFlipbookUrl(href)
+        if (!isFlipbookLink || !normalizedPdfUrl) return match
+
+        return `<figure class="flipbook" data-flipbook-pdf="${escapeAttribute(normalizedPdfUrl)}"><div class="ck-flipbook-renderer" data-flipbook-pdf="${escapeAttribute(normalizedPdfUrl)}"></div></figure>`
+      }
+    ) || ""
 
 const youtubeHosts = new Set([
   "www.youtube.com",
@@ -124,7 +164,7 @@ function replaceOembedElement(match: string): string {
     return match
   }
 
-  return `<button type="button" class="ck-video-placeholder" data-video-embed="${escapeAttribute(video.embedUrl)}" aria-label="Play ${video.provider} video"><img src="${escapeAttribute(video.thumbnailUrl)}" alt="" /><span class="ck-video-placeholder__play" aria-hidden="true"><span></span></span></button>`
+  return `<button type="button" class="ck-video-placeholder" data-video-embed="${escapeAttribute(video.embedUrl)}" aria-label="Play ${video.provider} video"><img src="${escapeAttribute(video.thumbnailUrl)}" alt="" aria-hidden="true" role="presentation" /><span class="ck-video-placeholder__play" aria-hidden="true"><span></span></span></button>`
 }
 
 function getVideoDetails(value: string): null | {
@@ -177,6 +217,26 @@ function getVideoDetails(value: string): null | {
 
 const escapeAttribute = (value: string) =>
   value.replaceAll("&", "&amp;").replaceAll('"', "&quot;")
+
+const isHttpUrl = (value: string) => {
+  try {
+    const url = new URL(value)
+
+    return url.protocol === "http:" || url.protocol === "https:"
+  } catch {
+    return false
+  }
+}
+
+const normalizeFlipbookUrl = (value?: string) => {
+  if (!value) return
+
+  if (isHttpUrl(value)) return value
+
+  if (value.startsWith("/uploads/")) {
+    return formatStrapiMediaUrl(value)
+  }
+}
 
 /**
  * Function to process links in HTML content, adding locale prefix to internal links.

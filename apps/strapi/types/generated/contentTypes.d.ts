@@ -545,6 +545,15 @@ export interface ApiNavbarNavbar extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
       Schema.Attribute.Private
+    emergencyActionPlanLink: Schema.Attribute.Component<
+      "utilities.link",
+      false
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
     locale: Schema.Attribute.String
     localizations: Schema.Attribute.Relation<"oneToMany", "api::navbar.navbar">
     logoImage: Schema.Attribute.Component<"utilities.image-with-link", false> &
@@ -572,6 +581,27 @@ export interface ApiNavbarNavbar extends Struct.SingleTypeSchema {
         }
       }>
     publishedAt: Schema.Attribute.DateTime
+    showAccessibilityButton: Schema.Attribute.Boolean &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }> &
+      Schema.Attribute.DefaultTo<true>
+    showEmergencyActionPlanButton: Schema.Attribute.Boolean &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }> &
+      Schema.Attribute.DefaultTo<true>
+    showSearchButton: Schema.Attribute.Boolean &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }> &
+      Schema.Attribute.DefaultTo<true>
     updatedAt: Schema.Attribute.DateTime
     updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
       Schema.Attribute.Private
@@ -823,6 +853,7 @@ export interface ApiSubscriberSubscriber extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private
     message: Schema.Attribute.Text
     name: Schema.Attribute.String
+    newsletter: Schema.Attribute.Boolean
     publishedAt: Schema.Attribute.DateTime
     updatedAt: Schema.Attribute.DateTime
     updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &

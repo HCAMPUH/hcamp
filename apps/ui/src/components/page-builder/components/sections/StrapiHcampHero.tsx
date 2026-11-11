@@ -30,7 +30,7 @@ export function StrapiHcampHero({
       <Container className="grid min-w-0 items-center gap-10 py-10 md:py-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:py-16">
         <div className="flex w-full min-w-0 flex-col items-start">
           {badge && (
-            <div className="border-brand-red/20 bg-brand-red/10 text-brand-red mb-6 flex max-w-full items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold">
+            <div className="mb-6 flex max-w-full items-center gap-2 rounded-full border border-red-300 bg-red-50 px-4 py-2 text-xs font-semibold tracking-[0.12em] text-red-900 uppercase dark:border-red-700 dark:bg-red-950/40 dark:text-red-100">
               <BrainCircuit className="size-4 shrink-0" aria-hidden="true" />
               <span className="min-w-0 wrap-break-word">{badge}</span>
             </div>
@@ -112,18 +112,18 @@ function HcampHeroVideo({
   readonly videoUrl: string
 }) {
   return (
-    <div className="border-brand-blue bg-brand-blue relative aspect-video w-full overflow-hidden rounded-2xl border-8 shadow-xl">
+    <div className="border-brand-blue bg-brand-blue relative isolate aspect-video w-full overflow-hidden rounded-2xl border-8 shadow-xl">
       <CkEditorRenderer
         htmlContent={`<figure class="media"><oembed url="${escapeHtmlAttribute(videoUrl)}"></oembed></figure>`}
         className="absolute inset-0 h-full w-full [&_.ck-content]:absolute [&_.ck-content]:inset-0 [&_.ck-content]:h-full [&_.ck-content]:w-full [&_.ck-video-placeholder]:!absolute [&_.ck-video-placeholder]:!inset-0 [&_.ck-video-placeholder]:!h-full [&_.ck-video-placeholder]:!w-full [&_.ck-video-placeholder]:rounded-none [&_.media]:!absolute [&_.media]:!inset-0 [&_.media]:!m-0 [&_.media]:!aspect-auto [&_.media]:!h-full [&_.media]:!w-full [&_.media]:!min-w-0"
       />
       {(label || title) && (
-        <div className="from-foreground/95 via-foreground/70 text-primary-foreground pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t to-transparent px-4 pt-16 pb-4">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/95 via-black/75 to-transparent px-4 pt-16 pb-4 text-white">
           {label && (
             <Typography
               tag="p"
               variant="small"
-              className="bg-brand-red text-primary-foreground inline-flex rounded-sm px-2 py-1 font-semibold tracking-wide uppercase"
+              className="bg-brand-red inline-flex rounded-sm px-2 py-1 font-semibold tracking-wide text-white uppercase"
             >
               {label}
             </Typography>
@@ -132,7 +132,7 @@ function HcampHeroVideo({
             <Typography
               tag="p"
               variant="large"
-              className="text-primary-foreground mt-1 font-semibold"
+              className="mt-1 font-semibold text-white"
             >
               {title}
             </Typography>

@@ -27,6 +27,7 @@ import MockedStrapiHcampHero from "@/app/[locale]/dev/showcase/components/strapi
 import MockedStrapiHeadingWithCTAButton from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiHeadingWithCTAButton"
 import MockedStrapiHero from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiHero"
 import MockedStrapiImageWithCTAButton from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiImageWithCTAButton"
+import MockedStrapiNewsletterForm from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiNewsletterForm"
 import MockedStrapiPledge from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiPledge"
 import MockedStrapiPortals from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiPortals"
 import MockedStrapiPostList from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiPostList"
@@ -266,6 +267,13 @@ export const showcaseItems = [
     kind: "component",
     component: MockedStrapiPledge,
     description: "A themed pledge form for collecting participant details",
+  },
+  {
+    id: "newsletter",
+    label: "Newsletter",
+    kind: "component",
+    component: MockedStrapiNewsletterForm,
+    description: "A responsive newsletter subscription form",
   },
 ] as const
 

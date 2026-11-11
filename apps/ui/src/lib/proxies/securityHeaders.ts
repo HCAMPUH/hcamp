@@ -106,6 +106,9 @@ function buildCsp({
     [
       "connect-src 'self'",
       ...meilisearchOrigins,
+      ...(allowLocalStrapiMedia
+        ? ["http://127.0.0.1:1337", "http://localhost:1337"]
+        : []),
       "https://www.google-analytics.com",
       "https://*.google-analytics.com",
       "https://*.analytics.google.com",

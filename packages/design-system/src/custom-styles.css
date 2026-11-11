@@ -12,6 +12,28 @@
   @apply text-gray-600 dark:text-gray-400;
 }
 
+.ck-editor-rich-text-page a,
+.ck-editor-rich-text-blog a {
+  color: var(--color-link) !important;
+  text-decoration-line: none;
+}
+
+.ck-editor-rich-text-page a:hover,
+.ck-editor-rich-text-page a:focus-visible,
+.ck-editor-rich-text-blog a:hover,
+.ck-editor-rich-text-blog a:focus-visible {
+  color: var(--color-link-hover) !important;
+  text-decoration-line: underline;
+  text-underline-offset: 0.15em;
+}
+
+.ck-editor-rich-text-page a:focus-visible,
+.ck-editor-rich-text-blog a:focus-visible {
+  border-radius: 0.125rem;
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
 .ck-content iframe[src^="https://www.youtube.com"] {
   width: 100%;
   aspect-ratio: 16/9;
@@ -93,6 +115,16 @@ h6 {
 .tip-tap-editor-wrapper p,
 .tip-tap-editor-wrapper .typo-p-medium {
   @apply mb-0.5 text-sm;
+}
+
+.ck-editor-rich-text-page li,
+.ck-editor-rich-text-blog li {
+  @apply text-sm text-gray-600 dark:text-gray-400;
+}
+
+.ck-editor-rich-text-page li > p,
+.ck-editor-rich-text-blog li > p {
+  @apply mb-0 inline;
 }
 
 .ck-editor-rich-text-page .typo-p-large,

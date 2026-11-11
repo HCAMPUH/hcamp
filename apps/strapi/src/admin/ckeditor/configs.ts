@@ -81,6 +81,37 @@ const styles = [
     > :last-child {
     border-right: 0;
   }
+
+  .ck-content figure.ck-flipbook-widget {
+    box-sizing: border-box;
+    display: block;
+    height: auto;
+    margin: 0;
+    min-width: 0;
+    width: 100%;
+    position: relative;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--ck-color-base-foreground);
+  }
+
+  .ck-content figure.ck-flipbook-widget .ck-flipbook-preview {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .ck-content figure.ck-flipbook-widget canvas {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    border: 0;
+    object-fit: contain;
+  }
   `,
 ].join("\n")
 

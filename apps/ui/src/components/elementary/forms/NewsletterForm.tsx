@@ -1,24 +1,34 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { MoveRight } from "lucide-react"
+import { ChevronsRight } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import * as z from "zod"
 
 import { AppField } from "@/components/forms/AppField"
 import { AppForm } from "@/components/forms/AppForm"
 import { Button } from "@/components/ui/button"
+import { useNewsletterForm } from "@/hooks/useAppForm"
 
 export function NewsletterForm() {
+  const t = useTranslations("newsletterForm")
+  const newsletterMutation = useNewsletterForm()
   const form = useForm<z.infer<FormSchemaType>>({
     resolver: zodResolver(NewsletterFormSchema),
     mode: "onBlur",
     reValidateMode: "onSubmit",
-    defaultValues: { email: "" },
+    defaultValues: { name: "", email: "" },
   })
 
-  async function onSubmit(_values: z.infer<FormSchemaType>) {
-    // Submit logic not yet implemented
+  function onSubmit(values: z.infer<FormSchemaType>) {
+    newsletterMutation.mutate(values, {
+      onSuccess: () => {
+        toast.success(t("success"))
+        form.reset()
+      },
+    })
   }
 
   return (
@@ -28,31 +38,46 @@ export function NewsletterForm() {
         onSubmit={onSubmit}
         id={newsletterForm}
         className="w-full"
+        disabled={newsletterMutation.isPending}
       >
-        <div className="relative">
-          <AppField
-            name="email"
-            type="text"
-            autoComplete="email"
-            required
-            fieldClassName="h-14 bg-background"
-            aria-label="email"
-          />
-          <Button
-            type="submit"
-            className="absolute top-1/2 right-3 -translate-y-1/2 md:w-fit"
-            form={newsletterForm}
-            aria-label="Submit form"
-          >
-            <MoveRight className="size-4" />
-          </Button>
-        </div>
+        <AppField
+          name="name"
+          type="text"
+          autoComplete="name"
+          required
+          label={t("name")}
+          placeholder={t("namePlaceholder")}
+        />
+        <AppField
+          name="email"
+          type="email"
+          autoComplete="email"
+          required
+          label={t("email")}
+          placeholder={t("emailPlaceholder")}
+        />
+        <Button
+          type="submit"
+          className="mt-4 w-full"
+          size="lg"
+          form={newsletterForm}
+          isLoading={newsletterMutation.isPending}
+        >
+          {t("submit")}
+          <ChevronsRight className="size-5" aria-hidden="true" />
+        </Button>
       </AppForm>
+      {newsletterMutation.error && (
+        <p className="text-destructive mt-4 text-sm" role="alert">
+          {t("error")}
+        </p>
+      )}
     </div>
   )
 }
 
 const NewsletterFormSchema = z.object({
+  name: z.string().min(1),
   email: z.string().email(),
 })
 

@@ -1,0 +1,10 @@
+{
+  "name": "page-flip",
+  "version": "2.0.7",
+  "main": "bundle/js/page-flip.browser.js",
+  "module": "bundle/js/page-flip.module.js",
+  "files": [
+    "bundle"
+  ],
+  "license": "MIT"
+}
