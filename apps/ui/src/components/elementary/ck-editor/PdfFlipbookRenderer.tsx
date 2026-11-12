@@ -6,10 +6,13 @@ import {
   type ErrorInfo,
   type ReactNode,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react"
 import { createRoot, type Root } from "react-dom/client"
+
+const PDF_THUMBNAIL_ROUTE = "/api/pdf-thumbnail"
 
 let pdfWorker: Worker | undefined
 
@@ -53,27 +56,34 @@ const isAppleTouchDevice = () => {
   )
 }
 
-const PdfThumbnail = dynamic<PdfThumbnailProps>(
-  async () => {
-    const { Document, Page, pdfjs } = await import("react-pdf")
+function PdfThumbnail({ pdfUrl }: PdfThumbnailProps) {
+  const [hasError, setHasError] = useState(false)
+  const thumbnailUrl = useMemo(() => {
+    const nextUrl = new URL(PDF_THUMBNAIL_ROUTE, window.location.origin)
+    nextUrl.searchParams.set("pdf", pdfUrl)
 
-    configurePdfWorker(pdfjs)
+    return nextUrl.href
+  }, [pdfUrl])
 
-    return ({ pdfUrl }: PdfThumbnailProps) => {
-      return (
-        <Document file={pdfUrl} loading={null} error={null}>
-          <Page
-            pageNumber={1}
-            width={900}
-            renderAnnotationLayer={false}
-            renderTextLayer={false}
-          />
-        </Document>
-      )
-    }
-  },
-  { ssr: false }
-)
+  return (
+    <div className="relative block aspect-[16/9] w-full overflow-hidden rounded-md bg-transparent">
+      {!hasError ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={thumbnailUrl}
+          alt=""
+          className="block h-full w-full object-contain"
+          loading="lazy"
+          decoding="async"
+          onError={() => setHasError(true)}
+          style={{ display: "block", width: "100%", height: "100%" }}
+        />
+      ) : (
+        <div className="h-full w-full bg-transparent" />
+      )}
+    </div>
+  )
+}
 
 type FlipbookErrorBoundaryProps = {
   readonly children: ReactNode
@@ -336,9 +346,7 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
         hidden={isActivated}
       >
         <PdfThumbnail pdfUrl={pdfUrl} />
-        <span className="ck-pdf-flipbook-thumbnail__read" aria-hidden="true">
-          View
-        </span>
+        <span className="ck-pdf-flipbook-thumbnail__read">View</span>
       </button>
       {isActivated ? (
         <FlipbookErrorBoundary

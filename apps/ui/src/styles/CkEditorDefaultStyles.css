@@ -1386,3 +1386,10 @@
   max-height: 100% !important;
   overflow: hidden;
 }
+
+.ck-content figure.flipbook .ck-pdf-flipbook-thumbnail img {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}
