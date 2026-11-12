@@ -29,7 +29,7 @@ export async function StrapiPostList({
   return (
     <section>
       <Container>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
           {posts.map((post) => {
             const imageUrl = formatStrapiMediaUrl(post.coverImage?.url)
             const accentColor =
@@ -43,9 +43,9 @@ export async function StrapiPostList({
                 variant="ghost"
                 className="group text-foreground hover:text-foreground focus-visible:ring-primary/30 h-full w-full flex-col items-stretch p-0 text-left whitespace-normal no-underline hover:bg-transparent hover:no-underline"
               >
-                <article className="bg-card text-card-foreground border-border flex h-full w-full flex-col overflow-hidden rounded-xl border shadow-sm transition-shadow group-hover:shadow-md">
+                <article className="bg-card text-card-foreground border-border flex h-full min-h-[38rem] w-full flex-col overflow-hidden rounded-xl border shadow-sm transition-shadow group-hover:shadow-md">
                   {imageUrl ? (
-                    <div className="relative aspect-[4/3]">
+                    <div className="relative aspect-[1/1]">
                       <Image
                         src={imageUrl}
                         alt={post.coverImage?.alternativeText ?? post.title}
@@ -56,7 +56,7 @@ export async function StrapiPostList({
                       <div className="from-card via-card/45 pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-linear-to-t to-transparent" />
                     </div>
                   ) : null}
-                  <div className="flex flex-1 flex-col items-start gap-3 p-4">
+                  <div className="flex flex-1 flex-col items-start gap-4 p-5">
                     <h4 className="text-foreground w-full min-w-0 text-left text-2xl leading-tight font-semibold wrap-break-word">
                       {post.title}
                     </h4>
