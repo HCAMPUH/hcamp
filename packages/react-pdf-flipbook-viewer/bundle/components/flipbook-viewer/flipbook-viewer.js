@@ -38,7 +38,7 @@ const FlipbookViewer = ({ pdfUrl, shareUrl, className, disableShare = false, onE
             setPdfLoading(false); // Ensure loading stops even on error
         }
     }, []);
-    return (React.createElement("div", { ref: containerRef, className: cn("relative h-[30.244rem] xs:h-[37.744rem] lg:h-[49.744rem] xl:h-[51.99rem] bg-gray-800 w-full overflow-hidden", className ?? '') },
+    return (React.createElement("div", { ref: containerRef, tabIndex: 0, role: "region", "aria-label": "PDF flipbook viewer", className: cn("relative h-[30.244rem] xs:h-[37.744rem] lg:h-[49.744rem] xl:h-[51.99rem] bg-gray-800 w-full overflow-hidden", className ?? '') },
         " ",
         pdfLoading && React.createElement(PdfLoading, null),
         React.createElement(Document, { file: pdfUrl, onLoadSuccess: onDocumentLoadSuccess, onLoadError: (error) => {

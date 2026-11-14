@@ -6,13 +6,12 @@ import {
   type ErrorInfo,
   type ReactNode,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from "react"
 import { createRoot, type Root } from "react-dom/client"
 
-const PDF_THUMBNAIL_ROUTE = "/api/pdf-thumbnail"
+import { PdfThumbnail } from "@/components/elementary/ck-editor/PdfThumbnail"
 
 let pdfWorker: Worker | undefined
 
@@ -43,45 +42,12 @@ const FlipbookViewer = dynamic(
   { ssr: false }
 )
 
-type PdfThumbnailProps = {
-  readonly pdfUrl: string
-}
-
 const isAppleTouchDevice = () => {
   if (typeof navigator === "undefined") return false
 
   return (
     /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
     (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
-  )
-}
-
-function PdfThumbnail({ pdfUrl }: PdfThumbnailProps) {
-  const [hasError, setHasError] = useState(false)
-  const thumbnailUrl = useMemo(() => {
-    const nextUrl = new URL(PDF_THUMBNAIL_ROUTE, window.location.origin)
-    nextUrl.searchParams.set("pdf", pdfUrl)
-
-    return nextUrl.href
-  }, [pdfUrl])
-
-  return (
-    <div className="relative block aspect-[16/9] w-full overflow-hidden rounded-md bg-transparent">
-      {!hasError ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={thumbnailUrl}
-          alt=""
-          className="block h-full w-full object-contain"
-          loading="lazy"
-          decoding="async"
-          onError={() => setHasError(true)}
-          style={{ display: "block", width: "100%", height: "100%" }}
-        />
-      ) : (
-        <div className="h-full w-full bg-transparent" />
-      )}
-    </div>
   )
 }
 
@@ -345,8 +311,7 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
         disabled={isClosing}
         hidden={isActivated}
       >
-        <PdfThumbnail pdfUrl={pdfUrl} />
-        <span className="ck-pdf-flipbook-thumbnail__read">View</span>
+        <PdfThumbnail key={pdfUrl} pdfUrl={pdfUrl} />
       </button>
       {isActivated ? (
         <FlipbookErrorBoundary
