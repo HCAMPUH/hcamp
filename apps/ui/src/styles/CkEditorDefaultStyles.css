@@ -18,19 +18,14 @@
 
 /* Keep the viewer toolbar inside the flipbook instead of fixing it to the viewport. */
 .ck-pdf-flipbook-viewer .fixed.bottom-0 {
-  background: color-mix(
-    in srgb,
-    var(--color-background) 60%,
-    transparent
-  ) !important;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 -0.25rem 1rem rgb(0 0 0 / 0.08) !important;
-  isolation: isolate;
+  background: transparent !important;
+  backdrop-filter: none;
+  box-shadow: none !important;
   inset: auto 0 0 !important;
   margin: 0 !important;
   position: absolute !important;
   z-index: 100 !important;
-  -webkit-backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: none;
   width: 100% !important;
 }
 
