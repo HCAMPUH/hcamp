@@ -78,7 +78,7 @@ async function generateThumbnail(pdfUrl: string) {
     headers: {
       Accept: "application/pdf, application/octet-stream, */*",
     },
-    cache: "force-cache",
+    cache: "no-store",
     signal: AbortSignal.timeout(20000),
   })
 

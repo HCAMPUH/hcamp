@@ -116,10 +116,6 @@ class FlipbookErrorBoundary extends Component<
 function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
   const [isActivated, setIsActivated] = useState(false)
   const [isInlineActivated, setIsInlineActivated] = useState(false)
-  const [isPortraitViewport, setIsPortraitViewport] = useState(
-    () =>
-      typeof window !== "undefined" && window.innerHeight > window.innerWidth
-  )
   const [isClosing, setIsClosing] = useState(false)
   const [viewerError, setViewerError] = useState<Error | null>(null)
   const [viewerDiagnostics, setViewerDiagnostics] = useState<ReturnType<
@@ -161,45 +157,6 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
       }
     }
   }, [])
-
-  useEffect(() => {
-    if (!isInlineActivated || !isAppleTouchDevice()) return
-
-    const updateViewportOrientation = () => {
-      setIsPortraitViewport(window.innerHeight > window.innerWidth)
-    }
-    const orientation = screen.orientation
-    const lockLandscape = async () => {
-      if (!orientation?.lock) return
-
-      try {
-        await orientation.lock("landscape")
-      } catch {
-        // iOS Safari may expose the API without permitting locks outside
-        // its native fullscreen mode. The inline viewer remains landscape.
-      }
-    }
-
-    void lockLandscape()
-    updateViewportOrientation()
-    window.addEventListener("resize", updateViewportOrientation, {
-      passive: true,
-    })
-    window.visualViewport?.addEventListener(
-      "resize",
-      updateViewportOrientation,
-      { passive: true }
-    )
-
-    return () => {
-      window.removeEventListener("resize", updateViewportOrientation)
-      window.visualViewport?.removeEventListener(
-        "resize",
-        updateViewportOrientation
-      )
-      if (orientation?.unlock) orientation.unlock()
-    }
-  }, [isInlineActivated])
 
   const resetViewer = () => {
     setViewerError(null)
@@ -296,9 +253,6 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
       className={[
         "ck-pdf-flipbook-fullscreen",
         isInlineActivated && "ck-pdf-flipbook-fullscreen--inline",
-        isInlineActivated &&
-          isPortraitViewport &&
-          "ck-pdf-flipbook-fullscreen--portrait",
       ]
         .filter(Boolean)
         .join(" ")}
