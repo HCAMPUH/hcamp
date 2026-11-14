@@ -1,54 +1,47 @@
 "use client"
 
-import { LeafThrough, type LeafThroughHandle } from "leafthrough/react"
+import dynamic from "next/dynamic"
 import {
   Component,
   type ErrorInfo,
   type ReactNode,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react"
 import { createRoot, type Root } from "react-dom/client"
 
-const renderPdfToPages = async (pdfUrl: string) => {
-  const response = await fetch(pdfUrl, {
-    headers: { Accept: "application/pdf, application/octet-stream, */*" },
-    cache: "force-cache",
-    signal: AbortSignal.timeout(30000),
-  })
+const PDF_THUMBNAIL_ROUTE = "/api/pdf-thumbnail"
 
-  if (!response.ok) {
-    throw new Error(`PDF fetch failed with status ${response.status}`)
+let pdfWorker: Worker | undefined
+
+const configurePdfWorker = (pdfjs: {
+  GlobalWorkerOptions: { workerPort?: Worker | null }
+}) => {
+  if (!pdfWorker) {
+    pdfWorker = new Worker(
+      // Turbopack bundles the worker as a same-origin module asset.
+      // eslint-disable-next-line unicorn/relative-url-style
+      new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url),
+      { type: "module" }
+    )
   }
 
-  const pdfData = new Uint8Array(await response.arrayBuffer())
-  const { getDocument } = await import("pdfjs-dist/legacy/build/pdf.mjs")
-  const pdfDocument = await getDocument({ data: pdfData }).promise
-  const pages: string[] = []
-
-  for (
-    let pageNumber = 1;
-    pageNumber <= pdfDocument.numPages;
-    pageNumber += 1
-  ) {
-    const page = await pdfDocument.getPage(pageNumber)
-    const viewport = page.getViewport({ scale: 1.2 })
-    const canvas = document.createElement("canvas")
-    const context = canvas.getContext("2d")
-
-    if (!context) {
-      continue
-    }
-
-    canvas.width = Math.ceil(viewport.width)
-    canvas.height = Math.ceil(viewport.height)
-    await page.render({ canvasContext: context, viewport }).promise
-    pages.push(canvas.toDataURL("image/png"))
-  }
-
-  return pages
+  pdfjs.GlobalWorkerOptions.workerPort = pdfWorker
 }
+
+const FlipbookViewer = dynamic(
+  async () => {
+    const { FlipbookViewer: Viewer } = await import("react-pdf-flipbook-viewer")
+    const { pdfjs } = await import("react-pdf")
+
+    configurePdfWorker(pdfjs)
+
+    return Viewer
+  },
+  { ssr: false }
+)
 
 type PdfThumbnailProps = {
   readonly pdfUrl: string
@@ -65,24 +58,25 @@ const isAppleTouchDevice = () => {
 
 function PdfThumbnail({ pdfUrl }: PdfThumbnailProps) {
   const [hasError, setHasError] = useState(false)
-  const [isReady, setIsReady] = useState(false)
-  const thumbnailUrl = `/api/pdf-thumbnail?pdf=${encodeURIComponent(pdfUrl)}`
+  const thumbnailUrl = useMemo(() => {
+    const nextUrl = new URL(PDF_THUMBNAIL_ROUTE, window.location.origin)
+    nextUrl.searchParams.set("pdf", pdfUrl)
+
+    return nextUrl.href
+  }, [pdfUrl])
 
   return (
-    <div className="relative block aspect-video w-full overflow-hidden rounded-md bg-transparent">
+    <div className="relative block aspect-[16/9] w-full overflow-hidden rounded-md bg-transparent">
       {!hasError ? (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           src={thumbnailUrl}
           alt=""
-          aria-hidden="true"
-          className="h-full w-full object-cover"
-          style={{
-            visibility: isReady ? "visible" : "hidden",
-            opacity: isReady ? 1 : 0,
-            transition: "opacity 120ms ease-out, visibility 120ms ease-out",
-          }}
-          onLoad={() => setIsReady(true)}
+          className="block h-full w-full object-contain"
+          loading="lazy"
+          decoding="async"
           onError={() => setHasError(true)}
+          style={{ display: "block", width: "100%", height: "100%" }}
         />
       ) : (
         <div className="h-full w-full bg-transparent" />
@@ -165,11 +159,9 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
   const [viewerDiagnostics, setViewerDiagnostics] = useState<ReturnType<
     typeof getFlipbookDiagnostics
   > | null>(null)
-  const [pdfPages, setPdfPages] = useState<string[]>([])
   const fullscreenRef = useRef<HTMLDivElement>(null)
   const wasFullscreen = useRef(false)
   const cleanupTimer = useRef<number | undefined>(undefined)
-  const magazineRef = useRef<LeafThroughHandle>(null)
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -210,7 +202,6 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
     const updateViewportOrientation = () => {
       setIsPortraitViewport(window.innerHeight > window.innerWidth)
     }
-
     const orientation = screen.orientation
     const lockLandscape = async () => {
       if (!orientation?.lock) return
@@ -244,22 +235,21 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
     }
   }, [isInlineActivated])
 
-  useEffect(() => {
-    if (!pdfUrl) return
+  const resetViewer = () => {
+    setViewerError(null)
+    setViewerDiagnostics(null)
+    setIsActivated(false)
+    setIsInlineActivated(false)
+    setIsClosing(true)
 
-    const loadPages = async () => {
-      try {
-        const pages = await renderPdfToPages(pdfUrl)
-        setPdfPages(pages)
-      } catch (error: unknown) {
-        setViewerError(
-          error instanceof Error ? error : new Error(String(error))
-        )
-      }
+    if (cleanupTimer.current !== undefined) {
+      window.clearTimeout(cleanupTimer.current)
     }
 
-    void loadPages()
-  }, [pdfUrl])
+    cleanupTimer.current = window.setTimeout(() => {
+      setIsClosing(false)
+    }, 500)
+  }
 
   const activateFlipbook = async () => {
     if (isClosing) return
@@ -286,6 +276,10 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
       setIsActivated(false)
       setIsInlineActivated(false)
     }
+  }
+
+  const closeInlineViewer = () => {
+    resetViewer()
   }
 
   const handleViewerError = (error: Error) => {
@@ -362,21 +356,13 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
           {viewerError ? (
             viewerErrorFallback
           ) : (
-            <div className="ck-pdf-flipbook-viewer overflow-hidden rounded-lg">
-              {pdfPages.length > 0 ? (
-                <LeafThrough
-                  ref={magazineRef}
-                  pages={pdfPages}
-                  className="h-[80vh] w-full"
-                  style={{ height: "80vh", width: "100%" }}
-                  layout="auto"
-                />
-              ) : (
-                <div className="text-muted-foreground flex h-[80vh] items-center justify-center text-sm">
-                  Loading PDF...
-                </div>
-              )}
-            </div>
+            <FlipbookViewer
+              pdfUrl={pdfUrl}
+              shareUrl={pdfUrl}
+              disableShare
+              onExit={closeInlineViewer}
+              className="ck-pdf-flipbook-viewer rounded-lg"
+            />
           )}
         </FlipbookErrorBoundary>
       ) : null}

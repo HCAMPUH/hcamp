@@ -1,3 +1,10 @@
+import { execFile } from "node:child_process"
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises"
+import { tmpdir } from "node:os"
+import path from "node:path"
+import { promisify } from "node:util"
+
+const execFileAsync = promisify(execFile)
 const THUMBNAIL_CACHE_CONTROL =
   "public, max-age=31536000, s-maxage=31536000, stale-while-revalidate=604800"
 const inFlightThumbnails = new Map<string, Promise<Uint8Array>>()
@@ -29,7 +36,7 @@ export async function GET(request: Request) {
     return new Response(Buffer.from(thumbnailBytes), {
       headers: {
         "Cache-Control": THUMBNAIL_CACHE_CONTROL,
-        "Content-Type": "image/svg+xml",
+        "Content-Type": "image/png",
         "Content-Length": String(thumbnailBytes.length),
         "X-Content-Type-Options": "nosniff",
       },
@@ -41,17 +48,11 @@ export async function GET(request: Request) {
       pdfUrl: normalizedPdfUrl.href,
     })
 
-    const fallback = createPlaceholderSvg(normalizedPdfUrl.pathname)
-    const fallbackBytes = Buffer.from(fallback)
-
-    return new Response(fallbackBytes, {
+    return new Response("Unable to generate PDF thumbnail", {
+      status: 502,
       headers: {
         "Cache-Control": "no-store",
-        "Content-Type": "image/svg+xml",
-        "Content-Length": String(fallbackBytes.length),
-        "X-Content-Type-Options": "nosniff",
       },
-      status: 200,
     })
   }
 }
@@ -72,7 +73,7 @@ async function getOrCreateThumbnail(pdfUrl: string) {
   }
 }
 
-async function generateThumbnail(pdfUrl: string): Promise<Uint8Array> {
+async function generateThumbnail(pdfUrl: string) {
   const response = await fetch(pdfUrl, {
     headers: {
       Accept: "application/pdf, application/octet-stream, */*",
@@ -86,39 +87,33 @@ async function generateThumbnail(pdfUrl: string): Promise<Uint8Array> {
   }
 
   const pdfBuffer = Buffer.from(await response.arrayBuffer())
+  const tempDir = await mkdtemp(path.join(tmpdir(), "pdf-thumb-"))
+  const pdfPath = path.join(tempDir, "source.pdf")
+  const outputPrefix = path.join(tempDir, "thumbnail")
 
-  if (!pdfBuffer.subarray(0, 5).equals(Buffer.from("%PDF-"))) {
-    throw new Error("Downloaded content is not a PDF")
+  try {
+    await writeFile(pdfPath, pdfBuffer)
+    await execFileAsync(
+      "pdftoppm",
+      [
+        "-f",
+        "1",
+        "-l",
+        "1",
+        "-png",
+        "-singlefile",
+        "-r",
+        "72",
+        pdfPath,
+        outputPrefix,
+      ],
+      { timeout: 30000, killSignal: "SIGKILL" }
+    )
+
+    const renderedPath = `${outputPrefix}.png`
+
+    return new Uint8Array(await readFile(renderedPath))
+  } finally {
+    await rm(tempDir, { recursive: true, force: true })
   }
-
-  const url = new URL(pdfUrl)
-  const placeholderSvg = createPlaceholderSvg(url.pathname)
-
-  return new Uint8Array(Buffer.from(placeholderSvg))
-}
-
-function createPlaceholderSvg(pdfPath: string) {
-  const fileName = decodeURIComponent(
-    pdfPath
-      .split("/")
-      .at(-1)
-      ?.replace(/\.[^.]+$/, "") || "PDF"
-  )
-  const label = fileName.slice(0, 18) || "PDF"
-
-  return `
-    <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-label="PDF document preview unavailable" style="background: transparent;">
-      <rect width="1280" height="720" fill="transparent"/>
-      <text x="640" y="360" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="transparent">${escapeXml(label)}</text>
-    </svg>
-  `.trim()
-}
-
-function escapeXml(value: string) {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&apos;")
 }
