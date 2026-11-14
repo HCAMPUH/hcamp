@@ -61,7 +61,7 @@ export function StrapiHcampHero({
                 <StrapiLink
                   key={link.id}
                   component={link}
-                  className="h-auto min-h-9 max-w-full py-2 text-left break-words whitespace-normal sm:h-9 sm:py-0 sm:whitespace-nowrap"
+                  className="h-auto min-h-9 max-w-full py-2 text-left break-words whitespace-normal"
                 />
               ))}
             </div>
@@ -118,26 +118,32 @@ function HcampHeroVideo({
         className="absolute inset-0 h-full w-full [&_.ck-content]:absolute [&_.ck-content]:inset-0 [&_.ck-content]:h-full [&_.ck-content]:w-full [&_.ck-video-placeholder]:!absolute [&_.ck-video-placeholder]:!inset-0 [&_.ck-video-placeholder]:!h-full [&_.ck-video-placeholder]:!w-full [&_.ck-video-placeholder]:rounded-none [&_.media]:!absolute [&_.media]:!inset-0 [&_.media]:!m-0 [&_.media]:!aspect-auto [&_.media]:!h-full [&_.media]:!w-full [&_.media]:!min-w-0"
       />
       {(label || title) && (
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black from-0% via-black/85 via-30% to-transparent to-75% px-4 pt-16 pb-4 text-white">
-          {label && (
-            <Typography
-              tag="p"
-              variant="small"
-              className="bg-brand-red inline-flex rounded-sm px-2 py-1 font-semibold tracking-wide text-white uppercase"
-            >
-              {label}
-            </Typography>
-          )}
-          {title && (
-            <Typography
-              tag="p"
-              variant="large"
-              className="mt-1 font-semibold text-white"
-            >
-              {title}
-            </Typography>
-          )}
-        </div>
+        <>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-36 bg-gradient-to-t from-black from-0% via-black/85 via-30% to-transparent to-75%"
+          />
+          <div className="pointer-events-none absolute inset-0 z-20 flex flex-col justify-end px-4 pb-4 text-white">
+            {label && (
+              <Typography
+                tag="p"
+                variant="small"
+                className="bg-brand-red absolute top-4 left-4 inline-flex rounded-sm px-2 py-1 font-semibold tracking-wide text-white uppercase sm:static sm:self-start"
+              >
+                {label}
+              </Typography>
+            )}
+            {title && (
+              <Typography
+                tag="p"
+                variant="large"
+                className="mt-1 !text-base font-semibold text-white sm:!text-lg"
+              >
+                {title}
+              </Typography>
+            )}
+          </div>
+        </>
       )}
     </div>
   )
