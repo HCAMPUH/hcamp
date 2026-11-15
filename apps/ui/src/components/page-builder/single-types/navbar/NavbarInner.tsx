@@ -74,16 +74,16 @@ export function NavbarInner({
                 <StrapiLink
                   component={navbarData.emergencyActionPlanLink}
                   className={cn(
-                    "h-10 w-10 shrink-0 justify-center overflow-hidden rounded-[16px] bg-clip-padding px-2 py-1 text-center text-sm leading-tight font-normal break-words whitespace-normal no-underline shadow-sm sm:h-12 sm:w-[120px]",
+                    "h-10 w-10 shrink-0 justify-center overflow-hidden rounded-[16px] bg-clip-padding px-2 py-1 text-center text-sm leading-tight font-normal break-words whitespace-normal no-underline shadow-sm xl:h-12 xl:w-[120px]",
                     !emergencyActionPlanHasDecorations &&
                       "bg-brand-red hover:bg-brand-red/90 text-white hover:text-white"
                   )}
                 >
                   <Siren
-                    className="size-5 shrink-0 text-current sm:hidden"
+                    className="size-5 shrink-0 text-current xl:hidden"
                     aria-hidden="true"
                   />
-                  <span className="sr-only sm:not-sr-only">
+                  <span className="sr-only xl:not-sr-only">
                     {navbarData.emergencyActionPlanLink.label}
                   </span>
                 </StrapiLink>
