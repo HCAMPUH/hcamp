@@ -80,12 +80,7 @@ export function NavbarInner({
                   )}
                 >
                   <Siren
-                    className={cn(
-                      "size-5 shrink-0 sm:hidden",
-                      emergencyActionPlanHasDecorations
-                        ? "text-brand-red"
-                        : "text-white"
-                    )}
+                    className="size-5 shrink-0 text-current sm:hidden"
                     aria-hidden="true"
                   />
                   <span className="sr-only sm:not-sr-only">
