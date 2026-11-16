@@ -71,7 +71,7 @@ export function StrapiAbout({
         >
           <div>
             {component.eyebrow ? (
-              <p className="inline-flex rounded-full border border-red-300 bg-red-50 px-3 py-1 text-xs font-semibold tracking-[0.12em] text-red-900 uppercase dark:border-red-700 dark:bg-red-950/40 dark:text-red-100">
+              <p className="border-brand-amber-border bg-brand-amber-background text-brand-amber-foreground inline-flex rounded-full border px-3 py-1 text-xs font-semibold tracking-[0.12em] uppercase">
                 {component.eyebrow}
               </p>
             ) : null}

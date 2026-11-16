@@ -47,7 +47,7 @@ export function StrapiPortals({
       <Container className="py-8">
         <div className="mx-auto mb-12 max-w-3xl text-center">
           {component.eyebrow ? (
-            <span className="inline-flex rounded-full border border-red-300 bg-red-50 px-3 py-1 text-xs font-semibold tracking-[0.12em] text-red-900 uppercase dark:border-red-700 dark:bg-red-950/40 dark:text-red-100">
+            <span className="border-brand-amber-border bg-brand-amber-background text-brand-amber-foreground inline-flex rounded-full border px-3 py-1 text-xs font-semibold tracking-[0.12em] uppercase">
               {component.eyebrow}
             </span>
           ) : null}
@@ -116,7 +116,7 @@ export function StrapiPortals({
             <div className="space-y-6 lg:col-span-7">
               <div>
                 {activeRole.category ? (
-                  <div className="bg-brand-gold-soft dark:bg-brand-gold-muted/20 mb-2 inline-flex rounded-full px-3 py-1 text-xs font-extrabold text-amber-900 uppercase dark:text-yellow-100">
+                  <div className="border-brand-amber-border bg-brand-amber-background text-brand-amber-foreground mb-2 inline-flex rounded-full border px-3 py-1 text-xs font-extrabold uppercase">
                     {activeRole.category}
                   </div>
                 ) : null}

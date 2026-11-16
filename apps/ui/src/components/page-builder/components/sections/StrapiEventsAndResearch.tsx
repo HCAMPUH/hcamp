@@ -173,7 +173,7 @@ function SectionIntro({
 }) {
   return (
     <header>
-      <span className="inline-flex rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-[0.12em] text-red-800 uppercase">
+      <span className="border-brand-amber-border bg-brand-amber-background text-brand-amber-foreground inline-flex rounded-full border px-3 py-1 text-xs font-semibold tracking-[0.12em] uppercase">
         {eyebrow}
       </span>
       {title ? (
