@@ -1,5 +1,6 @@
 export default [
   "strapi::errors",
+  "global::redirect-admin-registration",
   {
     name: "strapi::security",
     config: {
