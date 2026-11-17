@@ -61,9 +61,14 @@
     "coursesHeading": {
       "type": "string"
     },
-    "image": {
+    "coursesImage": {
       "type": "component",
       "component": "utilities.basic-image",
+      "repeatable": false
+    },
+    "coursesImageLink": {
+      "type": "component",
+      "component": "utilities.link",
       "repeatable": false
     },
     "courses": {

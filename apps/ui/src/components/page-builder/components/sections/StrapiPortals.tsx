@@ -29,6 +29,36 @@ const icons = {
   "heart-pulse": HeartPulse,
 }
 
+function PortalRoleCoursesImage({
+  component,
+}: {
+  component: Data.Component<"shared.portal-role">
+}) {
+  if (!component.coursesImage) return null
+
+  const image = (
+    <StrapiBasicImage
+      component={component.coursesImage}
+      className="mx-auto max-h-48 w-full object-contain"
+    />
+  )
+
+  return (
+    <div className="border-border border-b pb-4">
+      {component.coursesImageLink ? (
+        <StrapiLink
+          component={component.coursesImageLink}
+          className="mx-auto h-auto w-full justify-center p-0"
+        >
+          {image}
+        </StrapiLink>
+      ) : (
+        image
+      )}
+    </div>
+  )
+}
+
 export function StrapiPortals({
   component,
 }: PageBuilderComponentProps & {
@@ -207,14 +237,7 @@ export function StrapiPortals({
                     </span>
                   ) : null}
                 </div>
-                {activeRole.image ? (
-                  <div className="border-border border-b pb-4">
-                    <StrapiBasicImage
-                      component={activeRole.image}
-                      className="mx-auto max-h-48 w-full object-contain"
-                    />
-                  </div>
-                ) : null}
+                <PortalRoleCoursesImage component={activeRole} />
                 <div className="space-y-3">
                   {courses.map((course) => (
                     <StrapiLink

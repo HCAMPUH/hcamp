@@ -696,13 +696,14 @@ export interface SharedPortalRole extends Struct.ComponentSchema {
     category: Schema.Attribute.String
     courses: Schema.Attribute.Component<"shared.portal-course", true>
     coursesHeading: Schema.Attribute.String
+    coursesImage: Schema.Attribute.Component<"utilities.basic-image", false>
+    coursesImageLink: Schema.Attribute.Component<"utilities.link", false>
     coursesLabel: Schema.Attribute.String
     description: Schema.Attribute.Text & Schema.Attribute.Required
     icon: Schema.Attribute.Enumeration<
       ["users", "megaphone", "trophy", "book-open", "flag", "heart-pulse"]
     > &
       Schema.Attribute.DefaultTo<"users">
-    image: Schema.Attribute.Component<"utilities.basic-image", false>
     label: Schema.Attribute.String & Schema.Attribute.Required
     primaryAction: Schema.Attribute.Component<"utilities.link", false>
     responsibilities: Schema.Attribute.Component<
