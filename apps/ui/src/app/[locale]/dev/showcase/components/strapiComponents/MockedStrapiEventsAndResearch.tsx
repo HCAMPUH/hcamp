@@ -44,8 +44,10 @@ const data = {
       year: 2024,
       title:
         "Concussion Knowledge and Reporting Behaviors Among High School Athletes in Hawaii",
-      description:
-        "Investigating cultural factors, peer dynamics, and baseline testing effectiveness across Hawaii island high schools.",
+      description: {
+        content:
+          "<p>Investigating cultural factors, peer dynamics, and baseline testing effectiveness across Hawaii island high schools.</p>",
+      },
       researchItemEyebrow: "Peer reviewed",
       link: {
         type: "external",
@@ -60,8 +62,10 @@ const data = {
       year: 2023,
       title:
         "Implementation of Statewide Return-to-Learn Protocols in Hawaii Public Schools",
-      description:
-        "Evaluating classroom accommodation strategies and teacher training models in K-12 environments.",
+      description: {
+        content:
+          "<p>Evaluating classroom accommodation strategies and teacher training models in K-12 environments.</p>",
+      },
       researchItemEyebrow: "Peer reviewed",
       link: {
         type: "external",

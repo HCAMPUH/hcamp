@@ -314,9 +314,10 @@ function ResearchCard({ item }: { item: ResearchItem }) {
       >
         {item.title}
       </Typography>
-      <Typography variant="small" className="text-muted-foreground mt-2">
-        {item.description}
-      </Typography>
+      <CkEditorRenderer
+        htmlContent={item.description?.content}
+        className="text-muted-foreground mt-2 text-sm"
+      />
       {href ? (
         item.link ? (
           <StrapiLink

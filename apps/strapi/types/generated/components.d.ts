@@ -722,7 +722,10 @@ export interface SharedResearchItem extends Struct.ComponentSchema {
     displayName: "Research Item"
   }
   attributes: {
-    description: Schema.Attribute.Text & Schema.Attribute.Required
+    description: Schema.Attribute.Component<
+      "utilities.ck-editor-content",
+      false
+    >
     journal: Schema.Attribute.String & Schema.Attribute.Required
     link: Schema.Attribute.Component<"utilities.link", false>
     researchItemEyebrow: Schema.Attribute.String

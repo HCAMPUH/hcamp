@@ -18,8 +18,10 @@
       "required": true
     },
     "description": {
-      "type": "text",
-      "required": true
+      "type": "component",
+      "component": "utilities.ck-editor-content",
+      "repeatable": false,
+      "required": false
     },
     "researchItemEyebrow": {
       "type": "string"
