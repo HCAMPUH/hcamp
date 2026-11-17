@@ -61,7 +61,7 @@ export async function StrapiPostList({
                       {post.title}
                     </h4>
                     {post.excerpt ? (
-                      <p className="text-muted-foreground w-full min-w-0 text-left text-sm leading-relaxed wrap-break-word">
+                      <p className="text-muted-foreground w-full min-w-0 text-left text-base leading-relaxed wrap-break-word">
                         {post.excerpt}
                       </p>
                     ) : null}
@@ -74,7 +74,7 @@ export async function StrapiPostList({
                             color={accentColor}
                           />
                         ) : null}
-                        <div className="text-muted-foreground flex h-16 min-w-0 flex-col justify-end gap-2 text-xs leading-4">
+                        <div className="text-muted-foreground flex h-16 min-w-0 flex-col justify-end gap-2 text-sm leading-4">
                           {post.eventTime ? (
                             <div className="flex min-w-0 items-center gap-1.5">
                               <Clock3 className="text-primary size-3.5 shrink-0" />
@@ -141,7 +141,7 @@ function PostDate({
       className="flex size-16 shrink-0 flex-col items-center justify-center rounded-xl leading-none text-white shadow-sm"
       style={{ backgroundColor: color }}
     >
-      <span className="text-[0.65rem] font-bold tracking-[0.16em] text-white/70">
+      <span className="text-xs font-bold tracking-[0.16em] text-white/70">
         {month}
       </span>
       <span className="mt-1 text-2xl font-bold">{day}</span>

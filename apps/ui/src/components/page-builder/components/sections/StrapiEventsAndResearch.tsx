@@ -153,7 +153,7 @@ function EventHighlightContent({
       ) : null}
       {component.eventHighlightDescription ||
       component.eventHighlightPost?.excerpt ? (
-        <Typography variant="small" className="mt-3 text-white/90">
+        <Typography variant="medium" className="mt-3 text-white/90">
           {component.eventHighlightDescription ??
             component.eventHighlightPost?.excerpt}
         </Typography>
@@ -188,7 +188,7 @@ function SectionIntro({
       ) : null}
       <CkEditorRenderer
         htmlContent={description}
-        className="text-muted-foreground mt-2 max-w-2xl text-sm"
+        className="text-muted-foreground mt-2 max-w-2xl text-base"
       />
     </header>
   )
@@ -228,7 +228,7 @@ function EventCard({ event }: { event: Event }) {
           className="text-primary-foreground flex size-16 shrink-0 flex-col items-center justify-center rounded-xl"
           style={{ backgroundColor: accentColor }}
         >
-          <span className="text-[0.65rem] font-bold tracking-[0.16em] uppercase">
+          <span className="text-xs font-bold tracking-[0.16em] uppercase">
             {parsedDate.toLocaleDateString("en-US", {
               month: "short",
               timeZone: "UTC",
@@ -253,14 +253,14 @@ function EventCard({ event }: { event: Event }) {
         </Typography>
         {!event.featured && event.excerpt ? (
           <Typography
-            variant="small"
-            className="text-muted-foreground mt-2 line-clamp-2"
+            variant="medium"
+            className="text-muted-foreground mt-2 line-clamp-2 !text-sm"
           >
             {event.excerpt}
           </Typography>
         ) : null}
         {event.featured ? (
-          <div className="text-muted-foreground mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs">
+          <div className="text-muted-foreground mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
             {event.location ? (
               <span className="inline-flex items-center gap-1">
                 <MapPin className="size-3.5" aria-hidden="true" />
@@ -301,7 +301,7 @@ function ResearchCard({ item }: { item: ResearchItem }) {
           {item.journal} • {item.year}
         </Typography>
         {item.researchItemEyebrow ? (
-          <span className="shrink-0 rounded border border-red-200 bg-red-50 px-2 py-1 text-[0.65rem] font-semibold text-red-800 uppercase">
+          <span className="shrink-0 rounded border border-red-200 bg-red-50 px-2 py-1 text-xs font-semibold text-red-800 uppercase">
             {item.researchItemEyebrow}
           </span>
         ) : null}
@@ -316,7 +316,7 @@ function ResearchCard({ item }: { item: ResearchItem }) {
       </Typography>
       <CkEditorRenderer
         htmlContent={item.description?.content}
-        className="text-muted-foreground mt-2 text-sm"
+        className="text-muted-foreground mt-2 text-base"
       />
       {href ? (
         item.link ? (

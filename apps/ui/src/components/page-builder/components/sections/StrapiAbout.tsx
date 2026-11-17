@@ -110,7 +110,7 @@ export function StrapiAbout({
               <InstitutionLogoMedia component={component.institutionLogo} />
             ) : null}
             {component.institutionDescription ? (
-              <p className="text-xs leading-relaxed text-white">
+              <p className="text-base leading-relaxed text-white">
                 {component.institutionDescription}
               </p>
             ) : null}
@@ -140,14 +140,14 @@ export function StrapiAbout({
                       <StrapiLink
                         key={partner.id ?? partner.name}
                         component={partner.link}
-                        className="h-auto min-h-8 rounded-lg bg-white/10 p-2 text-center text-[11px] font-semibold text-white no-underline hover:bg-white/20 hover:no-underline focus-visible:ring-2 focus-visible:ring-amber-400"
+                        className="h-auto min-h-8 rounded-lg bg-white/10 p-2 text-center text-xs font-semibold text-white no-underline hover:bg-white/20 hover:no-underline focus-visible:ring-2 focus-visible:ring-amber-400"
                       >
                         {partner.name}
                       </StrapiLink>
                     ) : (
                       <span
                         key={partner.id ?? partner.name}
-                        className="flex min-h-8 items-center justify-center rounded-lg bg-white/10 p-2 text-center text-[11px] font-semibold text-white hover:bg-white/20"
+                        className="flex min-h-8 items-center justify-center rounded-lg bg-white/10 p-2 text-center text-xs font-semibold text-white hover:bg-white/20"
                       >
                         {partner.name}
                       </span>
@@ -194,7 +194,7 @@ function ResourceCard({ resource }: { resource: AboutResource }) {
           </div>
         ) : null}
         {resource.description ? (
-          <p className="text-xs leading-relaxed text-white">
+          <p className="text-sm leading-relaxed text-white">
             {resource.description}
           </p>
         ) : null}
