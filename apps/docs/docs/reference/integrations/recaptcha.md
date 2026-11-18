@@ -19,7 +19,9 @@ NEXT_PUBLIC_RECAPTCHA_SITE_KEY=...
 RECAPTCHA_SECRET_KEY=...
 ```
 
-Wrap forms in `ReCaptchaProvider`, execute with `useReCaptcha`, and validate the returned reCAPTCHA token on the server with `verifyRecaptcha`. The browser only collects the token; the final decision happens in server code before accepting the form action.
+The contact form is wrapped in `ReCaptchaProvider` and executes reCAPTCHA v3 with the `contact_form` action when submitted. The browser only collects the token; the public proxy verifies its score and action on the server before forwarding a contact message to Strapi. Newsletter-only submissions do not require a token.
+
+The site key is exposed through runtime CSR config, so it can be changed without rebuilding the UI. Set both variables above in the UI deployment.
 
 ## UI Usage
 
@@ -61,7 +63,7 @@ import { verifyRecaptcha } from "@/lib/recaptcha"
 
 export const submitContactUsForm = async (payload: FormData) => {
   const token = payload.get("recaptchaToken")
-  if (!(await verifyRecaptcha(token))) {
+  if (!(await verifyRecaptcha(token, "contact_form"))) {
     throw new Error("Invalid reCAPTCHA")
   }
 

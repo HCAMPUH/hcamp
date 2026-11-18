@@ -11,6 +11,7 @@ export function useContactForm() {
       email: string
       message: string
       newsletter: boolean
+      recaptchaToken: string
     }) => {
       const path = PublicStrapiClient.getStrapiApiPathByUId(
         "api::subscriber.subscriber"
@@ -21,7 +22,15 @@ export function useContactForm() {
         undefined,
         {
           method: "POST",
-          body: JSON.stringify({ data: values }),
+          body: JSON.stringify({
+            data: {
+              name: values.name,
+              email: values.email,
+              message: values.message,
+              newsletter: values.newsletter,
+            },
+            recaptchaToken: values.recaptchaToken,
+          }),
         },
         { useProxy: true }
       )

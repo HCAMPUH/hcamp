@@ -72,6 +72,7 @@ export default async function RootLayout({
     "SHOW_NON_BLOCKING_ERRORS",
     "APP_PUBLIC_URL",
     "IMGPROXY_URL",
+    "NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
   ]
 
   return (
