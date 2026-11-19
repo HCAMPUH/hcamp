@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Check } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { ReCaptchaProvider, useReCaptcha } from "next-recaptcha-v3"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -13,6 +14,8 @@ import { AppField } from "@/components/forms/AppField"
 import { AppForm } from "@/components/forms/AppForm"
 import { Button } from "@/components/ui/button"
 import { usePledgeForm } from "@/hooks/usePledgeForm"
+import { useRecaptchaBadgeVisibility } from "@/hooks/useRecaptchaBadgeVisibility"
+import { getEnvVar } from "@/lib/env-vars"
 import { sanitizeNameInput } from "@/lib/sanitize"
 
 const PledgeFormSchema = z.object({
@@ -27,14 +30,35 @@ export type SubmittedPledge = PledgeFormValues & {
   documentId: string
 }
 
-export function PledgeForm({
-  submitLabel,
-  onSubmitted,
-}: Readonly<{
+type PledgeFormProps = Readonly<{
   submitLabel?: string | null
   onSubmitted?: (pledge: SubmittedPledge) => void
-}>) {
+}>
+
+export function PledgeForm({ submitLabel, onSubmitted }: PledgeFormProps) {
   const t = useTranslations("pledgeForm")
+
+  const siteKey = getEnvVar("NEXT_PUBLIC_RECAPTCHA_SITE_KEY")
+  if (!siteKey) {
+    return (
+      <p className="text-center text-red-500" role="alert">
+        {t("error")}
+      </p>
+    )
+  }
+
+  return (
+    <ReCaptchaProvider reCaptchaKey={siteKey}>
+      <PledgeFormFields submitLabel={submitLabel} onSubmitted={onSubmitted} />
+    </ReCaptchaProvider>
+  )
+}
+
+function PledgeFormFields({ submitLabel, onSubmitted }: PledgeFormProps) {
+  useRecaptchaBadgeVisibility()
+
+  const t = useTranslations("pledgeForm")
+  const { executeRecaptcha } = useReCaptcha()
   const pledgeMutation = usePledgeForm()
   const [isSubmitted, setIsSubmitted] = useState(false)
   const form = useForm<PledgeFormValues>({
@@ -47,7 +71,7 @@ export function PledgeForm({
     },
   })
 
-  const onSubmit = (values: PledgeFormValues) => {
+  const onSubmit = async (values: PledgeFormValues) => {
     setIsSubmitted(false)
     const normalizedValues = {
       firstName: sanitizeNameInput(values.firstName, 80),
@@ -55,23 +79,31 @@ export function PledgeForm({
       schoolOrganization: sanitizeNameInput(values.schoolOrganization, 200),
     }
 
-    pledgeMutation.mutate(normalizedValues, {
-      onSuccess: (response) => {
-        const submittedPledge = (
-          response as { data?: Partial<SubmittedPledge> }
-        ).data
-        const pledge: SubmittedPledge = {
-          ...normalizedValues,
-          ...submittedPledge,
-          documentId: submittedPledge?.documentId ?? `local-${Date.now()}`,
-        }
+    try {
+      const recaptchaToken = await executeRecaptcha("pledge_form")
+      pledgeMutation.mutate(
+        { ...normalizedValues, recaptchaToken },
+        {
+          onSuccess: (response) => {
+            const submittedPledge = (
+              response as { data?: Partial<SubmittedPledge> }
+            ).data
+            const pledge: SubmittedPledge = {
+              ...normalizedValues,
+              ...submittedPledge,
+              documentId: submittedPledge?.documentId ?? `local-${Date.now()}`,
+            }
 
-        toast.success(t("success"))
-        form.reset()
-        setIsSubmitted(true)
-        onSubmitted?.(pledge)
-      },
-    })
+            toast.success(t("success"))
+            form.reset()
+            setIsSubmitted(true)
+            onSubmitted?.(pledge)
+          },
+        }
+      )
+    } catch {
+      toast.error(t("error"))
+    }
   }
 
   return (
@@ -81,7 +113,7 @@ export function PledgeForm({
         onSubmit={onSubmit}
         id="pledge-form"
         className="flex h-full w-full flex-col [&>fieldset]:flex [&>fieldset]:h-full [&>fieldset]:flex-col"
-        disabled={pledgeMutation.isPending}
+        disabled={form.formState.isSubmitting || pledgeMutation.isPending}
       >
         <AppField
           name="firstName"
@@ -113,7 +145,7 @@ export function PledgeForm({
           className="pledge-button relative mt-4 w-full overflow-visible"
           size="lg"
           form="pledge-form"
-          isLoading={pledgeMutation.isPending}
+          isLoading={form.formState.isSubmitting || pledgeMutation.isPending}
           data-submitted={isSubmitted ? "true" : undefined}
         >
           {isSubmitted ? (

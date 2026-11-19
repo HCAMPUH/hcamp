@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { ReCaptchaProvider, useReCaptcha } from "next-recaptcha-v3"
-import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -15,6 +14,7 @@ import { AppForm } from "@/components/forms/AppForm"
 import { AppTextArea } from "@/components/forms/AppTextArea"
 import { Button } from "@/components/ui/button"
 import { useContactForm } from "@/hooks/useAppForm"
+import { useRecaptchaBadgeVisibility } from "@/hooks/useRecaptchaBadgeVisibility"
 import { getEnvVar } from "@/lib/env-vars"
 import {
   sanitizeEmailInput,
@@ -50,14 +50,7 @@ function ContactFormFields({
 }: Readonly<{
   gdpr?: { href?: string; label?: string; newTab?: boolean }
 }>) {
-  useEffect(() => {
-    document.body.classList.add("contact-recaptcha-active")
-
-    return () => {
-      document.body.classList.remove("contact-recaptcha-active")
-    }
-  }, [])
-
+  useRecaptchaBadgeVisibility()
   const t = useTranslations("contactForm")
   const { executeRecaptcha } = useReCaptcha()
   const contactFormMutation = useContactForm()

@@ -40,10 +40,15 @@ export function useContactForm() {
 
 export function useNewsletterForm() {
   return useMutation({
-    mutationFn: (values: { name: string; email: string }) => {
+    mutationFn: (values: {
+      name: string
+      email: string
+      recaptchaToken: string
+    }) => {
       const path = PublicStrapiClient.getStrapiApiPathByUId(
         "api::subscriber.subscriber"
       )
+      const { recaptchaToken, ...subscriberValues } = values
 
       return PublicStrapiClient.fetchAPI(
         path,
@@ -52,9 +57,10 @@ export function useNewsletterForm() {
           method: "POST",
           body: JSON.stringify({
             data: {
-              ...values,
+              ...subscriberValues,
               newsletter: true,
             },
+            recaptchaToken,
           }),
         },
         { useProxy: true }

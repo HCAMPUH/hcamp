@@ -29,8 +29,8 @@ vi.mock("@/lib/strapi-api/request-auth", () => ({
 
 import { POST } from "./route"
 
-const makeRequest = (payload: unknown) =>
-  new Request("http://localhost/api/public-proxy/api/subscribers", {
+const makeRequest = (payload: unknown, path = "api/subscribers") =>
+  new Request(`http://localhost/api/public-proxy/${path}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
@@ -38,6 +38,9 @@ const makeRequest = (payload: unknown) =>
 
 const routeContext = {
   params: Promise.resolve({ slug: ["api", "subscribers"] }),
+}
+const pledgeRouteContext = {
+  params: Promise.resolve({ slug: ["api", "pledges", "submit"] }),
 }
 
 describe("POST /api/public-proxy/api/subscribers", () => {
@@ -132,18 +135,95 @@ describe("POST /api/public-proxy/api/subscribers", () => {
     )
   })
 
-  it("does not require reCAPTCHA for newsletter-only submissions", async () => {
+  it("verifies and removes the token before forwarding a newsletter submission", async () => {
     const payload = {
       data: { name: "A", email: "a@example.com", newsletter: true },
+      recaptchaToken: "newsletter-token",
     }
 
     const response = await POST(makeRequest(payload), routeContext)
 
     expect(response.status).toBe(200)
-    expect(verifyRecaptchaMock).not.toHaveBeenCalled()
+    expect(verifyRecaptchaMock).toHaveBeenCalledWith(
+      "newsletter-token",
+      "newsletter_form"
+    )
     expect(fetchMock).toHaveBeenCalledWith(
       "https://strapi.test/api/subscribers",
-      expect.objectContaining({ body: JSON.stringify(payload) })
+      expect.objectContaining({ body: JSON.stringify({ data: payload.data }) })
     )
+  })
+
+  it("rejects newsletter submissions with an invalid reCAPTCHA token", async () => {
+    verifyRecaptchaMock.mockResolvedValue(false)
+
+    const response = await POST(
+      makeRequest({
+        data: { name: "A", email: "a@example.com", newsletter: true },
+        recaptchaToken: "bad-token",
+      }),
+      routeContext
+    )
+
+    expect(response.status).toBe(403)
+    expect(verifyRecaptchaMock).toHaveBeenCalledWith(
+      "bad-token",
+      "newsletter_form"
+    )
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  it("verifies and removes the token before forwarding a pledge", async () => {
+    const payload = {
+      data: {
+        firstName: "A",
+        lastName: "B",
+        schoolOrganization: "School",
+      },
+      recaptchaToken: "pledge-token",
+    }
+
+    const response = await POST(
+      makeRequest(payload, "api/pledges/submit"),
+      pledgeRouteContext
+    )
+
+    expect(response.status).toBe(200)
+    expect(verifyRecaptchaMock).toHaveBeenCalledWith(
+      "pledge-token",
+      "pledge_form"
+    )
+    expect(createStrapiAuthHeaderMock).toHaveBeenCalledWith({
+      isReadOnly: false,
+      isPrivate: false,
+    })
+    expect(fetchMock).toHaveBeenCalledWith(
+      "https://strapi.test/api/pledges/submit",
+      expect.objectContaining({
+        body: JSON.stringify({ data: payload.data }),
+      })
+    )
+  })
+
+  it("rejects pledges with an invalid reCAPTCHA token", async () => {
+    verifyRecaptchaMock.mockResolvedValue(false)
+
+    const response = await POST(
+      makeRequest(
+        {
+          data: {
+            firstName: "A",
+            lastName: "B",
+            schoolOrganization: "School",
+          },
+          recaptchaToken: "bad-token",
+        },
+        "api/pledges/submit"
+      ),
+      pledgeRouteContext
+    )
+
+    expect(response.status).toBe(403)
+    expect(fetchMock).not.toHaveBeenCalled()
   })
 })

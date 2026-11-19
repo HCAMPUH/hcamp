@@ -8,6 +8,7 @@ type PledgeValues = {
   firstName: string
   lastName: string
   schoolOrganization: string
+  recaptchaToken: string
 }
 
 export function usePledgeForm() {
@@ -20,7 +21,14 @@ export function usePledgeForm() {
         undefined,
         {
           method: "POST",
-          body: JSON.stringify({ data: values }),
+          body: JSON.stringify({
+            data: {
+              firstName: values.firstName,
+              lastName: values.lastName,
+              schoolOrganization: values.schoolOrganization,
+            },
+            recaptchaToken: values.recaptchaToken,
+          }),
         },
         { useProxy: true }
       )

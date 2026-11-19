@@ -19,9 +19,11 @@ NEXT_PUBLIC_RECAPTCHA_SITE_KEY=...
 RECAPTCHA_SECRET_KEY=...
 ```
 
-The contact form is wrapped in `ReCaptchaProvider` and executes reCAPTCHA v3 with the `contact_form` action when submitted. The browser only collects the token; the public proxy verifies its score and action on the server before forwarding a contact message to Strapi. Newsletter-only submissions do not require a token.
+The contact form is wrapped in `ReCaptchaProvider` and executes reCAPTCHA v3 with the `contact_form` action when submitted. The newsletter form uses the `newsletter_form` action. The browser only collects each token; the public proxy verifies its score and action on the server before forwarding either submission to Strapi.
 
 The site key is exposed through runtime CSR config, so it can be changed without rebuilding the UI. Set both variables above in the UI deployment.
+
+Pledge submissions use the same flow with the `pledge_form` action. The Strapi `pledges/submit` route requires authentication; grant the UI custom API token permission to submit pledges so the proxy can forward verified submissions.
 
 ## UI Usage
 

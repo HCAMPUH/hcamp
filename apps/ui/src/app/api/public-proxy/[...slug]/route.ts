@@ -7,29 +7,30 @@ import {
   isStrapiEndpointAllowed,
 } from "@/lib/strapi-api/request-auth"
 
-const invalidSubscriberPayload = () =>
+const invalidFormPayload = () =>
   NextResponse.json(
     {
       error: {
-        message: "Invalid subscriber payload",
+        message: "Invalid form payload",
         name: "BadRequest",
       },
     },
     { status: 400 }
   )
 
-async function prepareSubscriberPayload(
-  body: string | Blob | undefined
+async function preparePayloadWithRecaptcha(
+  body: string | Blob | undefined,
+  action: string | ((payload: Record<string, unknown>) => string)
 ): Promise<{ body: string } | { response: NextResponse }> {
   if (typeof body !== "string") {
-    return { response: invalidSubscriberPayload() }
+    return { response: invalidFormPayload() }
   }
 
   let parsedPayload: unknown
   try {
     parsedPayload = JSON.parse(body)
   } catch {
-    return { response: invalidSubscriberPayload() }
+    return { response: invalidFormPayload() }
   }
 
   if (
@@ -37,42 +38,35 @@ async function prepareSubscriberPayload(
     parsedPayload === null ||
     Array.isArray(parsedPayload)
   ) {
-    return { response: invalidSubscriberPayload() }
+    return { response: invalidFormPayload() }
+  }
+
+  if (!getEnvVar("RECAPTCHA_SECRET_KEY")) {
+    return {
+      response: NextResponse.json(
+        {
+          error: {
+            message: "reCAPTCHA is not configured",
+            name: "ServiceUnavailable",
+          },
+        },
+        { status: 503 }
+      ),
+    }
   }
 
   const payload = parsedPayload as Record<string, unknown>
-  const data =
-    typeof payload.data === "object" && payload.data !== null
-      ? (payload.data as Record<string, unknown>)
+  const token =
+    typeof payload.recaptchaToken === "string"
+      ? payload.recaptchaToken
       : undefined
-  const message = data?.message
-
-  if (message) {
-    if (!getEnvVar("RECAPTCHA_SECRET_KEY")) {
-      return {
-        response: NextResponse.json(
-          {
-            error: {
-              message: "reCAPTCHA is not configured",
-              name: "ServiceUnavailable",
-            },
-          },
-          { status: 503 }
-        ),
-      }
-    }
-
-    const token =
-      typeof payload.recaptchaToken === "string"
-        ? payload.recaptchaToken
-        : undefined
-    if (!(await verifyRecaptcha(token, "contact_form"))) {
-      return {
-        response: NextResponse.json(
-          { error: { message: "Invalid reCAPTCHA", name: "Forbidden" } },
-          { status: 403 }
-        ),
-      }
+  const expectedAction = typeof action === "function" ? action(payload) : action
+  if (!(await verifyRecaptcha(token, expectedAction))) {
+    return {
+      response: NextResponse.json(
+        { error: { message: "Invalid reCAPTCHA", name: "Forbidden" } },
+        { status: 403 }
+      ),
     }
   }
 
@@ -138,7 +132,29 @@ async function handler(
     (path === "api/subscribers" || path === "api/subscribers/") &&
     request.method === "POST"
   ) {
-    const result = await prepareSubscriberPayload(body)
+    const result = await preparePayloadWithRecaptcha(body, (payload) => {
+      const data = payload.data
+      if (typeof data !== "object" || data === null || Array.isArray(data)) {
+        return "newsletter_form"
+      }
+
+      return (data as Record<string, unknown>).message
+        ? "contact_form"
+        : "newsletter_form"
+    })
+    if ("response" in result) {
+      return result.response
+    }
+    body = result.body
+    requestHeaders.delete("content-length")
+    requestHeaders.delete("transfer-encoding")
+  }
+
+  if (
+    (path === "api/pledges/submit" || path === "api/pledges/submit/") &&
+    request.method === "POST"
+  ) {
+    const result = await preparePayloadWithRecaptcha(body, "pledge_form")
     if ("response" in result) {
       return result.response
     }
@@ -150,7 +166,6 @@ async function handler(
   const authHeader = await createStrapiAuthHeader({
     isReadOnly,
     isPrivate: false,
-    usePublicRole: path === "api/pledges/submit" && request.method === "POST",
   })
 
   const response = await fetch(url, {

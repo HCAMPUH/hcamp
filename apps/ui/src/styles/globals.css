@@ -106,7 +106,7 @@
   }
 }
 
-body:not(.contact-recaptcha-active) .grecaptcha-badge {
+body:not(.recaptcha-active) .grecaptcha-badge {
   display: none !important;
   visibility: hidden !important;
 }
