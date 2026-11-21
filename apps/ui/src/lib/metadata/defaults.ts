@@ -17,7 +17,7 @@ export function getDefaultMetadata(siteUrl: string, t: TranslateFn) {
     icons: {
       icon: [
         { url: "/favicon.ico", sizes: "16x16 32x32" },
-        { url: "/favicon.svg", type: "image/svg+xml" },
+        // { URL: "/favicon.svg", type: "image/svg+xml" },
       ],
     },
 
