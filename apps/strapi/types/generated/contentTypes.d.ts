@@ -697,6 +697,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         "sections.accordion",
         "sections.portals",
         "sections.about",
+        "sections.leadership",
       ]
     > &
       Schema.Attribute.SetPluginOptions<{

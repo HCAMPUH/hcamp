@@ -19,6 +19,7 @@ import StrapiHcampHero from "@/components/page-builder/components/sections/Strap
 import StrapiHeadingWithCTAButton from "@/components/page-builder/components/sections/StrapiHeadingWithCTAButton"
 import StrapiHero from "@/components/page-builder/components/sections/StrapiHero"
 import StrapiImageWithCTAButton from "@/components/page-builder/components/sections/StrapiImageWithCTAButton"
+import StrapiLeadership from "@/components/page-builder/components/sections/StrapiLeadership"
 import StrapiPortals from "@/components/page-builder/components/sections/StrapiPortals"
 import StrapiPostList from "@/components/page-builder/components/sections/StrapiPostList"
 import StrapiTable from "@/components/page-builder/components/sections/StrapiTable"
@@ -53,6 +54,7 @@ export const PageContentComponents: Partial<
   "sections.hcamp-hero": StrapiHcampHero,
   "sections.hero": StrapiHero,
   "sections.image-with-cta-button": StrapiImageWithCTAButton,
+  "sections.leadership": StrapiLeadership,
   "sections.statistics": StrapiStatistics,
   "sections.features-list": StrapiFeaturesList,
   "sections.cta-banner": StrapiCTABanner,

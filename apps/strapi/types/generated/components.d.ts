@@ -427,6 +427,17 @@ export interface SectionsImageWithCtaButton extends Struct.ComponentSchema {
   }
 }
 
+export interface SectionsLeadership extends Struct.ComponentSchema {
+  collectionName: "components_sections_leaderships"
+  info: {
+    displayName: "Leadership"
+    icon: "user"
+  }
+  attributes: {
+    categories: Schema.Attribute.Component<"shared.leadership-category", true>
+  }
+}
+
 export interface SectionsPortals extends Struct.ComponentSchema {
   collectionName: "components_sections_portals"
   info: {
@@ -661,6 +672,26 @@ export interface SharedImageWithTitleAndDescription
           preset: "defaultCkEditor"
         }
       >
+  }
+}
+
+export interface SharedLeadershipCategory extends Struct.ComponentSchema {
+  collectionName: "components_shared_leadership_categories"
+  info: {
+    displayName: "Leadership Category"
+  }
+  attributes: {
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    description: Schema.Attribute.Text
+    image: Schema.Attribute.Component<"utilities.basic-image", false>
+    label: Schema.Attribute.String & Schema.Attribute.Required
+    title: Schema.Attribute.String
   }
 }
 
@@ -951,6 +982,7 @@ declare module "@strapi/strapi" {
       "sections.heading-with-cta-button": SectionsHeadingWithCtaButton
       "sections.hero": SectionsHero
       "sections.image-with-cta-button": SectionsImageWithCtaButton
+      "sections.leadership": SectionsLeadership
       "sections.portals": SectionsPortals
       "sections.post-list": SectionsPostList
       "sections.statistics": SectionsStatistics
@@ -966,6 +998,7 @@ declare module "@strapi/strapi" {
       "shared.figure": SharedFigure
       "shared.image-with-config": SharedImageWithConfig
       "shared.image-with-title-and-description": SharedImageWithTitleAndDescription
+      "shared.leadership-category": SharedLeadershipCategory
       "shared.portal-course": SharedPortalCourse
       "shared.portal-responsibility": SharedPortalResponsibility
       "shared.portal-role": SharedPortalRole

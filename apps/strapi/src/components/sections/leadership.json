@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_sections_leaderships",
+  "info": {
+    "displayName": "Leadership",
+    "icon": "user"
+  },
+  "options": {},
+  "attributes": {
+    "categories": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.leadership-category"
+    }
+  }
+}
