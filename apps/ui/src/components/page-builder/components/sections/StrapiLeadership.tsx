@@ -96,7 +96,7 @@ export function StrapiLeadership({
                       className="object-cover"
                     />
                     {hasText ? (
-                      <div className="bg-background/60 relative z-10 w-fit max-w-full rounded-xl p-6 shadow-sm backdrop-blur-md">
+                      <div className="backdrop-filter-fallback-background bg-background/60 relative z-10 w-fit max-w-full rounded-xl p-6 shadow-sm backdrop-blur-md">
                         {textContent}
                       </div>
                     ) : null}

@@ -23,7 +23,7 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
   const currentYear = now.getFullYear()
 
   return (
-    <footer className="bg-background w-full border-t shadow-sm backdrop-blur transition-colors duration-300">
+    <footer className="bg-background w-full border-t shadow-sm transition-colors duration-300">
       <Container className="pt-8 pb-4">
         <div className="flex flex-col justify-between gap-10 lg:flex-row">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">

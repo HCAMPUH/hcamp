@@ -463,6 +463,14 @@
   z-index: 1001;
 }
 
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  .ck-pdf-flipbook-fullscreen--inline .fixed.bottom-0 {
+    background-color: rgb(0 0 0 / 0.82) !important;
+  }
+}
+
 .ck-pdf-flipbook-fullscreen--inline .fixed.bottom-0 > div:nth-child(2) {
   align-items: center;
   display: flex;

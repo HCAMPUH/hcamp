@@ -19,6 +19,13 @@ function hideFloatingButton() {
   const style = document.createElement("style")
   style.id = HIDE_BUTTON_STYLE_ID
   style.textContent = `
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      #a11y-widget .backdrop-filter,
+      .backdrop-filter {
+        background-color: rgba(0, 0, 0, 0.72) !important;
+      }
+    }
+
     button[aria-label="Open Accessibility Widget"] {
       display: none !important;
     }
