@@ -186,6 +186,7 @@ packageExtensionsChecksum: sha256-25Vi5tvpUWsM+TSTllrkLDkMZY0+x7+4MHLbUl1WLoA=
 
 patchedDependencies:
   '@notum-cz/strapi-plugin-smart-populate@1.0.1': 3e017c2d214410937dd9f8f20967b8884437203841befdbe51dfd8067e530b77
+  strapi-plugin-meilisearch@0.16.5: 4ef75b2a11283c748aae5d30dc2ed2d0f1a809f45375a1a82b02a8569993d6e3
 
 importers:
 
@@ -410,7 +411,7 @@ importers:
         version: 3.0.4(@codemirror/autocomplete@6.20.3)(@codemirror/language@6.12.4)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.1)(@codemirror/theme-one-dark@6.1.3)(@strapi/strapi@5.63.0(d315c7a40e3b27bae273660c4313cf2f))(@strapi/utils@5.63.0(ts-toolbelt@9.6.0))(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.3.1(react@19.3.1))(react-router-dom@7.18.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)(sharp@0.35.5(@types/node@24.13.3))(styled-components@6.5.3(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(supports-color@8.1.1)
       strapi-plugin-meilisearch:
         specifier: ^0.16.5
-        version: 0.16.5(@codemirror/autocomplete@6.20.3)(@codemirror/language@6.12.4)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.1)(@codemirror/theme-one-dark@6.1.3)(@strapi/strapi@5.63.0(d315c7a40e3b27bae273660c4313cf2f))(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.3.1(react@19.3.1))(react-router-dom@7.18.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)(styled-components@6.5.3(react-dom@19.3.1(react@19.3.1))(react@19.3.1))
+        version: 0.16.5(patch_hash=4ef75b2a11283c748aae5d30dc2ed2d0f1a809f45375a1a82b02a8569993d6e3)(@codemirror/autocomplete@6.20.3)(@codemirror/language@6.12.4)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.1)(@codemirror/theme-one-dark@6.1.3)(@strapi/strapi@5.63.0(d315c7a40e3b27bae273660c4313cf2f))(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.3.1(react@19.3.1))(react-router-dom@7.18.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)(styled-components@6.5.3(react-dom@19.3.1(react@19.3.1))(react@19.3.1))
       strapi-provider-upload-azure-storage:
         specifier: 3.5.0
         version: 3.5.0(supports-color@8.1.1)
@@ -45047,7 +45048,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  strapi-plugin-meilisearch@0.16.5(@codemirror/autocomplete@6.20.3)(@codemirror/language@6.12.4)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.1)(@codemirror/theme-one-dark@6.1.3)(@strapi/strapi@5.63.0(d315c7a40e3b27bae273660c4313cf2f))(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.3.1(react@19.3.1))(react-router-dom@7.18.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)(styled-components@6.5.3(react-dom@19.3.1(react@19.3.1))(react@19.3.1)):
+  strapi-plugin-meilisearch@0.16.5(patch_hash=4ef75b2a11283c748aae5d30dc2ed2d0f1a809f45375a1a82b02a8569993d6e3)(@codemirror/autocomplete@6.20.3)(@codemirror/language@6.12.4)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.1)(@codemirror/theme-one-dark@6.1.3)(@strapi/strapi@5.63.0(d315c7a40e3b27bae273660c4313cf2f))(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.3.1(react@19.3.1))(react-router-dom@7.18.5(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)(styled-components@6.5.3(react-dom@19.3.1(react@19.3.1))(react@19.3.1)):
     dependencies:
       '@strapi/design-system': 2.2.4(@codemirror/autocomplete@6.20.3)(@codemirror/language@6.12.4)(@codemirror/lint@6.9.7)(@codemirror/search@6.7.1)(@codemirror/theme-one-dark@6.1.3)(@strapi/icons@2.2.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(styled-components@6.5.3(react-dom@19.3.1(react@19.3.1))(react@19.3.1)))(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(styled-components@6.5.3(react-dom@19.3.1(react@19.3.1))(react@19.3.1))
       '@strapi/icons': 2.2.4(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(styled-components@6.5.3(react-dom@19.3.1(react@19.3.1))(react@19.3.1))

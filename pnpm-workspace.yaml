@@ -134,3 +134,4 @@ peerDependencyRules:
     zod: ">=3.25.67 <5"
 patchedDependencies:
   '@notum-cz/strapi-plugin-smart-populate@1.0.1': patches/@notum-cz__strapi-plugin-smart-populate@1.0.1.patch
+  strapi-plugin-meilisearch@0.16.5: patches/strapi-plugin-meilisearch@0.16.5.patch

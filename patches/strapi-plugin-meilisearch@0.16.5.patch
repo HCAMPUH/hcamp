@@ -1,0 +1,48 @@
+diff --git a/dist/_chunks/index-Ch44vTbr.mjs b/dist/_chunks/index-Ch44vTbr.mjs
+index 1326306791c0735239705e0d8d1151cb32871668..5293d1b175c2bc0ae1ada3306c134efc04fdec3c 100644
+--- a/dist/_chunks/index-Ch44vTbr.mjs
++++ b/dist/_chunks/index-Ch44vTbr.mjs
+@@ -208,16 +208,14 @@ const index = {
+       name
+     });
+     app.addMenuLink({
+-      to: `/plugins/${pluginId}`,
++      to: `plugins/${pluginId}`,
+       icon: PluginIcon,
+       intlLabel: {
+         id: `${pluginId}.plugin.name`,
+         defaultMessage: name
+       },
+-      Component: async () => {
+-        const { App } = await import("./App-BmwNofki.mjs");
+-        return App;
+-      },
++      Component: () =>
++        import("./App-BmwNofki.mjs").then(({ App }) => ({ default: App })),
+       permissions: PERMISSIONS.main
+     });
+   },
+diff --git a/dist/_chunks/index-DoWrawNm.js b/dist/_chunks/index-DoWrawNm.js
+index d2671f62176596052ccba527c404da208d4ca246..5c04ff3eab12a37d537e390afd7cb6c2e0386ce9 100644
+--- a/dist/_chunks/index-DoWrawNm.js
++++ b/dist/_chunks/index-DoWrawNm.js
+@@ -209,16 +209,14 @@ const index = {
+       name
+     });
+     app.addMenuLink({
+-      to: `/plugins/${pluginId}`,
++      to: `plugins/${pluginId}`,
+       icon: PluginIcon,
+       intlLabel: {
+         id: `${pluginId}.plugin.name`,
+         defaultMessage: name
+       },
+-      Component: async () => {
+-        const { App } = await Promise.resolve().then(() => require("./App-C5l1eHGS.js"));
+-        return App;
+-      },
++      Component: () =>
++        Promise.resolve().then(() => require("./App-C5l1eHGS.js")).then(({ App }) => ({ default: App })),
+       permissions: PERMISSIONS.main
+     });
+   },
