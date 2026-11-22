@@ -6,6 +6,7 @@ import { useState } from "react"
 import CKEditorRenderer from "@/components/elementary/ck-editor"
 import { Container } from "@/components/elementary/Container"
 import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"
+import Typography from "@/components/typography"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { cn } from "@/lib/styles"
 import type { PageBuilderComponentProps } from "@/types/general"
@@ -58,7 +59,14 @@ export function StrapiLeadership({
             const textContent = hasText ? (
               <div>
                 {title ? (
-                  <h2 className="text-2xl font-semibold">{title}</h2>
+                  <Typography
+                    tag="h2"
+                    variant="heading2"
+                    fontWeight="extraBold"
+                    className="!text-3xl leading-tight"
+                  >
+                    {title}
+                  </Typography>
                 ) : null}
                 {description ? (
                   <p className="text-muted-foreground mt-2 leading-relaxed">
