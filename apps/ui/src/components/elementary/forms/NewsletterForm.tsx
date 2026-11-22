@@ -81,6 +81,7 @@ function NewsletterFormFields() {
       <AppForm
         form={form}
         onSubmit={onSubmit}
+        legend={t("formLegend")}
         id={newsletterForm}
         className="w-full"
         disabled={form.formState.isSubmitting || newsletterMutation.isPending}

@@ -149,6 +149,7 @@
   },
 
   "contactForm": {
+    "formLegend": "Contact form",
     "name": "First name and last name",
     "namePlaceholder": "Kai Doe",
     "email": "Email",
@@ -163,6 +164,7 @@
   },
 
   "newsletterForm": {
+    "formLegend": "Newsletter subscription form",
     "name": "Name",
     "namePlaceholder": "Kai Doe",
     "email": "Email",
@@ -173,6 +175,7 @@
   },
 
   "pledgeForm": {
+    "formLegend": "Pledge form",
     "firstName": "First name",
     "firstNamePlaceholder": "Enter your first name",
     "lastName": "Last name",

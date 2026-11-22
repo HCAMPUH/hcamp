@@ -97,6 +97,7 @@ function ContactFormFields({
       <AppForm
         form={form}
         onSubmit={onSubmit}
+        legend={t("formLegend")}
         id={contactFormName}
         className="w-full"
         disabled={form.formState.isSubmitting || contactFormMutation.isPending}

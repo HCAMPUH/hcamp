@@ -851,6 +851,7 @@
 
 .ck-content .todo-list .todo-list__label > input {
   -webkit-appearance: none;
+  appearance: none;
   border: 0;
   display: inline-block;
   height: var(--ck-todo-list-checkmark-size);
@@ -1152,6 +1153,12 @@
 
 .ck-content figure.table.table-rounded {
   overflow: clip;
+}
+
+@supports not (overflow: clip) {
+  .ck-content figure.table.table-rounded {
+    overflow: hidden;
+  }
 }
 
 .ck-content figure.table.table-rounded > table

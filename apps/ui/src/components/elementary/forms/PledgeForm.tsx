@@ -111,6 +111,7 @@ function PledgeFormFields({ submitLabel, onSubmitted }: PledgeFormProps) {
       <AppForm
         form={form}
         onSubmit={onSubmit}
+        legend={t("formLegend")}
         id="pledge-form"
         className="flex h-full w-full flex-col [&>fieldset]:flex [&>fieldset]:h-full [&>fieldset]:flex-col"
         disabled={form.formState.isSubmitting || pledgeMutation.isPending}

@@ -116,7 +116,12 @@ export function RegisterForm() {
           <CardDescription>{t("description")}</CardDescription>
         </CardHeader>
         <CardContent>
-          <AppForm form={form} onSubmit={onSubmit} id={registerFormName}>
+          <AppForm
+            form={form}
+            onSubmit={onSubmit}
+            legend={t("header")}
+            id={registerFormName}
+          >
             <AppField name="email" type="text" required label={t("email")} />
             <AppField
               name="password"

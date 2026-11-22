@@ -89,7 +89,12 @@ function SuspensedSetPasswordForm({ code, accountActivation }: Props) {
         <CardDescription>{t("description")}</CardDescription>
       </CardHeader>
       <CardContent>
-        <AppForm form={form} onSubmit={onSubmit} id={setPasswordFormName}>
+        <AppForm
+          form={form}
+          onSubmit={onSubmit}
+          legend={t("header")}
+          id={setPasswordFormName}
+        >
           <AppField
             name="password"
             type="password"

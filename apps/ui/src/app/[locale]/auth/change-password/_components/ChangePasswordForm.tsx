@@ -81,7 +81,12 @@ export function ChangePasswordForm() {
         <CardDescription>{t("description")}</CardDescription>
       </CardHeader>
       <CardContent>
-        <AppForm form={form} onSubmit={onSubmit} id={changePasswordFormName}>
+        <AppForm
+          form={form}
+          onSubmit={onSubmit}
+          legend={t("header")}
+          id={changePasswordFormName}
+        >
           <AppField
             name="currentPassword"
             type="password"

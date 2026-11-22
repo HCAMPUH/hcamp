@@ -63,7 +63,12 @@ export function ForgotPasswordForm() {
         <CardDescription>{t("description")}</CardDescription>
       </CardHeader>
       <CardContent>
-        <AppForm form={form} onSubmit={onSubmit} id={forgotPasswordFormName}>
+        <AppForm
+          form={form}
+          onSubmit={onSubmit}
+          legend={t("header")}
+          id={forgotPasswordFormName}
+        >
           <AppField name="email" type="email" required label={t("email")} />
         </AppForm>
       </CardContent>

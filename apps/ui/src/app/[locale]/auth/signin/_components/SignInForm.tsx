@@ -106,7 +106,12 @@ function SuspensedSignInForm({ strapiUrl }: { strapiUrl?: string }) {
         <CardDescription>{t("description")}</CardDescription>
       </CardHeader>
       <CardContent>
-        <AppForm form={form} onSubmit={onSubmit} id={signInFormName}>
+        <AppForm
+          form={form}
+          onSubmit={onSubmit}
+          legend={t("header")}
+          id={signInFormName}
+        >
           <AppField
             name="email"
             type="text"

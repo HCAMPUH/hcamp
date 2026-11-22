@@ -66,6 +66,12 @@
 /* this enabled the dark mode variant */
 @custom-variant dark (&:where(.dark, .dark *));
 
+@supports not (overflow: clip) {
+  .overflow-clip {
+    overflow: hidden !important;
+  }
+}
+
 @supports not (
   (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
 ) {
