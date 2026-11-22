@@ -76,19 +76,15 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
         <div className="flex flex-col-reverse justify-between gap-4 lg:flex-row lg:items-center">
           <div>
             {footer.copyRight && (
-              <Typography className="mx-auto w-fit lg:mx-0">
+              <Typography className="mx-auto w-fit text-center lg:mx-0 lg:text-left">
                 {footer.copyRight.split("{YEAR}").join(String(currentYear))}
               </Typography>
             )}
           </div>
 
-          <div className="flex flex-col items-center sm:flex-row md:space-x-4 lg:items-end">
+          <div className="flex flex-col items-center sm:flex-row sm:justify-center md:space-x-4 lg:items-end lg:justify-start">
             {footer.links?.map((link) => (
-              <StrapiLink
-                key={link.id}
-                component={link}
-                className="w-full md:w-fit"
-              />
+              <StrapiLink key={link.id} component={link} className="w-fit" />
             ))}
           </div>
         </div>
