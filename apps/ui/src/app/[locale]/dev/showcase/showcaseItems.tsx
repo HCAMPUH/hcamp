@@ -28,6 +28,7 @@ import MockedStrapiHeadingWithCTAButton from "@/app/[locale]/dev/showcase/compon
 import MockedStrapiHero from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiHero"
 import MockedStrapiImageWithCTAButton from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiImageWithCTAButton"
 import MockedStrapiLeadership from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiLeadership"
+import MockedStrapiLawRequirements from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiLawRequirements"
 import MockedStrapiNewsletterForm from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiNewsletterForm"
 import MockedStrapiPledge from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiPledge"
 import MockedStrapiPortals from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiPortals"
@@ -156,6 +157,14 @@ export const showcaseItems = [
     component: MockedStrapiHcampHero,
     description:
       "HCAMP educational hero with highlighted heading, statistics, CTAs, and video panel",
+  },
+  {
+    id: "law-requirements",
+    label: "Law Requirements",
+    kind: "component",
+    component: MockedStrapiLawRequirements,
+    description:
+      "Hawaii concussion law summary with mandate cards and statute links",
   },
   {
     id: "hero",

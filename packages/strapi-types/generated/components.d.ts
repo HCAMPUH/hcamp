@@ -1,0 +1,1053 @@
+import type { Schema, Struct } from "@strapi/strapi"
+
+export interface ElementsFooterItem extends Struct.ComponentSchema {
+  collectionName: "components_elements_footer_items"
+  info: {
+    description: ""
+    displayName: "FooterItem"
+  }
+  attributes: {
+    links: Schema.Attribute.Component<"utilities.link", true>
+    title: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface FormsContactForm extends Struct.ComponentSchema {
+  collectionName: "components_forms_contact_forms"
+  info: {
+    displayName: "ContactForm"
+  }
+  attributes: {
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "simpleCkEditor"
+        }
+      >
+    gdpr: Schema.Attribute.Component<"utilities.link", false>
+    title: Schema.Attribute.String
+  }
+}
+
+export interface FormsNewsletterForm extends Struct.ComponentSchema {
+  collectionName: "components_forms_newsletter_forms"
+  info: {
+    displayName: "Newsletter"
+  }
+  attributes: {
+    description: Schema.Attribute.Text
+    gdpr: Schema.Attribute.Component<"utilities.link", false>
+    title: Schema.Attribute.String
+  }
+}
+
+export interface FormsPledge extends Struct.ComponentSchema {
+  collectionName: "components_forms_pledges"
+  info: {
+    displayName: "Pledge"
+    icon: "handHeart"
+  }
+  attributes: {
+    description: Schema.Attribute.Text
+    eyebrow: Schema.Attribute.String
+    submitLabel: Schema.Attribute.String & Schema.Attribute.Required
+    title: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface LayoutNavbarItem extends Struct.ComponentSchema {
+  collectionName: "components_layout_navbar_items"
+  info: {
+    displayName: "NavbarItem"
+  }
+  attributes: {
+    categoryItems: Schema.Attribute.Component<"utilities.link", true>
+    isCategoryLink: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>
+    label: Schema.Attribute.String
+    link: Schema.Attribute.Component<"utilities.link", false>
+  }
+}
+
+export interface LayoutNavbarLogoRow extends Struct.ComponentSchema {
+  collectionName: "components_layout_navbar_logo_rows"
+  info: {
+    description: "Optional animated image row displayed beneath the navbar."
+    displayName: "NavbarLogoRow"
+    icon: "images"
+  }
+  attributes: {
+    logos: Schema.Attribute.Component<"utilities.basic-image", true>
+    missionTitle: Schema.Attribute.String
+    speed: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 25
+          min: 1
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<5>
+  }
+}
+
+export interface SectionsAbout extends Struct.ComponentSchema {
+  collectionName: "components_sections_abouts"
+  info: {
+    displayName: "About"
+    icon: "information"
+  }
+  attributes: {
+    backgroundColor: Schema.Attribute.String &
+      Schema.Attribute.CustomField<"plugin::color-picker.color">
+    description: Schema.Attribute.Text & Schema.Attribute.Required
+    eyebrow: Schema.Attribute.String & Schema.Attribute.Required
+    institutionDescription: Schema.Attribute.Text
+    institutionEyebrow: Schema.Attribute.String
+    institutionLogo: Schema.Attribute.Component<"utilities.basic-image", false>
+    partners: Schema.Attribute.Component<"shared.about-partner", true>
+    partnersEyebrow: Schema.Attribute.String
+    resources: Schema.Attribute.Component<"shared.about-resource", true>
+    title: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SectionsAccordion extends Struct.ComponentSchema {
+  collectionName: "components_sections_accordions"
+  info: {
+    displayName: "Accordion"
+    icon: "list"
+  }
+  attributes: {
+    items: Schema.Attribute.Component<"utilities.accordions", true>
+    title: Schema.Attribute.String
+  }
+}
+
+export interface SectionsAnimatedLogoRow extends Struct.ComponentSchema {
+  collectionName: "components_sections_animated_logo_rows"
+  info: {
+    description: ""
+    displayName: "AnimatedLogoRow"
+  }
+  attributes: {
+    logos: Schema.Attribute.Component<"utilities.basic-image", true>
+    title: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+  }
+}
+
+export interface SectionsAnimatedPledge extends Struct.ComponentSchema {
+  collectionName: "components_sections_animated_pledges"
+  info: {
+    description: "A scrolling ticker of recent athlete pledges."
+    displayName: "AnimatedPledge"
+    icon: "award"
+  }
+  attributes: {
+    backgroundColor: Schema.Attribute.String &
+      Schema.Attribute.CustomField<"plugin::color-picker.color">
+    description: Schema.Attribute.Text
+    recordsToShow: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 100
+          min: 1
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<30>
+    speed: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 100
+          min: 1
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<35>
+    title: Schema.Attribute.String & Schema.Attribute.Required
+    titleLink: Schema.Attribute.Component<"utilities.link", false>
+  }
+}
+
+export interface SectionsCard extends Struct.ComponentSchema {
+  collectionName: "components_sections_cards"
+  info: {
+    displayName: "Card"
+    icon: "cube"
+  }
+  attributes: {
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    description: Schema.Attribute.String
+    title: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SectionsCarousel extends Struct.ComponentSchema {
+  collectionName: "components_sections_carousels"
+  info: {
+    description: ""
+    displayName: "Carousel"
+  }
+  attributes: {
+    images: Schema.Attribute.Component<"utilities.image-with-link", true>
+    radius: Schema.Attribute.Enumeration<["sm", "md", "lg", "xl", "full"]>
+  }
+}
+
+export interface SectionsCtaBanner extends Struct.ComponentSchema {
+  collectionName: "components_sections_cta_banners"
+  info: {
+    displayName: "CTABanner"
+  }
+  attributes: {
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    features: Schema.Attribute.Component<
+      "shared.image-with-title-and-description",
+      true
+    >
+    image: Schema.Attribute.Component<"utilities.basic-image", false>
+    links: Schema.Attribute.Component<"utilities.link", true>
+    title: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+  }
+}
+
+export interface SectionsDialog extends Struct.ComponentSchema {
+  collectionName: "components_sections_dialogs"
+  info: {
+    displayName: "Dialog"
+    icon: "discuss"
+  }
+  attributes: {
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    description: Schema.Attribute.String
+    title: Schema.Attribute.String & Schema.Attribute.Required
+    triggerLabel: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SectionsEventsAndResearch extends Struct.ComponentSchema {
+  collectionName: "components_sections_events_and_researches"
+  info: {
+    displayName: "Events & Research"
+    icon: "calendar"
+  }
+  attributes: {
+    eventHighlightColor: Schema.Attribute.String &
+      Schema.Attribute.CustomField<"plugin::color-picker.color">
+    eventHighlightDescription: Schema.Attribute.Text
+    eventHighlightLabel: Schema.Attribute.String
+    eventHighlightPost: Schema.Attribute.Relation<"oneToOne", "api::post.post">
+    eventHighlightTitle: Schema.Attribute.String
+    events: Schema.Attribute.Relation<"manyToMany", "api::post.post">
+    eventsDescription: Schema.Attribute.Text
+    eventsEyebrow: Schema.Attribute.String & Schema.Attribute.Required
+    eventsTitle: Schema.Attribute.String & Schema.Attribute.Required
+    researchDescription: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    researchEyebrow: Schema.Attribute.String & Schema.Attribute.Required
+    researchItems: Schema.Attribute.Component<"shared.research-item", true>
+    researchTitle: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SectionsFaq extends Struct.ComponentSchema {
+  collectionName: "components_sections_faqs"
+  info: {
+    description: ""
+    displayName: "Faq"
+  }
+  attributes: {
+    accordions: Schema.Attribute.Component<"utilities.accordions", true>
+    subTitle: Schema.Attribute.String
+    title: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SectionsFeaturesList extends Struct.ComponentSchema {
+  collectionName: "components_sections_features_lists"
+  info: {
+    displayName: "FeaturesList"
+  }
+  attributes: {
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    features: Schema.Attribute.Component<
+      "shared.image-with-title-and-description",
+      true
+    >
+    listStyle: Schema.Attribute.Enumeration<["boxGrid", "grid", "list"]> &
+      Schema.Attribute.DefaultTo<"list">
+    mainImage: Schema.Attribute.Component<"shared.image-with-config", false>
+    title: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+  }
+}
+
+export interface SectionsHcampHero extends Struct.ComponentSchema {
+  collectionName: "components_sections_hcamp_heroes"
+  info: {
+    description: "HCAMP educational hero with statistics and video call to action"
+    displayName: "HCAMP-Hero"
+    icon: "play"
+  }
+  attributes: {
+    badge: Schema.Attribute.String
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    figures: Schema.Attribute.Component<"shared.figure", true>
+    links: Schema.Attribute.Component<"utilities.link", true>
+    title: Schema.Attribute.RichText &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    videoLabel: Schema.Attribute.String
+    videoTitle: Schema.Attribute.String
+    videoUrl: Schema.Attribute.String
+  }
+}
+
+export interface SectionsHeadingWithCtaButton extends Struct.ComponentSchema {
+  collectionName: "components_sections_heading_with_cta_buttons"
+  info: {
+    description: ""
+    displayName: "HeadingWithCTAButton"
+  }
+  attributes: {
+    cta: Schema.Attribute.Component<"utilities.link", false>
+    subText: Schema.Attribute.String
+    title: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SectionsHero extends Struct.ComponentSchema {
+  collectionName: "components_sections_heroes"
+  info: {
+    description: ""
+    displayName: "Hero"
+  }
+  attributes: {
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    links: Schema.Attribute.Component<"utilities.link", true>
+    note: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    tag: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    title: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+  }
+}
+
+export interface SectionsImageWithCtaButton extends Struct.ComponentSchema {
+  collectionName: "components_sections_image_with_cta_buttons"
+  info: {
+    description: ""
+    displayName: "ImageWithCTAButton"
+  }
+  attributes: {
+    image: Schema.Attribute.Component<"utilities.basic-image", false>
+    link: Schema.Attribute.Component<"utilities.link", false>
+    subText: Schema.Attribute.Text
+    title: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SectionsLawRequirements extends Struct.ComponentSchema {
+  collectionName: "components_sections_law_requirements"
+  info: {
+    description: "Hawaii concussion law requirements with three highlighted mandates and calls to action"
+    displayName: "LawRequirements"
+    icon: "shield"
+  }
+  attributes: {
+    badge: Schema.Attribute.String
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    links: Schema.Attribute.Component<"utilities.link", true>
+    requirements: Schema.Attribute.Component<
+      "shared.image-with-title-and-description",
+      true
+    >
+    title: Schema.Attribute.RichText &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+  }
+}
+
+export interface SectionsLeadership extends Struct.ComponentSchema {
+  collectionName: "components_sections_leaderships"
+  info: {
+    displayName: "Leadership"
+    icon: "user"
+  }
+  attributes: {
+    categories: Schema.Attribute.Component<"shared.leadership-category", true>
+  }
+}
+
+export interface SectionsPortals extends Struct.ComponentSchema {
+  collectionName: "components_sections_portals"
+  info: {
+    displayName: "Portals"
+    icon: "layers"
+  }
+  attributes: {
+    description: Schema.Attribute.Text & Schema.Attribute.Required
+    eyebrow: Schema.Attribute.String & Schema.Attribute.Required
+    roles: Schema.Attribute.Component<"shared.portal-role", true>
+    title: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SectionsPostList extends Struct.ComponentSchema {
+  collectionName: "components_sections_post_lists"
+  info: {
+    displayName: "Post List"
+    icon: "bulletList"
+  }
+  attributes: {
+    posts: Schema.Attribute.Relation<"manyToMany", "api::post.post">
+  }
+}
+
+export interface SectionsStatistics extends Struct.ComponentSchema {
+  collectionName: "components_sections_statistics"
+  info: {
+    displayName: "Statistics"
+  }
+  attributes: {
+    figures: Schema.Attribute.Component<"shared.figure", true>
+  }
+}
+
+export interface SectionsTable extends Struct.ComponentSchema {
+  collectionName: "components_sections_tables"
+  info: {
+    displayName: "Table"
+    icon: "table"
+  }
+  attributes: {
+    firstColumnLabel: Schema.Attribute.String & Schema.Attribute.Required
+    rows: Schema.Attribute.Component<"shared.table-row", true>
+    secondColumnLabel: Schema.Attribute.String & Schema.Attribute.Required
+    title: Schema.Attribute.String
+  }
+}
+
+export interface SectionsTabs extends Struct.ComponentSchema {
+  collectionName: "components_sections_tabs"
+  info: {
+    displayName: "Tabs"
+    icon: "bulletList"
+  }
+  attributes: {
+    tabs: Schema.Attribute.Component<"shared.tab-item", true>
+    title: Schema.Attribute.String
+  }
+}
+
+export interface SectionsTooltip extends Struct.ComponentSchema {
+  collectionName: "components_sections_tooltips"
+  info: {
+    displayName: "Tooltip"
+    icon: "information"
+  }
+  attributes: {
+    content: Schema.Attribute.String & Schema.Attribute.Required
+    triggerLabel: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SeoUtilitiesSeo extends Struct.ComponentSchema {
+  collectionName: "components_seo_utilities_seos"
+  info: {
+    description: ""
+    displayName: "Seo"
+    icon: "search"
+  }
+  attributes: {
+    applicationName: Schema.Attribute.String
+    canonicalUrl: Schema.Attribute.String
+    keywords: Schema.Attribute.Text
+    metaDescription: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 160
+      }>
+    metaImage: Schema.Attribute.Media<"images">
+    metaRobots: Schema.Attribute.Enumeration<
+      [
+        "all",
+        "index",
+        "index,follow",
+        "noindex",
+        "noindex,follow",
+        "noindex,nofollow",
+        "none",
+        "noarchive",
+        "nosnippet",
+        "max-snippet",
+      ]
+    > &
+      Schema.Attribute.DefaultTo<"all">
+    metaTitle: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 60
+      }>
+    og: Schema.Attribute.Component<"seo-utilities.seo-og", false>
+    structuredData: Schema.Attribute.JSON
+    twitter: Schema.Attribute.Component<"seo-utilities.seo-twitter", false>
+  }
+}
+
+export interface SeoUtilitiesSeoOg extends Struct.ComponentSchema {
+  collectionName: "components_seo_utilities_seo_ogs"
+  info: {
+    displayName: "SeoOg"
+    icon: "oneToMany"
+  }
+  attributes: {
+    description: Schema.Attribute.String
+    image: Schema.Attribute.Media<"images">
+    siteName: Schema.Attribute.String
+    title: Schema.Attribute.String
+    type: Schema.Attribute.Enumeration<["website", "article"]> &
+      Schema.Attribute.DefaultTo<"website">
+    url: Schema.Attribute.String
+  }
+}
+
+export interface SeoUtilitiesSeoTwitter extends Struct.ComponentSchema {
+  collectionName: "components_seo_utilities_seo_twitters"
+  info: {
+    displayName: "SeoTwitter"
+    icon: "oneToMany"
+  }
+  attributes: {
+    card: Schema.Attribute.String
+    creator: Schema.Attribute.String
+    creatorId: Schema.Attribute.String
+    description: Schema.Attribute.String
+    images: Schema.Attribute.Media<"images", true>
+    siteId: Schema.Attribute.String
+    title: Schema.Attribute.String
+  }
+}
+
+export interface SeoUtilitiesSocialIcons extends Struct.ComponentSchema {
+  collectionName: "components_seo_utilities_social_icons"
+  info: {
+    displayName: "SocialIcons"
+  }
+  attributes: {
+    socials: Schema.Attribute.Component<"utilities.image-with-link", true>
+    title: Schema.Attribute.String
+  }
+}
+
+export interface SharedAboutPartner extends Struct.ComponentSchema {
+  collectionName: "components_shared_about_partners"
+  info: {
+    displayName: "About Partner"
+  }
+  attributes: {
+    link: Schema.Attribute.Component<"utilities.link", false>
+    name: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SharedAboutResource extends Struct.ComponentSchema {
+  collectionName: "components_shared_about_resources"
+  info: {
+    displayName: "About Resource"
+  }
+  attributes: {
+    description: Schema.Attribute.Text & Schema.Attribute.Required
+    link: Schema.Attribute.Component<"utilities.link", false>
+    title: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SharedFigure extends Struct.ComponentSchema {
+  collectionName: "components_shared_figures"
+  info: {
+    displayName: "Figure"
+  }
+  attributes: {
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    number: Schema.Attribute.BigInteger
+    prefix: Schema.Attribute.String
+    suffix: Schema.Attribute.String
+  }
+}
+
+export interface SharedImageWithConfig extends Struct.ComponentSchema {
+  collectionName: "components_shared_image_with_configs"
+  info: {
+    displayName: "ImageWithConfig"
+  }
+  attributes: {
+    image: Schema.Attribute.Component<"utilities.basic-image", false>
+    position: Schema.Attribute.Enumeration<["left", "right"]>
+  }
+}
+
+export interface SharedImageWithTitleAndDescription
+  extends Struct.ComponentSchema {
+  collectionName: "components_shared_image_with_title_and_descriptions"
+  info: {
+    displayName: "ImageWithTitleAndDescription"
+  }
+  attributes: {
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    image: Schema.Attribute.Component<"utilities.basic-image", false>
+    title: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+  }
+}
+
+export interface SharedLeadershipCategory extends Struct.ComponentSchema {
+  collectionName: "components_shared_leadership_categories"
+  info: {
+    displayName: "Leadership Category"
+  }
+  attributes: {
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    description: Schema.Attribute.Text
+    image: Schema.Attribute.Component<"utilities.basic-image", false>
+    label: Schema.Attribute.String & Schema.Attribute.Required
+    title: Schema.Attribute.String
+  }
+}
+
+export interface SharedPortalCourse extends Struct.ComponentSchema {
+  collectionName: "components_shared_portal_courses"
+  info: {
+    displayName: "Portal Course"
+  }
+  attributes: {
+    audience: Schema.Attribute.String
+    link: Schema.Attribute.Component<"utilities.link", false>
+    title: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SharedPortalResponsibility extends Struct.ComponentSchema {
+  collectionName: "components_shared_portal_responsibilities"
+  info: {
+    displayName: "Portal Responsibility"
+  }
+  attributes: {
+    text: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SharedPortalRole extends Struct.ComponentSchema {
+  collectionName: "components_shared_portal_roles"
+  info: {
+    displayName: "Portal Role"
+  }
+  attributes: {
+    additionalActions: Schema.Attribute.Component<"utilities.link", true>
+    category: Schema.Attribute.String
+    courses: Schema.Attribute.Component<"shared.portal-course", true>
+    coursesHeading: Schema.Attribute.String
+    coursesImage: Schema.Attribute.Component<"utilities.basic-image", false>
+    coursesImageLink: Schema.Attribute.Component<"utilities.link", false>
+    coursesLabel: Schema.Attribute.String
+    description: Schema.Attribute.Text & Schema.Attribute.Required
+    icon: Schema.Attribute.Enumeration<
+      ["users", "megaphone", "trophy", "book-open", "flag", "heart-pulse"]
+    > &
+      Schema.Attribute.DefaultTo<"users">
+    label: Schema.Attribute.String & Schema.Attribute.Required
+    primaryAction: Schema.Attribute.Component<"utilities.link", false>
+    responsibilities: Schema.Attribute.Component<
+      "shared.portal-responsibility",
+      true
+    >
+    responsibilityHeading: Schema.Attribute.String
+    secondaryAction: Schema.Attribute.Component<"utilities.link", false>
+    title: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SharedResearchItem extends Struct.ComponentSchema {
+  collectionName: "components_shared_research_items"
+  info: {
+    displayName: "Research Item"
+  }
+  attributes: {
+    description: Schema.Attribute.Component<
+      "utilities.ck-editor-content",
+      false
+    >
+    journal: Schema.Attribute.String & Schema.Attribute.Required
+    link: Schema.Attribute.Component<"utilities.link", false>
+    researchItemEyebrow: Schema.Attribute.String
+    title: Schema.Attribute.String & Schema.Attribute.Required
+    year: Schema.Attribute.Integer & Schema.Attribute.Required
+  }
+}
+
+export interface SharedTabItem extends Struct.ComponentSchema {
+  collectionName: "components_shared_tab_items"
+  info: {
+    displayName: "Tab Item"
+  }
+  attributes: {
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    label: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface SharedTableRow extends Struct.ComponentSchema {
+  collectionName: "components_shared_table_rows"
+  info: {
+    displayName: "Table Row"
+  }
+  attributes: {
+    label: Schema.Attribute.String & Schema.Attribute.Required
+    value: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
+export interface UtilitiesAccordions extends Struct.ComponentSchema {
+  collectionName: "components_utilities_accordions"
+  info: {
+    description: ""
+    displayName: "Accordions"
+  }
+  attributes: {
+    answer: Schema.Attribute.RichText &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    question: Schema.Attribute.String & Schema.Attribute.Required
+    questionBackgroundColor: Schema.Attribute.String &
+      Schema.Attribute.CustomField<"plugin::color-picker.color">
+  }
+}
+
+export interface UtilitiesBasicImage extends Struct.ComponentSchema {
+  collectionName: "components_utilities_basic_images"
+  info: {
+    displayName: "BasicImage"
+  }
+  attributes: {
+    alt: Schema.Attribute.String
+    decorative: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>
+    fallbackSrc: Schema.Attribute.String
+    height: Schema.Attribute.Integer
+    media: Schema.Attribute.Media<"images" | "videos"> &
+      Schema.Attribute.Required
+    width: Schema.Attribute.Integer
+  }
+}
+
+export interface UtilitiesCkEditorContent extends Struct.ComponentSchema {
+  collectionName: "components_utilities_ck_editor_contents"
+  info: {
+    displayName: "CkEditorContent"
+  }
+  attributes: {
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+  }
+}
+
+export interface UtilitiesCkEditorText extends Struct.ComponentSchema {
+  collectionName: "components_utilities_ck_editor_texts"
+  info: {
+    displayName: "CkEditorText"
+  }
+  attributes: {
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "simpleCkEditor"
+        }
+      >
+  }
+}
+
+export interface UtilitiesImageWithLink extends Struct.ComponentSchema {
+  collectionName: "components_utilities_image_with_links"
+  info: {
+    description: ""
+    displayName: "ImageWithLink"
+  }
+  attributes: {
+    image: Schema.Attribute.Component<"utilities.basic-image", false>
+    link: Schema.Attribute.Component<"utilities.link", false>
+  }
+}
+
+export interface UtilitiesLink extends Struct.ComponentSchema {
+  collectionName: "components_utilities_links"
+  info: {
+    displayName: "Link"
+  }
+  attributes: {
+    decorations: Schema.Attribute.Component<"utilities.link-decorations", false>
+    href: Schema.Attribute.String & Schema.Attribute.Required
+    label: Schema.Attribute.String & Schema.Attribute.Required
+    newTab: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>
+    page: Schema.Attribute.Relation<"oneToOne", "api::page.page">
+    post: Schema.Attribute.Relation<"oneToOne", "api::post.post">
+    type: Schema.Attribute.Enumeration<["external", "page", "post"]> &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<"page">
+  }
+}
+
+export interface UtilitiesLinkDecorations extends Struct.ComponentSchema {
+  collectionName: "components_utilities_link_decorations"
+  info: {
+    displayName: "LinkDecorations"
+  }
+  attributes: {
+    disableAnimations: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>
+    hasIcons: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>
+    leftIcon: Schema.Attribute.Component<"utilities.basic-image", false>
+    rightIcon: Schema.Attribute.Component<"utilities.basic-image", false>
+    size: Schema.Attribute.Enumeration<
+      ["default", "xs", "sm", "lg", "icon", "icon-xs", "icon-sm", "icon-lg"]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<"default">
+    variant: Schema.Attribute.Enumeration<
+      ["default", "destructive", "outline", "secondary", "ghost", "link"]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<"link">
+  }
+}
+
+export interface UtilitiesLinksWithTitle extends Struct.ComponentSchema {
+  collectionName: "components_utilities_links_with_titles"
+  info: {
+    displayName: "LinksWithTitle"
+  }
+  attributes: {
+    links: Schema.Attribute.Component<"utilities.link", true>
+    title: Schema.Attribute.String
+  }
+}
+
+export interface UtilitiesText extends Struct.ComponentSchema {
+  collectionName: "components_utilities_texts"
+  info: {
+    displayName: "Text"
+  }
+  attributes: {
+    text: Schema.Attribute.String
+  }
+}
+
+export interface UtilitiesTipTapRichText extends Struct.ComponentSchema {
+  collectionName: "components_utilities_tip_tap_rich_texts"
+  info: {
+    displayName: "TipTapRichText"
+    icon: "layer"
+  }
+  attributes: {
+    content: Schema.Attribute.Text &
+      Schema.Attribute.CustomField<
+        "plugin::tiptap-editor.RichText",
+        {
+          preset: "everything"
+        }
+      >
+  }
+}
+
+declare module "@strapi/strapi" {
+  export namespace Public {
+    export interface ComponentSchemas {
+      "elements.footer-item": ElementsFooterItem
+      "forms.contact-form": FormsContactForm
+      "forms.newsletter-form": FormsNewsletterForm
+      "forms.pledge": FormsPledge
+      "layout.navbar-item": LayoutNavbarItem
+      "layout.navbar-logo-row": LayoutNavbarLogoRow
+      "sections.about": SectionsAbout
+      "sections.accordion": SectionsAccordion
+      "sections.animated-logo-row": SectionsAnimatedLogoRow
+      "sections.animated-pledge": SectionsAnimatedPledge
+      "sections.card": SectionsCard
+      "sections.carousel": SectionsCarousel
+      "sections.cta-banner": SectionsCtaBanner
+      "sections.dialog": SectionsDialog
+      "sections.events-and-research": SectionsEventsAndResearch
+      "sections.faq": SectionsFaq
+      "sections.features-list": SectionsFeaturesList
+      "sections.hcamp-hero": SectionsHcampHero
+      "sections.heading-with-cta-button": SectionsHeadingWithCtaButton
+      "sections.hero": SectionsHero
+      "sections.image-with-cta-button": SectionsImageWithCtaButton
+      "sections.law-requirements": SectionsLawRequirements
+      "sections.leadership": SectionsLeadership
+      "sections.portals": SectionsPortals
+      "sections.post-list": SectionsPostList
+      "sections.statistics": SectionsStatistics
+      "sections.table": SectionsTable
+      "sections.tabs": SectionsTabs
+      "sections.tooltip": SectionsTooltip
+      "seo-utilities.seo": SeoUtilitiesSeo
+      "seo-utilities.seo-og": SeoUtilitiesSeoOg
+      "seo-utilities.seo-twitter": SeoUtilitiesSeoTwitter
+      "seo-utilities.social-icons": SeoUtilitiesSocialIcons
+      "shared.about-partner": SharedAboutPartner
+      "shared.about-resource": SharedAboutResource
+      "shared.figure": SharedFigure
+      "shared.image-with-config": SharedImageWithConfig
+      "shared.image-with-title-and-description": SharedImageWithTitleAndDescription
+      "shared.leadership-category": SharedLeadershipCategory
+      "shared.portal-course": SharedPortalCourse
+      "shared.portal-responsibility": SharedPortalResponsibility
+      "shared.portal-role": SharedPortalRole
+      "shared.research-item": SharedResearchItem
+      "shared.tab-item": SharedTabItem
+      "shared.table-row": SharedTableRow
+      "utilities.accordions": UtilitiesAccordions
+      "utilities.basic-image": UtilitiesBasicImage
+      "utilities.ck-editor-content": UtilitiesCkEditorContent
+      "utilities.ck-editor-text": UtilitiesCkEditorText
+      "utilities.image-with-link": UtilitiesImageWithLink
+      "utilities.link": UtilitiesLink
+      "utilities.link-decorations": UtilitiesLinkDecorations
+      "utilities.links-with-title": UtilitiesLinksWithTitle
+      "utilities.text": UtilitiesText
+      "utilities.tip-tap-rich-text": UtilitiesTipTapRichText
+    }
+  }
+}

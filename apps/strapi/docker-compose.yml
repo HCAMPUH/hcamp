@@ -14,7 +14,7 @@ services:
       - data:/var/lib/postgresql/data
       # - ./data:/var/lib/postgresql/data # Bind mount option
     ports:
-      - "127.0.0.1:5432:5432" # Safe for local host access (Strapi on host)
+      - "127.0.0.1:55432:5432" # Safe for local host access (Strapi on host)
     networks:
       - db_network
 

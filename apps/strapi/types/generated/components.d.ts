@@ -427,6 +427,38 @@ export interface SectionsImageWithCtaButton extends Struct.ComponentSchema {
   }
 }
 
+export interface SectionsLawRequirements extends Struct.ComponentSchema {
+  collectionName: "components_sections_law_requirements"
+  info: {
+    description: "Hawaii concussion law requirements with three highlighted mandates and calls to action"
+    displayName: "LawRequirements"
+    icon: "shield"
+  }
+  attributes: {
+    badge: Schema.Attribute.String
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+    links: Schema.Attribute.Component<"utilities.link", true>
+    requirements: Schema.Attribute.Component<
+      "shared.image-with-title-and-description",
+      true
+    >
+    title: Schema.Attribute.RichText &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<
+        "plugin::ckeditor5.CKEditor",
+        {
+          preset: "defaultCkEditor"
+        }
+      >
+  }
+}
+
 export interface SectionsLeadership extends Struct.ComponentSchema {
   collectionName: "components_sections_leaderships"
   info: {
@@ -982,6 +1014,7 @@ declare module "@strapi/strapi" {
       "sections.heading-with-cta-button": SectionsHeadingWithCtaButton
       "sections.hero": SectionsHero
       "sections.image-with-cta-button": SectionsImageWithCtaButton
+      "sections.law-requirements": SectionsLawRequirements
       "sections.leadership": SectionsLeadership
       "sections.portals": SectionsPortals
       "sections.post-list": SectionsPostList
