@@ -86,7 +86,8 @@
         "sections.tooltip",
         "sections.accordion",
         "sections.portals",
-        "sections.about"
+        "sections.about",
+        "sections.leadership"
       ]
     },
     "children": {

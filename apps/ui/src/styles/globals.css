@@ -66,6 +66,28 @@
 /* this enabled the dark mode variant */
 @custom-variant dark (&:where(.dark, .dark *));
 
+@supports not (overflow: clip) {
+  .overflow-clip {
+    overflow: hidden !important;
+  }
+}
+
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  .backdrop-filter-fallback-background {
+    background-color: var(--color-background) !important;
+  }
+
+  .backdrop-filter-fallback-about {
+    background-color: rgb(255 255 255 / 0.2) !important;
+  }
+
+  .backdrop-filter-fallback-video {
+    background-color: rgb(0 0 0 / 0.72) !important;
+  }
+}
+
 @keyframes scrollHorizontal {
   to {
     transform: translate(calc(-50% - 1.75rem));
@@ -104,6 +126,11 @@
   body {
     @apply text-foreground;
   }
+}
+
+body:not(.recaptcha-active) .grecaptcha-badge {
+  display: none !important;
+  visibility: hidden !important;
 }
 
 @keyframes marquee {

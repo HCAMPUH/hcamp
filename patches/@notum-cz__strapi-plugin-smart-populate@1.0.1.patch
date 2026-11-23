@@ -1,0 +1,26 @@
+diff --git a/dist/server/index.js b/dist/server/index.js
+index 8ebb5077e6f3b4f9190b2d00647a8aac111e3d3d..49753ea828c7d1a0eb4b9c863eabef5dfd38c2c4 100644
+--- a/dist/server/index.js
++++ b/dist/server/index.js
+@@ -3,7 +3,7 @@ Object.defineProperties(exports, { __esModule: { value: true }, [Symbol.toString
+ const PLUGIN_ID = "smart-populate";
+ const DEFAULT_ACTIONS = ["findMany", "findOne", "findFirst"];
+ const getConfigValue = (strapi, key, defaultValue) => {
+-  const value = strapi.config.get(`plugin.${PLUGIN_ID}.${key}`);
++  const value = strapi.config.get(`plugin::${PLUGIN_ID}.${key}`);
+   return value === void 0 ? defaultValue : value;
+ };
+ const getPluginConfig = (strapi) => ({
+diff --git a/dist/server/index.mjs b/dist/server/index.mjs
+index 667c009ae484e78ad63bd773d2a42dd89eb12e69..9f1df6bef788bff46d0fec655bf0aa728785915e 100644
+--- a/dist/server/index.mjs
++++ b/dist/server/index.mjs
+@@ -1,7 +1,7 @@
+ const PLUGIN_ID = "smart-populate";
+ const DEFAULT_ACTIONS = ["findMany", "findOne", "findFirst"];
+ const getConfigValue = (strapi, key, defaultValue) => {
+-  const value = strapi.config.get(`plugin.${PLUGIN_ID}.${key}`);
++  const value = strapi.config.get(`plugin::${PLUGIN_ID}.${key}`);
+   return value === void 0 ? defaultValue : value;
+ };
+ const getPluginConfig = (strapi) => ({

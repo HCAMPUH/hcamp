@@ -57,7 +57,7 @@ export function NavbarLogoRow({
         </NavbarLogoRowAnimation>
       ) : null}
       {missionTitle ? (
-        <p className="bg-background/60 text-primary px-6 py-2 text-center text-sm font-medium backdrop-blur-md">
+        <p className="backdrop-filter-fallback-background bg-background/60 text-primary px-6 py-2 text-center text-sm font-medium backdrop-blur-md">
           {missionTitle}
         </p>
       ) : null}

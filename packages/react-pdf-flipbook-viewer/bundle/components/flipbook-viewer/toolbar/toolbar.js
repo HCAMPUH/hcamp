@@ -1,13 +1,19 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { Button } from '../../button'; // Assuming this path is correct
 import { ChevronLeft, ChevronRight, Maximize, Minimize } from 'lucide-react';
 import Zoom from './zoom'; // Assuming this component is compact
 import SliderNav from './slider-nav/slider-nav'; // Assuming this component is compact or its height is managed
 import useScreenSize from './../../../hooks/use-screensize';
 import Share from '../../share'; // Uses SimpleDropdown with z-index: 50
+import { setupToolbarActivity } from './toolbar-activity';
 import React from 'react';
 const Toolbar = ({ flipbookRef, containerRef, screenfull, pdfDetails, viewerStates, shareUrl, disableShare, setViewerStates, onExit, mobileOnly }) => {
     const { width: screenWidth } = useScreenSize();
+    const toolbarRef = useRef(null);
+    useEffect(() => {
+        if (!containerRef.current || !toolbarRef.current) return;
+        return setupToolbarActivity(containerRef.current, toolbarRef.current);
+    }, [containerRef]);
     // Determine current page display string
     const isTwoPageSpread = viewerStates.currentPageIndex > 0 && // Not the very first page (which is often a single cover)
         (viewerStates.currentPageIndex + 1) < pdfDetails.totalPages && // Not the very last page if it's single
@@ -53,7 +59,7 @@ const Toolbar = ({ flipbookRef, containerRef, screenfull, pdfDetails, viewerStat
     }, [flipbookRef]); // Dependency: flipbookRef
     const canFlipPrev = viewerStates.currentPageIndex > 0;
     const canFlipNext = viewerStates.currentPageIndex < pdfDetails.totalPages - 1;
-    return (React.createElement("div", { className: "fixed bottom-0 left-0 right-0 w-full bg-background shadow-lg z-40 p-2 print:hidden" },
+    return (React.createElement("div", { ref: toolbarRef, className: "fixed bottom-0 left-0 right-0 w-full bg-background shadow-lg z-40 p-2 print:hidden" },
         React.createElement("div", { className: "mb-1" },
             React.createElement(SliderNav, { flipbookRef: flipbookRef, pdfDetails: pdfDetails, viewerStates: viewerStates, setViewerStates: setViewerStates })),
         React.createElement("div", { className: "flex items-center justify-between gap-x-1 sm:gap-x-2" },

@@ -44,13 +44,13 @@ export async function StrapiAnimatedPledge({
             backgroundColor: component.backgroundColor ?? undefined,
           }}
         >
-          <div className="mb-2 flex items-center gap-4 border-b border-white/10 pb-2">
-            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-red-300 bg-red-50 px-3 py-1 text-xs font-semibold tracking-[0.12em] text-red-900 uppercase dark:border-red-700 dark:bg-red-950/40 dark:text-red-100">
+          <div className="mb-2 flex min-w-0 flex-wrap items-center gap-4 border-b border-white/10 pb-2">
+            <span className="border-brand-amber-border bg-brand-amber-background text-brand-amber-foreground inline-flex max-w-full min-w-0 items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold break-words whitespace-normal uppercase">
               <Award className="size-3.5" aria-hidden="true" />
               {component.titleLink ? (
                 <StrapiLink
                   component={component.titleLink}
-                  className="inline-flex !h-auto !min-h-0 !gap-0 !rounded-none !px-0 !py-0 text-xs !leading-none text-red-900 no-underline hover:text-red-900 dark:text-red-100 dark:hover:text-red-100"
+                  className="text-brand-amber-foreground hover:text-brand-amber-foreground dark:text-brand-amber-foreground dark:hover:text-brand-amber-foreground inline-flex !h-auto !min-h-0 max-w-full min-w-0 !gap-0 !rounded-none !px-0 !py-0 text-xs !leading-tight break-words !whitespace-normal no-underline"
                 >
                   {component.title}
                 </StrapiLink>

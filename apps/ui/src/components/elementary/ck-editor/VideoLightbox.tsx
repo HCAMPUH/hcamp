@@ -127,7 +127,7 @@ export function VideoLightbox({ children }: { children: ReactNode }) {
       >
         <DialogContent
           className="aspect-video w-[96vw] max-w-[96vw] overflow-hidden rounded-xl border-0 bg-black p-0 shadow-none sm:w-[min(90vw,80rem)] sm:max-w-[80rem]"
-          overlayClassName="bg-white bg-[radial-gradient(ellipse_at_center,transparent_0%,rgb(0_0_0/0.4)_45%,rgb(0_0_0/0.88)_100%)] backdrop-blur-[20px]"
+          overlayClassName="backdrop-filter-fallback-video bg-white bg-[radial-gradient(ellipse_at_center,transparent_0%,rgb(0_0_0/0.4)_45%,rgb(0_0_0/0.88)_100%)] backdrop-blur-[20px]"
           showCloseButton={false}
         >
           <DialogTitle className="sr-only">Video player</DialogTitle>

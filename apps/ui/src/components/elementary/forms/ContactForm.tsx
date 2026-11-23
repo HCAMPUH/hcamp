@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
+import { ReCaptchaProvider, useReCaptcha } from "next-recaptcha-v3"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
@@ -13,6 +14,13 @@ import { AppForm } from "@/components/forms/AppForm"
 import { AppTextArea } from "@/components/forms/AppTextArea"
 import { Button } from "@/components/ui/button"
 import { useContactForm } from "@/hooks/useAppForm"
+import { useRecaptchaBadgeVisibility } from "@/hooks/useRecaptchaBadgeVisibility"
+import { getEnvVar } from "@/lib/env-vars"
+import {
+  sanitizeEmailInput,
+  sanitizeMessageInput,
+  sanitizeNameInput,
+} from "@/lib/sanitize"
 
 export function ContactForm({
   gdpr,
@@ -20,6 +28,31 @@ export function ContactForm({
   gdpr?: { href?: string; label?: string; newTab?: boolean }
 }>) {
   const t = useTranslations("contactForm")
+
+  const siteKey = getEnvVar("NEXT_PUBLIC_RECAPTCHA_SITE_KEY")
+  if (!siteKey) {
+    return (
+      <p className="text-center text-red-500" role="alert">
+        {t("error")}
+      </p>
+    )
+  }
+
+  return (
+    <ReCaptchaProvider reCaptchaKey={siteKey}>
+      <ContactFormFields gdpr={gdpr} />
+    </ReCaptchaProvider>
+  )
+}
+
+function ContactFormFields({
+  gdpr,
+}: Readonly<{
+  gdpr?: { href?: string; label?: string; newTab?: boolean }
+}>) {
+  useRecaptchaBadgeVisibility()
+  const t = useTranslations("contactForm")
+  const { executeRecaptcha } = useReCaptcha()
   const contactFormMutation = useContactForm()
 
   const form = useForm<z.infer<FormSchemaType>>({
@@ -29,13 +62,34 @@ export function ContactForm({
     defaultValues: { name: "", email: "", message: "", newsletter: false },
   })
 
-  const onSubmit = (values: z.infer<FormSchemaType>) => {
-    contactFormMutation.mutate(values, {
-      onSuccess: () => {
-        toast.success(t("success"))
-        form.reset()
-      },
-    })
+  const onSubmit = async (values: z.infer<FormSchemaType>) => {
+    if (!executeRecaptcha) {
+      toast.error(t("error"))
+
+      return
+    }
+
+    const normalizedValues = {
+      name: sanitizeNameInput(values.name, 120),
+      email: sanitizeEmailInput(values.email),
+      message: sanitizeMessageInput(values.message, 2000),
+      newsletter: values.newsletter,
+    }
+
+    try {
+      const recaptchaToken = await executeRecaptcha("contact_form")
+      contactFormMutation.mutate(
+        { ...normalizedValues, recaptchaToken },
+        {
+          onSuccess: () => {
+            toast.success(t("success"))
+            form.reset()
+          },
+        }
+      )
+    } catch {
+      toast.error(t("error"))
+    }
   }
 
   return (
@@ -43,8 +97,10 @@ export function ContactForm({
       <AppForm
         form={form}
         onSubmit={onSubmit}
+        legend={t("formLegend")}
         id={contactFormName}
         className="w-full"
+        disabled={form.formState.isSubmitting || contactFormMutation.isPending}
       >
         <AppField
           name="name"
@@ -93,6 +149,9 @@ export function ContactForm({
           className="mx-auto mt-4 w-full md:w-fit"
           size="lg"
           form={contactFormName}
+          isLoading={
+            form.formState.isSubmitting || contactFormMutation.isPending
+          }
         >
           {t("submit")}
         </Button>
@@ -108,9 +167,9 @@ export function ContactForm({
 }
 
 const ContactFormSchema = z.object({
-  name: z.string().min(1),
-  email: z.string().email().min(1),
-  message: z.string().min(10),
+  name: z.string().trim().min(1).max(120),
+  email: z.string().trim().max(254).email(),
+  message: z.string().trim().min(10).max(2000),
   newsletter: z.boolean(),
 })
 

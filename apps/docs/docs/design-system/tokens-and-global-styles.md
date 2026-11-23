@@ -123,6 +123,8 @@ The first color group in `theme.css` supports Shadcn/ui components. The broader 
 
 If a project has a custom naming convention, avoid overwriting Shadcn/ui variables for unrelated concepts. Add semantic project tokens alongside them instead, so the design system remains compatible with future Shadcn/ui updates.
 
+The shared warm amber highlight palette is available as `brand-amber-background`, `brand-amber-border`, and `brand-amber-foreground` Tailwind color utilities.
+
 Example semantic tokens:
 
 ```css

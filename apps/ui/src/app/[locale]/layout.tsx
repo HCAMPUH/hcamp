@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "16x16 32x32" },
-      { url: "/favicon.svg", type: "image/svg+xml" },
+      // { URL: "/favicon.svg", type: "image/svg+xml" },
     ],
   },
 }
@@ -72,6 +72,7 @@ export default async function RootLayout({
     "SHOW_NON_BLOCKING_ERRORS",
     "APP_PUBLIC_URL",
     "IMGPROXY_URL",
+    "NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
   ]
 
   return (

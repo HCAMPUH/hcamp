@@ -27,6 +27,7 @@ import MockedStrapiHcampHero from "@/app/[locale]/dev/showcase/components/strapi
 import MockedStrapiHeadingWithCTAButton from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiHeadingWithCTAButton"
 import MockedStrapiHero from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiHero"
 import MockedStrapiImageWithCTAButton from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiImageWithCTAButton"
+import MockedStrapiLeadership from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiLeadership"
 import MockedStrapiNewsletterForm from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiNewsletterForm"
 import MockedStrapiPledge from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiPledge"
 import MockedStrapiPortals from "@/app/[locale]/dev/showcase/components/strapiComponents/MockedStrapiPortals"
@@ -260,6 +261,14 @@ export const showcaseItems = [
     component: MockedStrapiAbout,
     description:
       "Institutional program introduction with resource links, affiliation, and partner pills",
+  },
+  {
+    id: "leadership",
+    label: "Leadership",
+    kind: "component",
+    component: MockedStrapiLeadership,
+    description:
+      "Leadership categories with a selected title, description, and rich-text content",
   },
   {
     id: "pledge",

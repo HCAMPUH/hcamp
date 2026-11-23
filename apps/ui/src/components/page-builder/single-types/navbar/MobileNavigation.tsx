@@ -94,7 +94,7 @@ export function MobileNavigation({
                   <Button
                     variant="ghost"
                     onClick={() => setActiveItem(item)}
-                    className="flex h-17 w-full items-center justify-between px-6 py-5 text-lg"
+                    className="text-primary hover:text-primary flex h-17 w-full items-center justify-between px-6 py-5 text-lg"
                   >
                     {item.label}
                     <ChevronRight className="mx-2.5 flex size-5 shrink-0" />

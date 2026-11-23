@@ -20,6 +20,7 @@ import {
 import { useUserMutations } from "@/hooks/useUserMutations"
 import { PASSWORD_MIN_LENGTH } from "@/lib/constants"
 import { Link } from "@/lib/navigation"
+import { sanitizeEmailInput, sanitizePasswordInput } from "@/lib/sanitize"
 import { cn } from "@/lib/styles"
 
 // To enable email confirmation, Strapi Users-Permissions plugin must be configured (e.g. email provider, redirect URL)
@@ -42,10 +43,16 @@ export function RegisterForm() {
   })
 
   async function onSubmit(values: z.infer<FormSchemaType>) {
+    const normalizedValues = {
+      email: sanitizeEmailInput(values.email),
+      password: sanitizePasswordInput(values.password),
+      passwordConfirmation: sanitizePasswordInput(values.passwordConfirmation),
+    }
+
     registerMutation.mutate(
       {
-        email: values.email,
-        password: values.password,
+        email: normalizedValues.email,
+        password: normalizedValues.password,
       },
       {
         onSuccess: () => {
@@ -109,7 +116,12 @@ export function RegisterForm() {
           <CardDescription>{t("description")}</CardDescription>
         </CardHeader>
         <CardContent>
-          <AppForm form={form} onSubmit={onSubmit} id={registerFormName}>
+          <AppForm
+            form={form}
+            onSubmit={onSubmit}
+            legend={t("header")}
+            id={registerFormName}
+          >
             <AppField name="email" type="text" required label={t("email")} />
             <AppField
               name="password"
@@ -152,9 +164,9 @@ export function RegisterForm() {
 
 const RegisterFormSchema = z
   .object({
-    email: z.string().email(),
-    password: z.string().min(PASSWORD_MIN_LENGTH),
-    passwordConfirmation: z.string().min(PASSWORD_MIN_LENGTH),
+    email: z.string().trim().max(254).email(),
+    password: z.string().min(PASSWORD_MIN_LENGTH).max(256),
+    passwordConfirmation: z.string().min(PASSWORD_MIN_LENGTH).max(256),
   })
   .superRefine((data, ctx) => {
     if (data.password !== data.passwordConfirmation) {

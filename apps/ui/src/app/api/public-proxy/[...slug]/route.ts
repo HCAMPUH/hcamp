@@ -1,10 +1,79 @@
 import { NextResponse } from "next/server"
 
 import { getEnvVar } from "@/lib/env-vars"
+import { verifyRecaptcha } from "@/lib/recaptcha"
 import {
   createStrapiAuthHeader,
   isStrapiEndpointAllowed,
 } from "@/lib/strapi-api/request-auth"
+
+const invalidFormPayload = () =>
+  NextResponse.json(
+    {
+      error: {
+        message: "Invalid form payload",
+        name: "BadRequest",
+      },
+    },
+    { status: 400 }
+  )
+
+async function preparePayloadWithRecaptcha(
+  body: string | Blob | undefined,
+  action: string | ((payload: Record<string, unknown>) => string)
+): Promise<{ body: string } | { response: NextResponse }> {
+  if (typeof body !== "string") {
+    return { response: invalidFormPayload() }
+  }
+
+  let parsedPayload: unknown
+  try {
+    parsedPayload = JSON.parse(body)
+  } catch {
+    return { response: invalidFormPayload() }
+  }
+
+  if (
+    typeof parsedPayload !== "object" ||
+    parsedPayload === null ||
+    Array.isArray(parsedPayload)
+  ) {
+    return { response: invalidFormPayload() }
+  }
+
+  if (!getEnvVar("RECAPTCHA_SECRET_KEY")) {
+    return {
+      response: NextResponse.json(
+        {
+          error: {
+            message: "reCAPTCHA is not configured",
+            name: "ServiceUnavailable",
+          },
+        },
+        { status: 503 }
+      ),
+    }
+  }
+
+  const payload = parsedPayload as Record<string, unknown>
+  const token =
+    typeof payload.recaptchaToken === "string"
+      ? payload.recaptchaToken
+      : undefined
+  const expectedAction = typeof action === "function" ? action(payload) : action
+  if (!(await verifyRecaptcha(token, expectedAction))) {
+    return {
+      response: NextResponse.json(
+        { error: { message: "Invalid reCAPTCHA", name: "Forbidden" } },
+        { status: 403 }
+      ),
+    }
+  }
+
+  const { recaptchaToken: _recaptchaToken, ...strapiPayload } = payload
+
+  return { body: JSON.stringify(strapiPayload) }
+}
 
 /**
  * This route handler acts as a public proxy for frontend requests with two primary goals:
@@ -43,6 +112,7 @@ async function handler(
   const isReadOnly = request.method === "GET" || request.method === "HEAD"
 
   const clonedRequest = request.clone()
+  const requestHeaders = new Headers(clonedRequest.headers)
   // Extract the body explicitly from the cloned request
   let body: string | Blob | undefined
   if (!isReadOnly) {
@@ -58,16 +128,50 @@ async function handler(
     }
   }
 
+  if (
+    (path === "api/subscribers" || path === "api/subscribers/") &&
+    request.method === "POST"
+  ) {
+    const result = await preparePayloadWithRecaptcha(body, (payload) => {
+      const data = payload.data
+      if (typeof data !== "object" || data === null || Array.isArray(data)) {
+        return "newsletter_form"
+      }
+
+      return (data as Record<string, unknown>).message
+        ? "contact_form"
+        : "newsletter_form"
+    })
+    if ("response" in result) {
+      return result.response
+    }
+    body = result.body
+    requestHeaders.delete("content-length")
+    requestHeaders.delete("transfer-encoding")
+  }
+
+  if (
+    (path === "api/pledges/submit" || path === "api/pledges/submit/") &&
+    request.method === "POST"
+  ) {
+    const result = await preparePayloadWithRecaptcha(body, "pledge_form")
+    if ("response" in result) {
+      return result.response
+    }
+    body = result.body
+    requestHeaders.delete("content-length")
+    requestHeaders.delete("transfer-encoding")
+  }
+
   const authHeader = await createStrapiAuthHeader({
     isReadOnly,
     isPrivate: false,
-    usePublicRole: path === "api/pledges/submit" && request.method === "POST",
   })
 
   const response = await fetch(url, {
     headers: {
       // Convert headers to object
-      ...Object.fromEntries(clonedRequest.headers),
+      ...Object.fromEntries(requestHeaders),
       // Override the Authorization header with the injected token
       ...authHeader,
     },
@@ -79,13 +183,13 @@ async function handler(
   // Remove encoding headers, because the body is no longer compressed and the browser/client will choke on it.
   // (Built-in fetch in Node.js decompresses the body if the response has Content-Encoding: gzip
   // and gives the decompressed stream.)
-  const headers = new Headers(response.headers)
-  headers.delete("content-encoding")
-  headers.delete("content-length")
+  const responseHeaders = new Headers(response.headers)
+  responseHeaders.delete("content-encoding")
+  responseHeaders.delete("content-length")
 
   return new NextResponse(response.body, {
     status: response.status,
-    headers,
+    headers: responseHeaders,
   })
 }
 

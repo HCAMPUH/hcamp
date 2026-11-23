@@ -11,6 +11,8 @@ import {
 } from "react"
 import { createRoot, type Root } from "react-dom/client"
 
+import { PdfThumbnail } from "@/components/elementary/ck-editor/PdfThumbnail"
+
 let pdfWorker: Worker | undefined
 
 const configurePdfWorker = (pdfjs: {
@@ -40,10 +42,6 @@ const FlipbookViewer = dynamic(
   { ssr: false }
 )
 
-type PdfThumbnailProps = {
-  readonly pdfUrl: string
-}
-
 const isAppleTouchDevice = () => {
   if (typeof navigator === "undefined") return false
 
@@ -52,28 +50,6 @@ const isAppleTouchDevice = () => {
     (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
   )
 }
-
-const PdfThumbnail = dynamic<PdfThumbnailProps>(
-  async () => {
-    const { Document, Page, pdfjs } = await import("react-pdf")
-
-    configurePdfWorker(pdfjs)
-
-    return ({ pdfUrl }: PdfThumbnailProps) => {
-      return (
-        <Document file={pdfUrl} loading={null} error={null}>
-          <Page
-            pageNumber={1}
-            width={900}
-            renderAnnotationLayer={false}
-            renderTextLayer={false}
-          />
-        </Document>
-      )
-    }
-  },
-  { ssr: false }
-)
 
 type FlipbookErrorBoundaryProps = {
   readonly children: ReactNode
@@ -140,10 +116,6 @@ class FlipbookErrorBoundary extends Component<
 function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
   const [isActivated, setIsActivated] = useState(false)
   const [isInlineActivated, setIsInlineActivated] = useState(false)
-  const [isPortraitViewport, setIsPortraitViewport] = useState(
-    () =>
-      typeof window !== "undefined" && window.innerHeight > window.innerWidth
-  )
   const [isClosing, setIsClosing] = useState(false)
   const [viewerError, setViewerError] = useState<Error | null>(null)
   const [viewerDiagnostics, setViewerDiagnostics] = useState<ReturnType<
@@ -185,45 +157,6 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
       }
     }
   }, [])
-
-  useEffect(() => {
-    if (!isInlineActivated || !isAppleTouchDevice()) return
-
-    const updateViewportOrientation = () => {
-      setIsPortraitViewport(window.innerHeight > window.innerWidth)
-    }
-    const orientation = screen.orientation
-    const lockLandscape = async () => {
-      if (!orientation?.lock) return
-
-      try {
-        await orientation.lock("landscape")
-      } catch {
-        // iOS Safari may expose the API without permitting locks outside
-        // its native fullscreen mode. The inline viewer remains landscape.
-      }
-    }
-
-    void lockLandscape()
-    updateViewportOrientation()
-    window.addEventListener("resize", updateViewportOrientation, {
-      passive: true,
-    })
-    window.visualViewport?.addEventListener(
-      "resize",
-      updateViewportOrientation,
-      { passive: true }
-    )
-
-    return () => {
-      window.removeEventListener("resize", updateViewportOrientation)
-      window.visualViewport?.removeEventListener(
-        "resize",
-        updateViewportOrientation
-      )
-      if (orientation?.unlock) orientation.unlock()
-    }
-  }, [isInlineActivated])
 
   const resetViewer = () => {
     setViewerError(null)
@@ -320,9 +253,6 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
       className={[
         "ck-pdf-flipbook-fullscreen",
         isInlineActivated && "ck-pdf-flipbook-fullscreen--inline",
-        isInlineActivated &&
-          isPortraitViewport &&
-          "ck-pdf-flipbook-fullscreen--portrait",
       ]
         .filter(Boolean)
         .join(" ")}
@@ -335,10 +265,7 @@ function PdfFlipbookInstance({ pdfUrl }: { readonly pdfUrl: string }) {
         disabled={isClosing}
         hidden={isActivated}
       >
-        <PdfThumbnail pdfUrl={pdfUrl} />
-        <span className="ck-pdf-flipbook-thumbnail__read" aria-hidden="true">
-          View
-        </span>
+        <PdfThumbnail key={pdfUrl} pdfUrl={pdfUrl} />
       </button>
       {isActivated ? (
         <FlipbookErrorBoundary

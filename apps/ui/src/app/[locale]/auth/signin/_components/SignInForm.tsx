@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/card"
 import { useUserMutations } from "@/hooks/useUserMutations"
 import { Link } from "@/lib/navigation"
+import { sanitizeEmailInput, sanitizeUrlInput } from "@/lib/sanitize"
 
 export function SignInForm({ strapiUrl }: { strapiUrl?: string }) {
   return (
@@ -34,10 +35,15 @@ export function SignInForm({ strapiUrl }: { strapiUrl?: string }) {
 const validateCallbackUrl = (url: string | null): string => {
   const fallback = "/"
   if (!url) return fallback
+  const sanitized = sanitizeUrlInput(url)
+  if (!sanitized) return fallback
+
   try {
-    const resolved = new URL(url, window.location.origin)
+    const resolved = new URL(sanitized, window.location.origin)
     if (resolved.origin === window.location.origin) {
-      return resolved.pathname + resolved.search + resolved.hash
+      const path = resolved.pathname + resolved.search + resolved.hash
+
+      return path.startsWith("/") ? path : `/${path}`
     }
   } catch {
     // invalid URL
@@ -60,7 +66,12 @@ function SuspensedSignInForm({ strapiUrl }: { strapiUrl?: string }) {
   })
 
   async function onSubmit(values: z.infer<FormSchemaType>) {
-    signInMutation.mutate(values, {
+    const normalizedValues = {
+      email: sanitizeEmailInput(values.email),
+      password: values.password,
+    }
+
+    signInMutation.mutate(normalizedValues, {
       onSuccess: () => {
         // Use full page navigation to ensure session is reloaded
         // This is more reliable than client-side navigation for session updates
@@ -95,7 +106,12 @@ function SuspensedSignInForm({ strapiUrl }: { strapiUrl?: string }) {
         <CardDescription>{t("description")}</CardDescription>
       </CardHeader>
       <CardContent>
-        <AppForm form={form} onSubmit={onSubmit} id={signInFormName}>
+        <AppForm
+          form={form}
+          onSubmit={onSubmit}
+          legend={t("header")}
+          id={signInFormName}
+        >
           <AppField
             name="email"
             type="text"
@@ -141,8 +157,8 @@ function SuspensedSignInForm({ strapiUrl }: { strapiUrl?: string }) {
 }
 
 const SignInFormSchema = z.object({
-  email: z.string().min(1).email().or(z.string().min(1)),
-  password: z.string().min(1),
+  email: z.string().trim().max(254).email(),
+  password: z.string().min(1).max(256),
 })
 
 type FormSchemaType = typeof SignInFormSchema

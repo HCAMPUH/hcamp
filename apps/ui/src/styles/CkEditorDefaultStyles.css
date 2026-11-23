@@ -18,19 +18,14 @@
 
 /* Keep the viewer toolbar inside the flipbook instead of fixing it to the viewport. */
 .ck-pdf-flipbook-viewer .fixed.bottom-0 {
-  background: color-mix(
-    in srgb,
-    var(--color-background) 60%,
-    transparent
-  ) !important;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 -0.25rem 1rem rgb(0 0 0 / 0.08) !important;
-  isolation: isolate;
+  background: transparent !important;
+  backdrop-filter: none;
+  box-shadow: none !important;
   inset: auto 0 0 !important;
   margin: 0 !important;
   position: absolute !important;
   z-index: 100 !important;
-  -webkit-backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: none;
   width: 100% !important;
 }
 
@@ -409,7 +404,8 @@
   z-index: 1000;
 }
 
-.ck-pdf-flipbook-fullscreen--inline .ck-pdf-flipbook-viewer {
+.ck-pdf-flipbook-fullscreen--inline .ck-pdf-flipbook-viewer,
+.ck-content figure.flipbook .ck-pdf-flipbook-fullscreen--inline .ck-pdf-flipbook-viewer {
   aspect-ratio: auto;
   height: 100dvh !important;
   left: 0;
@@ -465,6 +461,14 @@
   right: 0;
   box-shadow: none !important;
   z-index: 1001;
+}
+
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  .ck-pdf-flipbook-fullscreen--inline .fixed.bottom-0 {
+    background-color: rgb(0 0 0 / 0.82) !important;
+  }
 }
 
 .ck-pdf-flipbook-fullscreen--inline .fixed.bottom-0 > div:nth-child(2) {
@@ -523,102 +527,6 @@
   color: white;
   font-weight: 700;
   padding: 0.6rem 1rem;
-}
-
-@media (orientation: portrait), (max-aspect-ratio: 1 / 1) {
-  .ck-pdf-flipbook-fullscreen--inline.ck-pdf-flipbook-fullscreen--portrait
-    .ck-pdf-flipbook-viewer {
-    height: 100dvh !important;
-    width: 100vw;
-  }
-
-  .ck-pdf-flipbook-fullscreen--inline .ck-pdf-flipbook-viewer {
-    height: 100dvh !important;
-    width: 100vw;
-  }
-
-  .ck-pdf-flipbook-fullscreen--inline
-    .ck-pdf-flipbook-viewer
-    .react-transform-wrapper {
-    height: 100vw !important;
-    left: 50%;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%) rotate(90deg);
-    transform-origin: center;
-    width: 100dvh !important;
-  }
-
-  .ck-pdf-flipbook-fullscreen--inline
-    .ck-pdf-flipbook-viewer
-    .react-transform-component {
-    height: 100% !important;
-    width: 100% !important;
-  }
-
-  .ck-pdf-flipbook-fullscreen--inline .fixed.bottom-0 {
-    bottom: auto;
-    height: 3.5rem;
-    left: 50%;
-    right: auto;
-    top: 50%;
-    transform: translate(-50%, -50%) rotate(90deg);
-    transform-origin: center;
-    width: 100dvh !important;
-  }
-}
-
-.ck-pdf-flipbook-fullscreen--inline.ck-pdf-flipbook-fullscreen--portrait
-  .ck-pdf-flipbook-viewer
-  .react-transform-wrapper {
-  height: 100vw !important;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%) rotate(90deg);
-  transform-origin: center;
-  width: 100dvh !important;
-}
-
-.ck-pdf-flipbook-fullscreen--inline.ck-pdf-flipbook-fullscreen--portrait
-  .ck-pdf-flipbook-viewer
-  .react-transform-component {
-  height: 100% !important;
-  width: 100% !important;
-}
-
-.ck-pdf-flipbook-fullscreen--inline
-  .ck-flipbook-rotated-landscape
-  .react-pageflip,
-.ck-pdf-flipbook-fullscreen--inline
-  .ck-flipbook-rotated-landscape
-  .stf__parent {
-  height: 100% !important;
-  width: 100% !important;
-}
-
-.ck-pdf-flipbook-fullscreen--inline
-  .ck-flipbook-rotated-landscape
-  .stf__wrapper,
-.ck-pdf-flipbook-fullscreen--inline
-  .ck-flipbook-rotated-landscape
-  .stf__block {
-  height: 100% !important;
-  max-height: 100% !important;
-  max-width: 100% !important;
-  width: 100% !important;
-}
-
-.ck-pdf-flipbook-fullscreen--inline.ck-pdf-flipbook-fullscreen--portrait
-  .fixed.bottom-0 {
-  bottom: auto;
-  height: 3.5rem;
-  left: 50%;
-  right: auto;
-  top: 50%;
-  transform: translate(-50%, -50%) rotate(90deg);
-  transform-origin: center;
-  width: 100dvh !important;
 }
 
 /* Keep CMS-authored brand colors readable on the page background. */
@@ -943,6 +851,7 @@
 
 .ck-content .todo-list .todo-list__label > input {
   -webkit-appearance: none;
+  appearance: none;
   border: 0;
   display: inline-block;
   height: var(--ck-todo-list-checkmark-size);
@@ -1246,6 +1155,12 @@
   overflow: clip;
 }
 
+@supports not (overflow: clip) {
+  .ck-content figure.table.table-rounded {
+    overflow: hidden;
+  }
+}
+
 .ck-content figure.table.table-rounded > table
   > :first-child
   > tr:first-child
@@ -1385,4 +1300,11 @@
   min-height: 0 !important;
   max-height: 100% !important;
   overflow: hidden;
+}
+
+.ck-content figure.flipbook .ck-pdf-flipbook-thumbnail img {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
 }

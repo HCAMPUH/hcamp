@@ -76,6 +76,8 @@ function buildCsp({
       "script-src 'self' 'unsafe-inline'",
       "https://s3.amazonaws.com",
       "https://ajax.googleapis.com",
+      "https://www.google.com/recaptcha/",
+      "https://www.gstatic.com/recaptcha/",
       "https://hawaii.us14.list-manage.com",
       "https://player.vimeo.com",
       "https://www.googletagmanager.com",
@@ -113,6 +115,8 @@ function buildCsp({
       "https://*.google-analytics.com",
       "https://*.analytics.google.com",
       "https://*.googletagmanager.com",
+      "https://www.google.com/recaptcha/",
+      "https://www.gstatic.com/recaptcha/",
       "https://api.welcomingweb.com",
       // Example — Google Analytics / Ads (uncomment if used):
       // "https://*.google-analytics.com",
@@ -127,7 +131,8 @@ function buildCsp({
     // document remains responsible for its own scripts and media policy.
     [
       "frame-src 'self'",
-      "https://www.google.com",
+      "https://www.google.com/recaptcha/",
+      "https://recaptcha.google.com/recaptcha/",
       "https://player.vimeo.com",
       "https://www.youtube.com",
       "https://www.youtube-nocookie.com",

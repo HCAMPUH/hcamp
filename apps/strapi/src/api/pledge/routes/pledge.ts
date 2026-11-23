@@ -24,9 +24,6 @@ export default {
       method: "POST",
       path: "/pledges/submit",
       handler: "pledge.submit",
-      config: {
-        auth: false,
-      },
     },
   ],
 }

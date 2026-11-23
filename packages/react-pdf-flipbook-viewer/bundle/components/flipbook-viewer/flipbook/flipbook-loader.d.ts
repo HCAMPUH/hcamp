@@ -4,6 +4,7 @@ import { PDFDetails } from '../../../lib/definitions';
 type FlipbookLoaderProps = {
     pdfDetails: PDFDetails;
     scale: number;
+    isSinglePage: boolean;
     viewerStates: {
         currentPageIndex: number;
         zoomScale: number;

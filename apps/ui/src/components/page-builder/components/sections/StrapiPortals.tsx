@@ -29,6 +29,36 @@ const icons = {
   "heart-pulse": HeartPulse,
 }
 
+function PortalRoleCoursesImage({
+  component,
+}: {
+  component: Data.Component<"shared.portal-role">
+}) {
+  if (!component.coursesImage) return null
+
+  const image = (
+    <StrapiBasicImage
+      component={component.coursesImage}
+      className="mx-auto max-h-48 w-full object-contain"
+    />
+  )
+
+  return (
+    <div className="border-border border-b pb-4">
+      {component.coursesImageLink ? (
+        <StrapiLink
+          component={component.coursesImageLink}
+          className="mx-auto h-auto w-full justify-center p-0"
+        >
+          {image}
+        </StrapiLink>
+      ) : (
+        image
+      )}
+    </div>
+  )
+}
+
 export function StrapiPortals({
   component,
 }: PageBuilderComponentProps & {
@@ -47,7 +77,7 @@ export function StrapiPortals({
       <Container className="py-8">
         <div className="mx-auto mb-12 max-w-3xl text-center">
           {component.eyebrow ? (
-            <span className="inline-flex rounded-full border border-red-300 bg-red-50 px-3 py-1 text-xs font-semibold tracking-[0.12em] text-red-900 uppercase dark:border-red-700 dark:bg-red-950/40 dark:text-red-100">
+            <span className="border-brand-amber-border bg-brand-amber-background text-brand-amber-foreground inline-flex rounded-full border px-3 py-1 text-xs font-semibold tracking-[0.12em] uppercase">
               {component.eyebrow}
             </span>
           ) : null}
@@ -64,7 +94,7 @@ export function StrapiPortals({
           {component.description ? (
             <Typography
               variant="medium"
-              className="text-muted-foreground mt-2 text-sm"
+              className="text-muted-foreground mt-2 text-base"
             >
               {component.description}
             </Typography>
@@ -93,7 +123,7 @@ export function StrapiPortals({
                   role="tab"
                   onClick={() => setActiveIndex(index)}
                   className={cn(
-                    "text-foreground flex min-h-11 items-center gap-2 rounded-xl px-5 py-3 text-xs font-bold transition-colors sm:text-sm",
+                    "text-foreground flex min-h-11 items-center gap-2 rounded-xl px-5 py-3 text-sm font-bold transition-colors",
                     isActive &&
                       "bg-background text-red-950 shadow-sm dark:text-red-100"
                   )}
@@ -116,7 +146,7 @@ export function StrapiPortals({
             <div className="space-y-6 lg:col-span-7">
               <div>
                 {activeRole.category ? (
-                  <div className="bg-brand-gold-soft dark:bg-brand-gold-muted/20 mb-2 inline-flex rounded-full px-3 py-1 text-xs font-extrabold text-amber-900 uppercase dark:text-yellow-100">
+                  <div className="border-brand-amber-border bg-brand-amber-background text-brand-amber-foreground mb-2 inline-flex rounded-full border px-3 py-1 text-xs font-extrabold uppercase">
                     {activeRole.category}
                   </div>
                 ) : null}
@@ -130,7 +160,7 @@ export function StrapiPortals({
                 </Typography>
                 <Typography
                   variant="medium"
-                  className="text-muted-foreground mt-2 text-sm leading-relaxed"
+                  className="text-muted-foreground mt-2 text-base leading-relaxed"
                 >
                   {activeRole.description}
                 </Typography>
@@ -150,7 +180,7 @@ export function StrapiPortals({
                   {(activeRole.responsibilities ?? []).map((item) => (
                     <li
                       key={item.id ?? item.text}
-                      className="text-muted-foreground flex items-start gap-2 text-xs"
+                      className="text-muted-foreground flex items-start gap-2 text-sm"
                     >
                       <CheckCircle2
                         className="mt-0.5 size-4 shrink-0 text-red-800"
@@ -164,11 +194,11 @@ export function StrapiPortals({
               <div className="flex min-w-0 flex-wrap gap-3 pt-2">
                 <StrapiLink
                   component={activeRole.primaryAction}
-                  className="h-auto max-w-full min-w-0 rounded-xl bg-red-900 px-5 py-2.5 text-left text-xs font-bold break-words whitespace-normal text-white shadow transition-colors hover:bg-red-800 dark:bg-red-800 dark:hover:bg-red-700"
+                  className="h-auto max-w-full min-w-0 rounded-xl bg-red-900 px-5 py-2.5 text-left text-sm font-bold break-words whitespace-normal text-white shadow transition-colors hover:bg-red-800 dark:bg-red-800 dark:hover:bg-red-700"
                 />
                 <StrapiLink
                   component={activeRole.secondaryAction}
-                  className="border-border bg-background text-foreground hover:bg-muted h-auto max-w-full min-w-0 rounded-xl border px-5 py-2.5 text-left text-xs font-bold break-words whitespace-normal transition-colors"
+                  className="border-border bg-background text-foreground hover:bg-muted h-auto max-w-full min-w-0 rounded-xl border px-5 py-2.5 text-left text-sm font-bold break-words whitespace-normal transition-colors"
                 >
                   <Download
                     className="size-4 text-red-950"
@@ -180,7 +210,7 @@ export function StrapiPortals({
                   <StrapiLink
                     key={action.id ?? action.label}
                     component={action}
-                    className="border-border bg-background text-foreground hover:bg-muted h-auto max-w-full min-w-0 rounded-xl border px-5 py-2.5 text-left text-xs font-bold break-words whitespace-normal transition-colors"
+                    className="border-border bg-background text-foreground hover:bg-muted h-auto max-w-full min-w-0 rounded-xl border px-5 py-2.5 text-left text-sm font-bold break-words whitespace-normal transition-colors"
                   />
                 ))}
               </div>
@@ -207,14 +237,7 @@ export function StrapiPortals({
                     </span>
                   ) : null}
                 </div>
-                {activeRole.image ? (
-                  <div className="border-border border-b pb-4">
-                    <StrapiBasicImage
-                      component={activeRole.image}
-                      className="mx-auto max-h-48 w-full object-contain"
-                    />
-                  </div>
-                ) : null}
+                <PortalRoleCoursesImage component={activeRole} />
                 <div className="space-y-3">
                   {courses.map((course) => (
                     <StrapiLink
@@ -224,13 +247,13 @@ export function StrapiPortals({
                     >
                       <div className="min-w-0">
                         {course.audience ? (
-                          <span className="rounded bg-red-50 px-2 py-0.5 text-[10px] font-bold text-red-950 dark:bg-red-950/40 dark:text-red-100">
+                          <span className="rounded bg-red-50 px-2 py-0.5 text-xs font-bold text-red-950 dark:bg-red-950/40 dark:text-red-100">
                             {course.audience}
                           </span>
                         ) : null}
                         <Typography
                           tag="p"
-                          variant="small"
+                          variant="medium"
                           fontWeight="semiBold"
                           className="text-foreground mt-0.5 leading-tight break-words whitespace-normal"
                         >

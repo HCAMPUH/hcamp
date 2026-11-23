@@ -10,6 +10,12 @@ A customizable React component to render PDF documents in a flipbook-style viewe
 - **Keyboard Shortcuts**: Use keyboard arrows to navigate through the pages.
 - **Responsive Design**: Optimized for various screen sizes.
 
+The navigation controls hide after three seconds of inactivity. Interact with
+the viewer using a mouse, touch, or keyboard to show them again. Controls stay
+visible while they have keyboard focus or a pointer interaction is active.
+On iPhone, the viewer fits one page in portrait orientation and switches to a
+two-page layout in landscape when there is enough room.
+
 ## Installation
 
 Install using npm

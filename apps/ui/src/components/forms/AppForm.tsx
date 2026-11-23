@@ -19,6 +19,7 @@ interface Props<T extends FieldValues = FieldValues> {
   ) => void
   readonly onError?: SubmitErrorHandler<T>
   readonly children: React.ReactNode
+  readonly legend: string
   readonly className?: string
   readonly id?: string
   readonly disabled?: boolean
@@ -30,6 +31,7 @@ export function AppForm<T extends FieldValues = FieldValues>({
     /* empty */
   },
   children,
+  legend,
   className,
   id,
   form,
@@ -47,8 +49,9 @@ export function AppForm<T extends FieldValues = FieldValues>({
         id={id}
         noValidate
       >
-        <fieldset disabled={disabled} className="space-y-4">
-          {children}
+        <fieldset disabled={disabled}>
+          <legend className="sr-only">{legend}</legend>
+          <div className="flex flex-1 flex-col space-y-4">{children}</div>
         </fieldset>
       </form>
     </FormProvider>

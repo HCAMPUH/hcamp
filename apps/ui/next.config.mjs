@@ -15,7 +15,7 @@ const nextConfig = {
   // Enable cacheComponents when caching strategy is introduced
   // cacheComponents: true,
   experimental: {
-    turbopackFileSystemCacheForDev: true,
+    turbopackFileSystemCacheForDev: false,
   },
   reactCompiler: true,
   transpilePackages: ["@repo/design-system"],
