@@ -8,13 +8,13 @@ const data = {
   badge: "State Legislation & Safety Mandates",
   title: "<h2>Hawaii Concussion Law Requirements</h2>",
   description:
-    "<p>Under Hawaii Law (Act 197 / Act 262), annual concussion education is mandatory for public and private schools, coaches, athletic staff, and parents. The law defines mandatory removal from play, immediate evaluation, and strict Return-to-Learn and Return-to-Play protocols before returning to athletic competition.</p>",
+    "<p>Under Hawaii Law (Act 197 / Act 262), annual concussion education is mandatory for public and private school athletic staff, coaches, student-athletes, and parents. The law defines mandatory removal from play, immediate evaluation, and strict Return-to-Learn &amp; Return-to-Play protocols before returning to athletic competition.</p>",
   requirements: [
     {
       id: 1,
       title: "<p>Annual Education</p>",
       description:
-        "<p>Mandatory training for coaches, parents, and student athletes every school year.</p>",
+        "<p>Mandatory training for coaches, parents, and student-athletes every school year.</p>",
     },
     {
       id: 2,
