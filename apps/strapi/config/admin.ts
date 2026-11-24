@@ -16,6 +16,12 @@ export default ({ env }) => {
       secret: env("ADMIN_JWT_SECRET"),
       providers: [microsoftSSOProvider(env)].filter(Boolean),
     },
+    rateLimit: {
+      enabled: true,
+      interval: { min: 15 },
+      max: 5,
+      keyGenerator: (ctx) => ctx.request.ip,
+    },
     apiToken: {
       salt: env("API_TOKEN_SALT"),
     },

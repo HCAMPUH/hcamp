@@ -26,6 +26,8 @@ Start here when you are working on website/app sign-in, registration, password r
 
 Strapi Admin SSO is for CMS users who log into `/admin`. In this starter, Microsoft SSO authenticates Strapi admin users through Microsoft Entra ID, while Strapi still controls admin roles and permissions.
 
+Strapi's `koa2-ratelimit`-backed admin limiter allows 5 attempts per client IP every 15 minutes on credential login and admin registration. Those endpoints share an in-memory counter per Strapi instance; Microsoft SSO is unaffected. This is separate from the Users & Permissions limiter for end-user authentication.
+
 Start here when you are working on CMS editor/admin login.
 
 ## Related Documentation
