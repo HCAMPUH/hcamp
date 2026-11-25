@@ -45,8 +45,8 @@ export function AppTextArea({
             required={nativeProps.required}
           />
 
-          <FormControl>
-            <div className="relative flex items-stretch overflow-hidden rounded-md">
+          <div className="relative flex items-stretch overflow-hidden rounded-md">
+            <FormControl>
               <Textarea
                 {...field}
                 value={field.value ?? ""}
@@ -66,8 +66,8 @@ export function AppTextArea({
                   fieldClassName
                 )}
               />
-            </div>
-          </FormControl>
+            </FormControl>
+          </div>
 
           <AppFormDescription description={description} />
 

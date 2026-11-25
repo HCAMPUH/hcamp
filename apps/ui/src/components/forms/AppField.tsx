@@ -51,8 +51,8 @@ export function AppField({
             required={nativeProps.required}
           />
 
-          <FormControl>
-            <div className="relative flex items-stretch overflow-hidden rounded-md">
+          <div className="relative flex items-stretch overflow-hidden rounded-md">
+            <FormControl>
               <Input
                 {...field}
                 {...nativeProps}
@@ -83,22 +83,22 @@ export function AppField({
                   fieldClassName
                 )}
               />
-              {endAdornment && (
-                <div
-                  className={cn(
-                    "flex items-center rounded-r-md border bg-gray-100 px-2",
-                    {
-                      "border-y-red-600 border-r-red-600 text-red-600":
-                        fieldState.invalid,
-                      "border-gray-100": !fieldState.invalid,
-                    }
-                  )}
-                >
-                  {endAdornment}
-                </div>
-              )}
-            </div>
-          </FormControl>
+            </FormControl>
+            {endAdornment && (
+              <div
+                className={cn(
+                  "flex items-center rounded-r-md border bg-gray-100 px-2",
+                  {
+                    "border-y-red-600 border-r-red-600 text-red-600":
+                      fieldState.invalid,
+                    "border-gray-100": !fieldState.invalid,
+                  }
+                )}
+              >
+                {endAdornment}
+              </div>
+            )}
+          </div>
 
           <AppFormDescription description={description} />
 
