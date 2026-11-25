@@ -84,6 +84,9 @@ export default async function RootLayout({
         />
         <Script id="csr-config" strategy="beforeInteractive">
           {`
+         // Keep Zod from probing or using Function() under the strict CSP.
+         globalThis.__zod_globalConfig = globalThis.__zod_globalConfig || {};
+         globalThis.__zod_globalConfig.jitless = true;
          window.CSR_CONFIG = window.CSR_CONFIG || {};
          window.CSR_CONFIG = ${JSON.stringify({
            ...CSR_ENVs.reduce(
