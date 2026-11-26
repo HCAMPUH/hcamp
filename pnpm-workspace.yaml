@@ -135,3 +135,11 @@ peerDependencyRules:
 patchedDependencies:
   '@notum-cz/strapi-plugin-smart-populate@1.0.1': patches/@notum-cz__strapi-plugin-smart-populate@1.0.1.patch
   strapi-plugin-meilisearch@0.16.5: patches/strapi-plugin-meilisearch@0.16.5.patch
+permissions:
+  dotenv:
+    skills: [dotenvx]
+skills:
+  dirs:
+    - .agent/skills
+    - .agents/skills
+    - .github/skills
