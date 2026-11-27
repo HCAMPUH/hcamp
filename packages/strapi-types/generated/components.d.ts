@@ -431,10 +431,13 @@ export interface SectionsLawRequirements extends Struct.ComponentSchema {
   collectionName: "components_sections_law_requirements"
   info: {
     description: "Hawaii concussion law requirements with three highlighted mandates and calls to action"
-    displayName: "LawRequirements"
+    displayName: "Law"
     icon: "shield"
   }
   attributes: {
+    backgroundColor: Schema.Attribute.String &
+      Schema.Attribute.CustomField<"plugin::color-picker.color">
+    backgroundImage: Schema.Attribute.Component<"utilities.basic-image", false>
     badge: Schema.Attribute.String
     description: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<

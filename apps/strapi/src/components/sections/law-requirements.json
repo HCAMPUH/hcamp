@@ -1,12 +1,22 @@
 {
   "collectionName": "components_sections_law_requirements",
   "info": {
-    "displayName": "LawRequirements",
+    "displayName": "Law",
     "icon": "shield",
     "description": "Hawaii concussion law requirements with three highlighted mandates and calls to action"
   },
   "options": {},
   "attributes": {
+    "backgroundColor": {
+      "type": "customField",
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    },
+    "backgroundImage": {
+      "type": "component",
+      "component": "utilities.basic-image",
+      "repeatable": false
+    },
     "badge": {
       "type": "string"
     },

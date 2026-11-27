@@ -5,6 +5,7 @@ import { Scale } from "lucide-react"
 
 import CkEditorRenderer from "@/components/elementary/ck-editor"
 import { Container } from "@/components/elementary/Container"
+import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"
 import StrapiLink from "@/components/page-builder/components/utilities/StrapiLink"
 import Typography from "@/components/typography"
 import type { PageBuilderComponentProps } from "@/types/general"
@@ -15,19 +16,41 @@ export function StrapiLawRequirements({
   component: Data.Component<"sections.law-requirements">
 }) {
   const { badge, title, description, requirements, links } = component
+  const backgroundImage = component.backgroundImage
+  const hasBackgroundImage = Boolean(
+    backgroundImage?.media || backgroundImage?.fallbackSrc
+  )
 
   return (
     <section className="py-8 sm:py-10">
       <Container>
-        <div className="relative isolate overflow-hidden rounded-3xl bg-red-900 px-6 py-8 text-white shadow-xl sm:px-10 sm:py-10 lg:px-12 lg:py-12">
+        <div
+          className="relative isolate overflow-hidden rounded-3xl bg-red-900 px-6 py-8 text-white shadow-xl sm:px-10 sm:py-10 lg:px-12 lg:py-12"
+          style={
+            component.backgroundColor
+              ? { backgroundColor: component.backgroundColor }
+              : undefined
+          }
+        >
+          {hasBackgroundImage ? (
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 opacity-25"
+            >
+              <StrapiBasicImage
+                component={backgroundImage}
+                fill
+                sizes="100vw"
+                className="object-cover"
+              />
+            </div>
+          ) : null}
+
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute top-0 right-0 hidden h-[58%] w-[48%] justify-end overflow-hidden lg:flex"
+            className="pointer-events-none absolute top-0 right-0 flex h-[58%] w-[72%] justify-end overflow-hidden sm:w-[60%] lg:w-[48%]"
           >
-            <Scale
-              className="-mt-12 size-[360px] translate-x-1 text-white/10"
-              strokeWidth={1}
-            />
+            <Scale className="-mt-10 size-56 translate-x-10 text-white/10 sm:-mt-12 sm:size-72 sm:translate-x-12 lg:-mt-16 lg:size-[360px]" />
           </div>
 
           <div className="relative z-10 max-w-5xl">
